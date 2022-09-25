@@ -12,6 +12,7 @@ import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.text.SimpleDateFormat;
 import java.util.Date;
+import javax.swing.JFileChooser;
 
 /**
  *
@@ -67,7 +68,18 @@ public class AdminForm extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void BackupBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_BackupBtnActionPerformed
-        String destinationPath = "C:\\MEIA";
+        File file;
+        String destinationPath = "";
+        
+        JFileChooser dialog = new JFileChooser("C:\\MEIA");
+        dialog.setFileSelectionMode(JFileChooser.DIRECTORIES_ONLY);
+        int value = dialog.showOpenDialog(this);
+        
+        if (value == JFileChooser.APPROVE_OPTION) {
+            file = dialog.getSelectedFile();
+            destinationPath = file.getPath();
+        }
+        
         makeBackup(destinationPath);
         updateBackupBitacora(destinationPath);
         updateDescriptorBackupBitacora();
@@ -116,8 +128,9 @@ public class AdminForm extends javax.swing.JFrame {
         try {
             Files.copy(source.toPath(), dest.toPath(), StandardCopyOption.COPY_ATTRIBUTES);
         }
-        catch (IOException e) {
-            
+        catch (IOException ex) {
+            String strError = ex.getMessage();
+            System.out.println(strError);
         }
         
         File[] files = new File("C:\\MEIA").listFiles(); 
@@ -128,8 +141,9 @@ public class AdminForm extends javax.swing.JFrame {
                 try {
                     Files.copy(file.toPath(), path, StandardCopyOption.COPY_ATTRIBUTES);
                 }
-                catch (IOException e) {
-
+                catch (IOException ex) {
+                    String strError = ex.getMessage();
+                    System.out.println(strError);
                 }
             }
         }
@@ -147,9 +161,9 @@ public class AdminForm extends javax.swing.JFrame {
                 bw.close();
             }
         }
-        catch(IOException ex)
-        {
+        catch(IOException ex) {
             String strError = ex.getMessage();
+            System.out.println(strError);
         }
     }
     
@@ -188,9 +202,9 @@ public class AdminForm extends javax.swing.JFrame {
                bw.close();
            }
        }
-       catch(IOException ex)
-       {
+       catch(IOException ex) {
            String strError = ex.getMessage();
+           System.out.println(strError);
        }
     }
 
