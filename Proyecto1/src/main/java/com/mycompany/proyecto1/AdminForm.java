@@ -3,6 +3,15 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/GUIForms/JFrame.java to edit this template
  */
 package com.mycompany.proyecto1;
+import java.io.File;
+import java.nio.file.Files;
+import java.nio.file.StandardCopyOption;
+import java.io.*;
+import java.util.ArrayList;
+import java.nio.file.Path;
+import java.nio.file.Paths;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 
 /**
  *
@@ -75,6 +84,94 @@ public class AdminForm extends javax.swing.JFrame {
                 new AdminForm().setVisible(true);
             }
         });
+    }
+    
+    public static void makeBackup(String _destinationPath) {
+        String destinationPath = _destinationPath + "/MEIA_Backup";
+        var source = new File("C:\\MEIA");
+        var dest = new File(destinationPath);
+        
+        try {
+            Files.copy(source.toPath(), dest.toPath(), StandardCopyOption.COPY_ATTRIBUTES);
+        }
+        catch (IOException e) {
+            
+        }
+        
+        File[] files = new File("C:\\MEIA").listFiles(); 
+        ArrayList<String> results = new ArrayList<String>();
+        for (File file : files) {
+            System.out.println(file.toPath());
+            System.out.println(file.getName());
+            String strPath = dest.toString() + "/" + file.getName();
+            Path path = Paths.get(strPath);
+            if (file.isFile()) {
+                //results.add(file.getName());
+                try {
+                    Files.copy(file.toPath(), path, StandardCopyOption.COPY_ATTRIBUTES);
+                }
+                catch (IOException e) {
+
+                }
+            }
+        }
+        
+        // update bitacora
+        String bitacoraPath = "C:\\MEIA/bitacora_backup";
+        File bitacoraFile = new File(bitacoraPath);
+        String date = new SimpleDateFormat("dd-MM-yyyy").format(new Date());
+        
+        try {
+            try (FileWriter Write = new FileWriter(bitacoraFile, true); 
+                BufferedWriter bw = new BufferedWriter(Write)) {
+                bw.write(_destinationPath + "|" + "usuario" + "|" + date + System.getProperty( "line.separator" ));
+                bw.close();
+            }
+        }
+        catch(IOException ex)
+        {
+            String strError = ex.getMessage();
+        } 
+        
+        // update desc bitacora
+         String descBitacoraPath = "C:\\MEIA/desc_bitacora_backup";
+         ArrayList<String> rawData = Proyecto1.getFile(descBitacoraPath);
+         String[] data = new String[6];
+         for (int i = 0; i < rawData.size(); i++) {
+             data[i] = rawData.get(i);
+             System.out.println(rawData.get(i));
+         }
+         data[0] = "Nombre simbolico: ";
+         if (data[1] == null) {
+             data[1] = "Fecha de creación: " + date;
+         }
+         if (data[2] == null) {
+             data[2] = "Usuario creación: ";
+         }
+         data[3] = "Fecha de modificación: " + date;
+         data[4] = "Usuario de modificación: ";
+         if (data[5] == null) {
+             data[5] = "Registros: 1";
+         } else {
+             char number = data[5].charAt(11);
+             Integer num = Integer.parseInt(Character.toString(number)) + 1;
+             System.out.println(num);
+             data[5] = "Registros: " + num.toString();
+         }
+         
+         File descBitacoraFile = new File(descBitacoraPath);
+         
+         try {
+            try (FileWriter Write = new FileWriter(descBitacoraFile, false); 
+                BufferedWriter bw = new BufferedWriter(Write)) {
+                bw.write(data[0] + System.getProperty("line.separator") + data[1] + System.getProperty("line.separator") + data[2] + System.getProperty("line.separator") + data[3] + System.getProperty("line.separator") + data[4] + System.getProperty("line.separator") + data[5]);
+                bw.close();
+            }
+        }
+        catch(IOException ex)
+        {
+            String strError = ex.getMessage();
+        } 
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
