@@ -35,21 +35,43 @@ public class AdminForm extends javax.swing.JFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
+        BackupBtn = new javax.swing.JButton();
+
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+
+        BackupBtn.setText("Backup");
+        BackupBtn.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                BackupBtnActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 400, Short.MAX_VALUE)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                .addContainerGap(242, Short.MAX_VALUE)
+                .addComponent(BackupBtn)
+                .addGap(86, 86, 86))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 300, Short.MAX_VALUE)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                .addContainerGap(216, Short.MAX_VALUE)
+                .addComponent(BackupBtn)
+                .addGap(62, 62, 62))
         );
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
+
+    private void BackupBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_BackupBtnActionPerformed
+        String destinationPath = "C:\\MEIA";
+        makeBackup(destinationPath);
+        updateBackupBitacora(destinationPath);
+        updateDescriptorBackupBitacora();
+    }//GEN-LAST:event_BackupBtnActionPerformed
 
     /**
      * @param args the command line arguments
@@ -86,7 +108,7 @@ public class AdminForm extends javax.swing.JFrame {
         });
     }
     
-    public static void makeBackup(String _destinationPath) {
+    private void makeBackup(String _destinationPath) {
         String destinationPath = _destinationPath + "/MEIA_Backup";
         var source = new File("C:\\MEIA");
         var dest = new File(destinationPath);
@@ -99,14 +121,10 @@ public class AdminForm extends javax.swing.JFrame {
         }
         
         File[] files = new File("C:\\MEIA").listFiles(); 
-        ArrayList<String> results = new ArrayList<String>();
         for (File file : files) {
-            System.out.println(file.toPath());
-            System.out.println(file.getName());
             String strPath = dest.toString() + "/" + file.getName();
             Path path = Paths.get(strPath);
             if (file.isFile()) {
-                //results.add(file.getName());
                 try {
                     Files.copy(file.toPath(), path, StandardCopyOption.COPY_ATTRIBUTES);
                 }
@@ -115,8 +133,9 @@ public class AdminForm extends javax.swing.JFrame {
                 }
             }
         }
-        
-        // update bitacora
+    }
+    
+    private void updateBackupBitacora(String destinationPath) {
         String bitacoraPath = "C:\\MEIA/bitacora_backup";
         File bitacoraFile = new File(bitacoraPath);
         String date = new SimpleDateFormat("dd-MM-yyyy").format(new Date());
@@ -124,56 +143,58 @@ public class AdminForm extends javax.swing.JFrame {
         try {
             try (FileWriter Write = new FileWriter(bitacoraFile, true); 
                 BufferedWriter bw = new BufferedWriter(Write)) {
-                bw.write(_destinationPath + "|" + "usuario" + "|" + date + System.getProperty( "line.separator" ));
+                bw.write(destinationPath + "|" + "usuario" + "|" + date + System.getProperty( "line.separator" ));
                 bw.close();
             }
         }
         catch(IOException ex)
         {
             String strError = ex.getMessage();
-        } 
+        }
+    }
+    
+    private void updateDescriptorBackupBitacora() {
+        String date = new SimpleDateFormat("dd-MM-yyyy").format(new Date());
+        String descBitacoraPath = "C:\\MEIA/desc_bitacora_backup";
+        ArrayList<String> rawData = Proyecto1.getFile(descBitacoraPath);
+        String[] data = new String[6];
+        for (int i = 0; i < rawData.size(); i++) {
+            data[i] = rawData.get(i);
+        }
         
-        // update desc bitacora
-         String descBitacoraPath = "C:\\MEIA/desc_bitacora_backup";
-         ArrayList<String> rawData = Proyecto1.getFile(descBitacoraPath);
-         String[] data = new String[6];
-         for (int i = 0; i < rawData.size(); i++) {
-             data[i] = rawData.get(i);
-             System.out.println(rawData.get(i));
-         }
-         data[0] = "Nombre simbolico: ";
-         if (data[1] == null) {
-             data[1] = "Fecha de creación: " + date;
-         }
-         if (data[2] == null) {
-             data[2] = "Usuario creación: ";
-         }
-         data[3] = "Fecha de modificación: " + date;
-         data[4] = "Usuario de modificación: ";
-         if (data[5] == null) {
-             data[5] = "Registros: 1";
-         } else {
-             char number = data[5].charAt(11);
-             Integer num = Integer.parseInt(Character.toString(number)) + 1;
-             System.out.println(num);
-             data[5] = "Registros: " + num.toString();
-         }
-         
-         File descBitacoraFile = new File(descBitacoraPath);
-         
-         try {
-            try (FileWriter Write = new FileWriter(descBitacoraFile, false); 
-                BufferedWriter bw = new BufferedWriter(Write)) {
-                bw.write(data[0] + System.getProperty("line.separator") + data[1] + System.getProperty("line.separator") + data[2] + System.getProperty("line.separator") + data[3] + System.getProperty("line.separator") + data[4] + System.getProperty("line.separator") + data[5]);
-                bw.close();
-            }
+        data[0] = "Nombre simbolico: ";
+        if (data[1] == null) {
+            data[1] = "Fecha de creación: " + date;
         }
-        catch(IOException ex)
-        {
-            String strError = ex.getMessage();
-        } 
+        if (data[2] == null) {
+            data[2] = "Usuario creación: ";
+        }
+        data[3] = "Fecha de modificación: " + date;
+        data[4] = "Usuario de modificación: ";
+        if (data[5] == null) {
+            data[5] = "Registros: 1";
+        } else {
+            String number = data[5].substring(11, data[5].length());
+            Integer num = Integer.parseInt(number) + 1;
+            data[5] = "Registros: " + num.toString();
+        }
+
+        File descBitacoraFile = new File(descBitacoraPath);
+
+        try {
+           try (FileWriter Write = new FileWriter(descBitacoraFile, false); 
+               BufferedWriter bw = new BufferedWriter(Write)) {
+               bw.write(data[0] + System.getProperty("line.separator") + data[1] + System.getProperty("line.separator") + data[2] + System.getProperty("line.separator") + data[3] + System.getProperty("line.separator") + data[4] + System.getProperty("line.separator") + data[5]);
+               bw.close();
+           }
+       }
+       catch(IOException ex)
+       {
+           String strError = ex.getMessage();
+       }
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton BackupBtn;
     // End of variables declaration//GEN-END:variables
 }
