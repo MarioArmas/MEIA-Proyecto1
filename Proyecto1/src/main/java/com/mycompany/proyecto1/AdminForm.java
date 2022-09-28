@@ -20,6 +20,9 @@ import javax.swing.JFileChooser;
  */
 public class AdminForm extends javax.swing.JFrame {
 
+    private final String USER_FILE = "C:\\MEIA/usuario.txt";
+    private final String USER_BITACORA_FILE = "C:\\MEIA/bitacora_usuario.txt";
+
     /**
      * Creates new form AdminForm
      */
@@ -37,6 +40,27 @@ public class AdminForm extends javax.swing.JFrame {
     private void initComponents() {
 
         BackupBtn = new javax.swing.JButton();
+        UserTF = new javax.swing.JTextField();
+        NameTF = new javax.swing.JTextField();
+        LastNameTF = new javax.swing.JTextField();
+        PasswordTF = new javax.swing.JTextField();
+        RolTF = new javax.swing.JTextField();
+        BirthDateTF = new javax.swing.JTextField();
+        EmailTF = new javax.swing.JTextField();
+        PhoneNumberTF = new javax.swing.JTextField();
+        PathProfilePictureTF = new javax.swing.JTextField();
+        jLabel1 = new javax.swing.JLabel();
+        jLabel2 = new javax.swing.JLabel();
+        jLabel3 = new javax.swing.JLabel();
+        jLabel4 = new javax.swing.JLabel();
+        jLabel5 = new javax.swing.JLabel();
+        jLabel6 = new javax.swing.JLabel();
+        jLabel7 = new javax.swing.JLabel();
+        jLabel8 = new javax.swing.JLabel();
+        jLabel9 = new javax.swing.JLabel();
+        SearchBtn = new javax.swing.JButton();
+        UpdateBtn = new javax.swing.JButton();
+        DeleteBtn = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -47,21 +71,139 @@ public class AdminForm extends javax.swing.JFrame {
             }
         });
 
+        UserTF.setText("jTextField1");
+
+        NameTF.setText("jTextField2");
+
+        LastNameTF.setText("jTextField3");
+
+        PasswordTF.setText("jTextField4");
+
+        RolTF.setText("jTextField5");
+
+        BirthDateTF.setText("jTextField6");
+
+        EmailTF.setText("jTextField7");
+
+        PhoneNumberTF.setText("jTextField8");
+
+        PathProfilePictureTF.setText("jTextField9");
+
+        jLabel1.setText("User:");
+
+        jLabel2.setText("Name:");
+
+        jLabel3.setText("Last Name:");
+
+        jLabel4.setText("Password:");
+
+        jLabel5.setText("Rol:");
+
+        jLabel6.setText("Birth date:");
+
+        jLabel7.setText("email:");
+
+        jLabel8.setText("Phone Number:");
+
+        jLabel9.setText("Path Profile Picture:");
+
+        SearchBtn.setText("Search");
+        SearchBtn.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                SearchBtnActionPerformed(evt);
+            }
+        });
+
+        UpdateBtn.setText("Update");
+
+        DeleteBtn.setText("Delete");
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                .addContainerGap(242, Short.MAX_VALUE)
-                .addComponent(BackupBtn)
-                .addGap(86, 86, 86))
+                .addContainerGap(63, Short.MAX_VALUE)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jLabel5, javax.swing.GroupLayout.PREFERRED_SIZE, 37, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                        .addComponent(jLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, 48, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 48, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                        .addComponent(jLabel4, javax.swing.GroupLayout.PREFERRED_SIZE, 69, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(jLabel3, javax.swing.GroupLayout.PREFERRED_SIZE, 69, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(jLabel6, javax.swing.GroupLayout.PREFERRED_SIZE, 69, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                        .addComponent(jLabel8, javax.swing.GroupLayout.PREFERRED_SIZE, 51, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(jLabel7, javax.swing.GroupLayout.PREFERRED_SIZE, 51, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(jLabel9, javax.swing.GroupLayout.PREFERRED_SIZE, 130, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(PathProfilePictureTF, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                        .addComponent(PhoneNumberTF, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(EmailTF, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(BirthDateTF, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(RolTF, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(PasswordTF, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(LastNameTF, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                            .addComponent(NameTF, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(UserTF, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 46, Short.MAX_VALUE)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                        .addComponent(BackupBtn)
+                        .addComponent(SearchBtn))
+                    .addComponent(UpdateBtn, javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addComponent(DeleteBtn, javax.swing.GroupLayout.Alignment.TRAILING))
+                .addGap(13, 13, 13))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                .addContainerGap(216, Short.MAX_VALUE)
+            .addGroup(layout.createSequentialGroup()
+                .addContainerGap(14, Short.MAX_VALUE)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(UserTF, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jLabel1)
+                    .addComponent(SearchBtn))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(NameTF, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jLabel2)
+                    .addComponent(UpdateBtn))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(LastNameTF, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jLabel3)
+                    .addComponent(DeleteBtn))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(PasswordTF, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jLabel4))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(RolTF, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jLabel5))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(BirthDateTF, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jLabel6))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(EmailTF, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jLabel7))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(PhoneNumberTF, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jLabel8))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(PathProfilePictureTF, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jLabel9))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(BackupBtn)
-                .addGap(62, 62, 62))
+                .addGap(27, 27, 27))
         );
 
         pack();
@@ -84,6 +226,22 @@ public class AdminForm extends javax.swing.JFrame {
         updateBackupBitacora(destinationPath);
         updateDescriptorBackupBitacora();
     }//GEN-LAST:event_BackupBtnActionPerformed
+
+    private void SearchBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_SearchBtnActionPerformed
+        String userName = UserTF.getText();
+        String[] user = searchUser(userName);
+        if (user[0] != null) {
+            UserTF.setText(user[0]);
+            NameTF.setText(user[1]);
+            LastNameTF.setText(user[2]);
+            PasswordTF.setText(user[3]);
+            RolTF.setText(user[4]);
+            BirthDateTF.setText(user[5]);
+            EmailTF.setText(user[6]);
+            PhoneNumberTF.setText(user[7]);
+            PathProfilePictureTF.setText(user[8]);
+        }
+    }//GEN-LAST:event_SearchBtnActionPerformed
 
     /**
      * @param args the command line arguments
@@ -150,33 +308,22 @@ public class AdminForm extends javax.swing.JFrame {
     }
     
     private void updateBackupBitacora(String destinationPath) {
-        String bitacoraPath = "C:\\MEIA/bitacora_backup";
-        File bitacoraFile = new File(bitacoraPath);
+        String bitacoraPath = "C:\\MEIA/bitacora_backup.txt";
         String date = new SimpleDateFormat("dd-MM-yyyy").format(new Date());
-        
-        try {
-            try (FileWriter Write = new FileWriter(bitacoraFile, true); 
-                BufferedWriter bw = new BufferedWriter(Write)) {
-                bw.write(destinationPath + "|" + "usuario" + "|" + date + System.getProperty( "line.separator" ));
-                bw.close();
-            }
-        }
-        catch(IOException ex) {
-            String strError = ex.getMessage();
-            System.out.println(strError);
-        }
+        String fileData = destinationPath + "|" + "usuario" + "|" + date + System.getProperty("line.separator");
+        Proyecto1.saveFile(bitacoraPath, fileData, true);
     }
     
     private void updateDescriptorBackupBitacora() {
         String date = new SimpleDateFormat("dd-MM-yyyy").format(new Date());
-        String descBitacoraPath = "C:\\MEIA/desc_bitacora_backup";
+        String descBitacoraPath = "C:\\MEIA/desc_bitacora_backup.txt";
         ArrayList<String> rawData = Proyecto1.getFile(descBitacoraPath);
         String[] data = new String[6];
         for (int i = 0; i < rawData.size(); i++) {
             data[i] = rawData.get(i);
         }
         
-        data[0] = "Nombre simbolico: ";
+        data[0] = "Nombre simbolico: bitacora_backup.txt";
         if (data[1] == null) {
             data[1] = "Fecha de creación: " + date;
         }
@@ -193,22 +340,124 @@ public class AdminForm extends javax.swing.JFrame {
             data[5] = "Registros: " + num.toString();
         }
 
-        File descBitacoraFile = new File(descBitacoraPath);
-
-        try {
-           try (FileWriter Write = new FileWriter(descBitacoraFile, false); 
-               BufferedWriter bw = new BufferedWriter(Write)) {
-               bw.write(data[0] + System.getProperty("line.separator") + data[1] + System.getProperty("line.separator") + data[2] + System.getProperty("line.separator") + data[3] + System.getProperty("line.separator") + data[4] + System.getProperty("line.separator") + data[5]);
-               bw.close();
-           }
-       }
-       catch(IOException ex) {
-           String strError = ex.getMessage();
-           System.out.println(strError);
-       }
+        String fileData = data[0] + System.getProperty("line.separator") + data[1] + System.getProperty("line.separator") + data[2] + System.getProperty("line.separator") + data[3] + System.getProperty("line.separator") + data[4] + System.getProperty("line.separator") + data[5];
+        Proyecto1.saveFile(descBitacoraPath, fileData, false);
+    }
+    
+    private void createUser() {
+        String[] user = new String[10];
+        user[0] = UserTF.getText();
+        user[1] = NameTF.getText();
+        user[2] = LastNameTF.getText();
+        user[3] = PasswordTF.getText();
+        user[4] = RolTF.getText();
+        user[5] = BirthDateTF.getText();
+        user[6] = EmailTF.getText();
+        user[7] = PhoneNumberTF.getText();
+        user[8] = PathProfilePictureTF.getText();
+        user[9] = "0";
+    }
+    
+    private String[] searchUser(String userName) {
+        ArrayList<String> fileUsers = Proyecto1.getFile(USER_FILE);
+        ArrayList<String> fileBitacoraUsers = Proyecto1.getFile(USER_BITACORA_FILE);
+        String[] userFinded = new String[11];
+        
+        for (String userData : fileUsers) {
+            String[] user = userData.split("\\|");
+            if (user[0].equals(userName)) {
+                userFinded = user;
+                userFinded[10] = USER_FILE;
+                break;
+            }
+        }
+        
+        for (String userData : fileBitacoraUsers) {
+            String[] user = userData.split("\\|");
+            if (user[0].equals(userName)) {
+                userFinded = user;
+                userFinded[10] = USER_BITACORA_FILE;
+                break;
+            }
+        }
+        
+        return userFinded;
+    }
+    
+    private void updateUser() {
+        String[] user = new String[10];
+        user[0] = UserTF.getText();
+        user[1] = NameTF.getText();
+        user[2] = LastNameTF.getText();
+        user[3] = PasswordTF.getText();
+        user[4] = RolTF.getText();
+        user[5] = BirthDateTF.getText();
+        user[6] = EmailTF.getText();
+        user[7] = PhoneNumberTF.getText();
+        user[8] = PathProfilePictureTF.getText();
+        
+        
+    }
+    
+    private void deleteUser() {
+        // no a él mismo
+        String userName = UserTF.getText();
+        if (userName.equals("")) return;
+        if (userName.equals("EL MISMO")) return; // NO SE PUEDE ELIMINAR A EL MISMO (PENDIENTE
+        
+        String[] userFinded = searchUser(userName);
+        if (userFinded[0] == null) return; // NO EXISTE EL USUARIO
+        String path = userFinded[10];
+        
+        ArrayList<String> fileUsers = Proyecto1.getFile(path);
+        String lineToAdd = "";
+        for (int i = 0; i < fileUsers.size(); i++) {
+            String[] user = fileUsers.get(i).split("\\|");
+            if (user[0].equals(userName)) {
+                user[9] = "0";
+                
+                for (int j = 0; j < user.length; j++) {
+                    lineToAdd += user[j];
+                    if (j != user.length - 1) {
+                        lineToAdd += "|";
+                    }
+                }
+                
+                String fileData = "";
+                for (String item : fileUsers) {
+                    fileData += item + System.getProperty("line.separator");
+                }
+                fileUsers.remove(i);
+                fileUsers.add(lineToAdd);
+                Proyecto1.saveFile(path, fileData, false);
+                // SORT FILE OR FILEDATA IF BITACORA PENDIENTE
+                return;
+            }
+        }
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton BackupBtn;
+    private javax.swing.JTextField BirthDateTF;
+    private javax.swing.JButton DeleteBtn;
+    private javax.swing.JTextField EmailTF;
+    private javax.swing.JTextField LastNameTF;
+    private javax.swing.JTextField NameTF;
+    private javax.swing.JTextField PasswordTF;
+    private javax.swing.JTextField PathProfilePictureTF;
+    private javax.swing.JTextField PhoneNumberTF;
+    private javax.swing.JTextField RolTF;
+    private javax.swing.JButton SearchBtn;
+    private javax.swing.JButton UpdateBtn;
+    private javax.swing.JTextField UserTF;
+    private javax.swing.JLabel jLabel1;
+    private javax.swing.JLabel jLabel2;
+    private javax.swing.JLabel jLabel3;
+    private javax.swing.JLabel jLabel4;
+    private javax.swing.JLabel jLabel5;
+    private javax.swing.JLabel jLabel6;
+    private javax.swing.JLabel jLabel7;
+    private javax.swing.JLabel jLabel8;
+    private javax.swing.JLabel jLabel9;
     // End of variables declaration//GEN-END:variables
 }
