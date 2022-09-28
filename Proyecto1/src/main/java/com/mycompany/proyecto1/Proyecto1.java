@@ -6,19 +6,26 @@
 package com.mycompany.proyecto1;
 
 import java.io.BufferedReader;
+import java.io.BufferedWriter;
 import java.io.File;
 import java.io.FileReader;
+import java.io.FileWriter;
 import java.io.IOException;
 import java.util.ArrayList;
+import javax.swing.JFrame;
 
 /**
  *
  * @author mario
  */
-public class Proyecto1 {
+public class Proyecto1{
 
     public static void main(String[] args) {
-        
+        // this lines open the admin form (just for testing)
+        AdminForm adminForm = new AdminForm();
+        adminForm.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
+        adminForm.setSize(430, 350);
+        adminForm.setVisible(true);
     }
     
     public static ArrayList<String> getFile(String path) {
@@ -48,5 +55,23 @@ public class Proyecto1 {
         }
 
         return data;
+    }
+    
+    public static void saveFile(String path, String data, boolean append) {
+        File descBitacoraFile = new File(path);
+
+        try {
+            // true -> append
+            // false -> overwrite
+           try (FileWriter Write = new FileWriter(descBitacoraFile, append);
+               BufferedWriter bw = new BufferedWriter(Write)) {
+               bw.write(data);
+               bw.close();
+           }
+       }
+       catch(IOException ex) {
+           String strError = ex.getMessage();
+           System.out.println(strError);
+       }
     }
 }
