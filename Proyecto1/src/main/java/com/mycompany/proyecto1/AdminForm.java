@@ -423,14 +423,15 @@ public class AdminForm extends javax.swing.JFrame {
                     }
                 }
                 
+                fileUsers.remove(i);
+                fileUsers.add(i, lineToAdd);
+                
                 String fileData = "";
                 for (String item : fileUsers) {
                     fileData += item + System.getProperty("line.separator");
                 }
-                fileUsers.remove(i);
-                fileUsers.add(lineToAdd);
+                
                 Proyecto1.saveFile(path, fileData, false);
-                // SORT FILE OR FILEDATA IF BITACORA PENDIENTE
                 return;
             }
         }
