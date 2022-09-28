@@ -365,7 +365,7 @@ public class AdminForm extends javax.swing.JFrame {
         
         for (String userData : fileUsers) {
             String[] user = userData.split("\\|");
-            if (user[0].equals(userName)) {
+            if (user[0].equals(userName) && user[9].equals("1")) {
                 userFinded = user;
                 userFinded[10] = USER_FILE;
                 break;
@@ -374,7 +374,7 @@ public class AdminForm extends javax.swing.JFrame {
         
         for (String userData : fileBitacoraUsers) {
             String[] user = userData.split("\\|");
-            if (user[0].equals(userName)) {
+            if (user[0].equals(userName) && user[9].equals("1")) {
                 userFinded = user;
                 userFinded[10] = USER_BITACORA_FILE;
                 break;
