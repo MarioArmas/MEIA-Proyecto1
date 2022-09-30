@@ -519,18 +519,26 @@ public class AdminForm extends javax.swing.JFrame {
             return "Rol no válido";
         }
         
-        // FORMATO DE FECHA
+        if (!correctDateFormat(userInput[5])) {
+            return "Formato de fecha no válido";
+        }
         
         if (userInput[6].length() > 40) {
             return "Correo demasiado largo";
         }
-        // CORREO VALIDO
         
-        // VALIDAR TELEFONO
+        if (!correctEmailFormat(userInput[6])) {
+            return "Formato de correo no válido";
+        }
+        
+        if (userInput[7].length() != 8) {
+            return "Número de teléfono no válido";
+        }
+        
         try {
             int test = Integer.parseInt(userInput[7]);
         }
-        catch (Exception ex) {
+        catch (NumberFormatException ex) {
             String strError = ex.getMessage();
             System.out.println(strError);
             return "El número de teléfono no es un int";
@@ -541,6 +549,32 @@ public class AdminForm extends javax.swing.JFrame {
         }
         
         return "ok";
+    }
+    
+    private boolean correctDateFormat(String date) {
+        // Formato de fecha dd/mm/yyyy
+        String[] fields = date.split("/");
+        if (fields.length != 3) return false;
+        
+        try {
+            int field0 = Integer.parseInt(fields[0]);
+            int field1 = Integer.parseInt(fields[1]);
+            int field2 = Integer.parseInt(fields[2]);
+        }
+        catch (NumberFormatException ex) {
+            return false;
+        }
+        
+        if (fields[0].length() != 2) return false;
+        if (fields[1].length() != 2) return false;
+        if (fields[2].length() != 4) return false;
+        
+        return true;
+    }
+    
+    private boolean correctEmailFormat(String date) {
+        String[] fields = date.split("@");
+        return fields.length == 2;
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
