@@ -61,6 +61,7 @@ public class AdminForm extends javax.swing.JFrame {
         SearchBtn = new javax.swing.JButton();
         UpdateBtn = new javax.swing.JButton();
         DeleteBtn = new javax.swing.JButton();
+        InsertBtn = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -70,24 +71,6 @@ public class AdminForm extends javax.swing.JFrame {
                 BackupBtnActionPerformed(evt);
             }
         });
-
-        UserTF.setText("jTextField1");
-
-        NameTF.setText("jTextField2");
-
-        LastNameTF.setText("jTextField3");
-
-        PasswordTF.setText("jTextField4");
-
-        RolTF.setText("jTextField5");
-
-        BirthDateTF.setText("jTextField6");
-
-        EmailTF.setText("jTextField7");
-
-        PhoneNumberTF.setText("jTextField8");
-
-        PathProfilePictureTF.setText("jTextField9");
 
         jLabel1.setText("User:");
 
@@ -115,15 +98,32 @@ public class AdminForm extends javax.swing.JFrame {
         });
 
         UpdateBtn.setText("Update");
+        UpdateBtn.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                UpdateBtnActionPerformed(evt);
+            }
+        });
 
         DeleteBtn.setText("Delete");
+        DeleteBtn.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                DeleteBtnActionPerformed(evt);
+            }
+        });
+
+        InsertBtn.setText("Insert");
+        InsertBtn.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                InsertBtnActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                .addContainerGap(63, Short.MAX_VALUE)
+                .addContainerGap(64, Short.MAX_VALUE)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(jLabel5, javax.swing.GroupLayout.PREFERRED_SIZE, 37, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
@@ -150,13 +150,14 @@ public class AdminForm extends javax.swing.JFrame {
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                             .addComponent(NameTF, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(UserTF, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE))))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 46, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 45, Short.MAX_VALUE)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                         .addComponent(BackupBtn)
                         .addComponent(SearchBtn))
                     .addComponent(UpdateBtn, javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addComponent(DeleteBtn, javax.swing.GroupLayout.Alignment.TRAILING))
+                    .addComponent(DeleteBtn, javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addComponent(InsertBtn, javax.swing.GroupLayout.Alignment.TRAILING))
                 .addGap(13, 13, 13))
         );
         layout.setVerticalGroup(
@@ -180,7 +181,8 @@ public class AdminForm extends javax.swing.JFrame {
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(PasswordTF, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jLabel4))
+                    .addComponent(jLabel4)
+                    .addComponent(InsertBtn))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(RolTF, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -242,6 +244,18 @@ public class AdminForm extends javax.swing.JFrame {
             PathProfilePictureTF.setText(user[8]);
         }
     }//GEN-LAST:event_SearchBtnActionPerformed
+
+    private void InsertBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_InsertBtnActionPerformed
+        createUser();
+    }//GEN-LAST:event_InsertBtnActionPerformed
+
+    private void DeleteBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_DeleteBtnActionPerformed
+        deleteUser();
+    }//GEN-LAST:event_DeleteBtnActionPerformed
+
+    private void UpdateBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_UpdateBtnActionPerformed
+        updateUser();
+    }//GEN-LAST:event_UpdateBtnActionPerformed
 
     /**
      * @param args the command line arguments
@@ -355,14 +369,14 @@ public class AdminForm extends javax.swing.JFrame {
         user[6] = EmailTF.getText();
         user[7] = PhoneNumberTF.getText();
         user[8] = PathProfilePictureTF.getText();
-        user[9] = "0";
+        user[9] = "1";
         
         String status =  validateInputs(user);
         if (!status.equals("ok")) return;
         
         String[] userFinded = searchUser(user[0]);
 
-        if (userFinded[0] != null) return; // EL USUARIO YA EXISTE
+        if (userFinded[0] != null) return;
 
         // PENDIENTE VALIDAR EL LENGTH DE LA BITACORA
         String userToAdd = "";
@@ -385,7 +399,7 @@ public class AdminForm extends javax.swing.JFrame {
         for (String userData : fileUsers) {
             String[] user = userData.split("\\|");
             if (user[0].equals(userName) && user[9].equals("1")) {
-                userFinded = user;
+                System.arraycopy(user, 0, userFinded, 0, user.length);
                 userFinded[10] = USER_FILE;
                 break;
             }
@@ -394,7 +408,7 @@ public class AdminForm extends javax.swing.JFrame {
         for (String userData : fileBitacoraUsers) {
             String[] user = userData.split("\\|");
             if (user[0].equals(userName) && user[9].equals("1")) {
-                userFinded = user;
+                System.arraycopy(user, 0, userFinded, 0, user.length);
                 userFinded[10] = USER_BITACORA_FILE;
                 break;
             }
@@ -404,7 +418,7 @@ public class AdminForm extends javax.swing.JFrame {
     }
     
     private void updateUser() {
-        String[] user = new String[10];
+        String[] user = new String[9];
         user[0] = UserTF.getText();
         user[1] = NameTF.getText();
         user[2] = LastNameTF.getText();
@@ -420,15 +434,14 @@ public class AdminForm extends javax.swing.JFrame {
             String[] userFinded = searchUser(user[0]);
             String path = userFinded[10];
             if (userFinded[0] == null) {
-                return; // EL USUARIO NO EXISTE
+                return;
             }
             
             ArrayList<String> fileUsers = Proyecto1.getFile(path);
             for (int i = 0; i < fileUsers.size(); i++) {
                 String[] userInFile = fileUsers.get(i).split("\\|");
-                
                 if (userInFile[0].equals(user[0])) {
-                    System.arraycopy(user, 0, userInFile, 0, userInFile.length);
+                    System.arraycopy(user, 0, userInFile, 0, user.length);
                     String lineToAdd = "";
                     for (int j = 0; j < userInFile.length; j++) {
                         lineToAdd += userInFile[j];
@@ -457,10 +470,10 @@ public class AdminForm extends javax.swing.JFrame {
         // no a él mismo
         String userName = UserTF.getText();
         if (userName.equals("")) return;
-        if (userName.equals("EL MISMO")) return; // NO SE PUEDE ELIMINAR A EL MISMO (PENDIENTE
+        if (userName.equals("EL MISMO")) return; // NO SE PUEDE ELIMINAR A EL MISMO PENDIENTE
         
         String[] userFinded = searchUser(userName);
-        if (userFinded[0] == null) return; // NO EXISTE EL USUARIO
+        if (userFinded[0] == null) return;
         String path = userFinded[10];
         
         ArrayList<String> fileUsers = Proyecto1.getFile(path);
@@ -513,7 +526,7 @@ public class AdminForm extends javax.swing.JFrame {
         if (userInput[3].length() > 40) {
             return "Contraseña demasiado larga";
         }
-        // VALIDAR SEGURIDAD DE LA PASSWORD
+        // VALIDAR SEGURIDAD DE LA PASSWORD PENDIENTE
         
         if (!userInput[4].equals("1") && !userInput[4].equals("0")) {
             return "Rol no válido";
@@ -582,6 +595,7 @@ public class AdminForm extends javax.swing.JFrame {
     private javax.swing.JTextField BirthDateTF;
     private javax.swing.JButton DeleteBtn;
     private javax.swing.JTextField EmailTF;
+    private javax.swing.JButton InsertBtn;
     private javax.swing.JTextField LastNameTF;
     private javax.swing.JTextField NameTF;
     private javax.swing.JTextField PasswordTF;
