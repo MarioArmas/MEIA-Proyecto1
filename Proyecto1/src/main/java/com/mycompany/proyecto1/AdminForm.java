@@ -350,12 +350,31 @@ public class AdminForm extends javax.swing.JFrame {
         user[1] = NameTF.getText();
         user[2] = LastNameTF.getText();
         user[3] = PasswordTF.getText();
-        user[4] = RolTF.getText();
+        user[4] = "0";
         user[5] = BirthDateTF.getText();
         user[6] = EmailTF.getText();
         user[7] = PhoneNumberTF.getText();
         user[8] = PathProfilePictureTF.getText();
         user[9] = "0";
+        
+        String status =  validateInputs(user);
+        if (!status.equals("ok")) return;
+        
+        String[] userFinded = searchUser(user[0]);
+
+        if (userFinded[0] != null) return; // EL USUARIO YA EXISTE
+
+        // PENDIENTE VALIDAR EL LENGTH DE LA BITACORA
+        String userToAdd = "";
+        for (int i = 0; i < user.length; i++) {
+            userToAdd += user[i];
+            if (i != user.length -1) {
+                userToAdd += "|";
+            }
+        }
+        userToAdd += System.getProperty("line.separator");
+
+        Proyecto1.saveFile(USER_BITACORA_FILE, userToAdd, true);
     }
     
     private String[] searchUser(String userName) {
@@ -396,7 +415,42 @@ public class AdminForm extends javax.swing.JFrame {
         user[7] = PhoneNumberTF.getText();
         user[8] = PathProfilePictureTF.getText();
         
-        
+        String status =  validateInputs(user);
+        if (status.equals("ok")) {
+            String[] userFinded = searchUser(user[0]);
+            String path = userFinded[10];
+            if (userFinded[0] == null) {
+                return; // EL USUARIO NO EXISTE
+            }
+            
+            ArrayList<String> fileUsers = Proyecto1.getFile(path);
+            for (int i = 0; i < fileUsers.size(); i++) {
+                String[] userInFile = fileUsers.get(i).split("\\|");
+                
+                if (userInFile[0].equals(user[0])) {
+                    System.arraycopy(user, 0, userInFile, 0, userInFile.length);
+                    String lineToAdd = "";
+                    for (int j = 0; j < userInFile.length; j++) {
+                        lineToAdd += userInFile[j];
+                        if (j != userInFile.length - 1) {
+                            lineToAdd += "|";
+                        }
+                    }
+                    
+                    fileUsers.remove(i);
+                    fileUsers.add(i, lineToAdd);
+                    String fileData = "";
+                    
+                    for (String item : fileUsers) {
+                        fileData += item + System.getProperty("line.separator");
+                    }
+
+                    Proyecto1.saveFile(path, fileData, false);
+                    
+                    return;
+                }
+            }
+        }
     }
     
     private void deleteUser() {
@@ -435,6 +489,58 @@ public class AdminForm extends javax.swing.JFrame {
                 return;
             }
         }
+    }
+    
+    private String validateInputs(String[] userInput) {
+        for (String item : userInput) {
+            if (item.equals("")) {
+                return "campos vacios";
+            }
+        }
+        
+        if (userInput[0].length() > 20) {
+            return "Nombre de usuario demasiado largo";
+        }
+        
+        if (userInput[1].length() > 30) {
+            return "Nombre demasiado largo";
+        }
+        
+        if (userInput[2].length() > 30) {
+            return "Apellido demasiado largo";
+        }
+        
+        if (userInput[3].length() > 40) {
+            return "Contraseña demasiado larga";
+        }
+        // VALIDAR SEGURIDAD DE LA PASSWORD
+        
+        if (!userInput[4].equals("1") && !userInput[4].equals("0")) {
+            return "Rol no válido";
+        }
+        
+        // FORMATO DE FECHA
+        
+        if (userInput[6].length() > 40) {
+            return "Correo demasiado largo";
+        }
+        // CORREO VALIDO
+        
+        // VALIDAR TELEFONO
+        try {
+            int test = Integer.parseInt(userInput[7]);
+        }
+        catch (Exception ex) {
+            String strError = ex.getMessage();
+            System.out.println(strError);
+            return "El número de teléfono no es un int";
+        }
+        
+        if (userInput[8].length() > 200) {
+            return "Ubicación de archivo demasiado larga";
+        }
+        
+        return "ok";
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
