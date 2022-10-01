@@ -342,10 +342,10 @@ public class AdminForm extends javax.swing.JFrame {
             data[1] = "Fecha de creación: " + date;
         }
         if (data[2] == null) {
-            data[2] = "Usuario creación: ";
+            data[2] = "Usuario creación: "; // PENDIENTE
         }
         data[3] = "Fecha de modificación: " + date;
-        data[4] = "Usuario de modificación: ";
+        data[4] = "Usuario de modificación: "; // PENDIENTE
         if (data[5] == null) {
             data[5] = "Registros: 1";
         } else {
@@ -356,6 +356,65 @@ public class AdminForm extends javax.swing.JFrame {
 
         String fileData = data[0] + System.getProperty("line.separator") + data[1] + System.getProperty("line.separator") + data[2] + System.getProperty("line.separator") + data[3] + System.getProperty("line.separator") + data[4] + System.getProperty("line.separator") + data[5];
         Proyecto1.saveFile(descBitacoraPath, fileData, false);
+    }
+    
+    private void updateDescriptorUser(boolean bitacora) {
+        String path;
+        String date = new SimpleDateFormat("dd-MM-yyyy").format(new Date());
+        ArrayList<String> descData;
+        ArrayList<String> fileData;
+        String fileName;
+        if (bitacora) {
+            path = "C:\\MEIA/desc_bitacora_usuario.txt";
+            descData = Proyecto1.getFile(path);
+            fileData = Proyecto1.getFile(USER_BITACORA_FILE);
+            fileName = "bitacora_usuario.txt";
+        }
+        else {
+            path = "C:\\MEIA/desc_usuario.txt";
+            descData = Proyecto1.getFile(path);
+            fileData = Proyecto1.getFile(USER_FILE);
+            fileName = "usuario.txt";
+        }
+        
+        int actives = 0;
+        int inactives = 0;
+        for (String userData : fileData) {
+            String[] user = userData.split("\\|");
+            if (user[9].equals("1")) actives++;
+            else inactives++;
+        }
+        String[] data = new String[8];
+        for (int i = 0; i < descData.size(); i++) {
+            data[i] = descData.get(i);
+        }
+        
+        data[0] = "Nombre simbolico: " + fileName;
+        if (data[1] == null) {
+            data[1] = "Fecha de creación: " + date;
+        }
+        if (data[2] == null) {
+            data[2] = "Usuario creación: "; // PENDIENTE
+        }
+        data[3] = "Fecha de modificación: " + date;
+        data[4] = "Usuario de modificación: "; // PENDIENTE
+        data[5] = "Registros: " + fileData.size();
+        data[6] = "Registros activos: " + actives;
+        data[7] = "Registros inactivos: " + inactives;
+        
+        String fileString = "";
+        for (int i = 0; i < data.length; i++) {
+            fileString += data[i];
+            if (i != data.length - 1) {
+                fileString += System.getProperty("line.separator");
+            }
+        }
+        
+        if (!bitacora) {
+            fileString += "Max reorganización: "; // PENDIENTE
+        }
+        
+        Proyecto1.saveFile(path, fileString, false);
     }
     
     private void createUser() {
@@ -389,6 +448,7 @@ public class AdminForm extends javax.swing.JFrame {
         userToAdd += System.getProperty("line.separator");
 
         Proyecto1.saveFile(USER_BITACORA_FILE, userToAdd, true);
+        updateDescriptorUser(true);
     }
     
     private String[] searchUser(String userName) {
@@ -459,6 +519,12 @@ public class AdminForm extends javax.swing.JFrame {
                     }
 
                     Proyecto1.saveFile(path, fileData, false);
+                    if (path.equals(USER_BITACORA_FILE)) {
+                        updateDescriptorUser(true);
+                    }
+                    if (path.equals(USER_FILE)) {
+                        updateDescriptorUser(false);
+                    }
                     
                     return;
                 }
@@ -499,6 +565,13 @@ public class AdminForm extends javax.swing.JFrame {
                 }
                 
                 Proyecto1.saveFile(path, fileData, false);
+                if (path.equals(USER_BITACORA_FILE)) {
+                    updateDescriptorUser(true);
+                }
+                if (path.equals(USER_FILE)) {
+                    updateDescriptorUser(false);
+                }
+                
                 return;
             }
         }
