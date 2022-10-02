@@ -60,35 +60,30 @@ public class SignInForm extends javax.swing.JFrame {
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
-        txtUser.setText("jTextField1");
         txtUser.addKeyListener(new java.awt.event.KeyAdapter() {
             public void keyTyped(java.awt.event.KeyEvent evt) {
                 txtUserKeyTyped(evt);
             }
         });
 
-        txtName.setText("jTextField2");
         txtName.addKeyListener(new java.awt.event.KeyAdapter() {
             public void keyTyped(java.awt.event.KeyEvent evt) {
                 txtNameKeyTyped(evt);
             }
         });
 
-        txtLastName.setText("jTextField3");
         txtLastName.addKeyListener(new java.awt.event.KeyAdapter() {
             public void keyTyped(java.awt.event.KeyEvent evt) {
                 txtLastNameKeyTyped(evt);
             }
         });
 
-        txtPassword.setText("jTextField4");
         txtPassword.addKeyListener(new java.awt.event.KeyAdapter() {
             public void keyTyped(java.awt.event.KeyEvent evt) {
                 txtPasswordKeyTyped(evt);
             }
         });
 
-        txtEmail.setText("jTextField5");
         txtEmail.addKeyListener(new java.awt.event.KeyAdapter() {
             public void keyReleased(java.awt.event.KeyEvent evt) {
                 txtEmailKeyReleased(evt);
@@ -98,7 +93,6 @@ public class SignInForm extends javax.swing.JFrame {
             }
         });
 
-        txtPhoneNumber.setText("jTextField6");
         txtPhoneNumber.addKeyListener(new java.awt.event.KeyAdapter() {
             public void keyTyped(java.awt.event.KeyEvent evt) {
                 txtPhoneNumberKeyTyped(evt);
@@ -128,7 +122,6 @@ public class SignInForm extends javax.swing.JFrame {
 
         jLabel8.setText("Path Profile Picture");
 
-        txtPath.setText("jTextField7");
         txtPath.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 txtPathActionPerformed(evt);
@@ -314,20 +307,20 @@ public class SignInForm extends javax.swing.JFrame {
     
     public boolean ValidatePassword(String password)
     {
-        boolean status = true;
-        int uppercaseCounter = 0;
-        int lowercaseCounter = 0;
-        int digitCounter = 0;
-        int specialCounter =0;
-       
+    boolean status = true;
+    int uppercaseCounter = 0;
+    int lowercaseCounter = 0;
+    int digitCounter = 0;
+    int specialCounter =0;
        try
        {
+
         File ComparisonFile = new File ("C:\\Users\\nossu\\Desktop\\a\\MEIA-Proyecto1\\PasswordComparisons.txt"); //Cambiar ruta
         FileReader frComparison = new FileReader(ComparisonFile);
         BufferedReader brComparison = new BufferedReader(frComparison); 
         
         String line;
-        List<String> list = new ArrayList<String>();
+        ArrayList<String> list = new ArrayList<String>();
         while((line = brComparison.readLine()) != null){
             list.add(line);
         }
@@ -336,30 +329,19 @@ public class SignInForm extends javax.swing.JFrame {
         for(int i = 0; i<password.length(); i++)
         {
            char c = password.charAt(i);
-           if(Character.isUpperCase(c))
-           {
-               uppercaseCounter++;
-           }else if(Character.isLowerCase(c)){
-               lowercaseCounter++;
-           }
-           else if(IsNumber(String.valueOf(c))){
-               digitCounter++;
-           }
-           if(c>=33 && c<=46 || c==64){
-               specialCounter++;
-           }
-           
-           if((password.length() >= Integer.parseInt(output[0])) &&(uppercaseCounter >= Integer.parseInt(output[1]))
-                && (lowercaseCounter >= Integer.parseInt(output[2])) && (digitCounter >= Integer.parseInt(output[3]))
-                && (specialCounter >= Integer.parseInt(output[4])))
+           if(Character.isUpperCase(c)){uppercaseCounter++;}
+           if(Character.isLowerCase(c)){lowercaseCounter++;}
+           if(IsNumber(String.valueOf(c))){digitCounter++;}
+           if(c>=33 && c<=46 || c==64){specialCounter++;}  
+        }
+        if((password.length() >= Integer.parseInt(output[0])) &&(uppercaseCounter >= Integer.parseInt(output[1]))
+            && (lowercaseCounter >= Integer.parseInt(output[2])) && (digitCounter >= Integer.parseInt(output[3]))
+            && (specialCounter >= Integer.parseInt(output[4])))
            {
                status = true;
-               return status;
            }else{
                status = false;
-               return status;
            }
-        }
        }catch(IOException ex) {
            JOptionPane.showMessageDialog(null, "El archivo no existe.");
        }   
