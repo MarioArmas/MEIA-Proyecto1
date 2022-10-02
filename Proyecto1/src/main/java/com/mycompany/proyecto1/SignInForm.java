@@ -5,7 +5,14 @@
 package com.mycompany.proyecto1;
 
 import static java.awt.image.ImageObserver.WIDTH;
+import java.io.BufferedReader;
+import java.io.File;
+import java.io.FileReader;
+import java.io.IOException;
+import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.List;
+import java.util.Scanner;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 import javax.swing.JOptionPane;
@@ -221,7 +228,7 @@ public class SignInForm extends javax.swing.JFrame {
     }//GEN-LAST:event_txtPathActionPerformed
 
     private void btnLogActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnLogActionPerformed
-        if(ValidateEmail(txtEmail.getText()) && IsNumber(txtPhoneNumber.getText()))
+        if(ValidateEmail(txtEmail.getText()) && IsNumber(txtPhoneNumber.getText()) && ValidatePassword(txtPassword.getText()))
         {
             String day = Integer.toString(DateC.getCalendar().get(Calendar.DAY_OF_MONTH));
             String month = Integer.toString(DateC.getCalendar().get(Calendar.MONTH) + 1);
@@ -265,21 +272,21 @@ public class SignInForm extends javax.swing.JFrame {
     }//GEN-LAST:event_txtNameKeyTyped
 
     private void txtLastNameKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtLastNameKeyTyped
-        if(txtName.getText().length() >= 30)
+        if(txtLastName.getText().length() >= 30)
         {
             evt.consume();
         }
     }//GEN-LAST:event_txtLastNameKeyTyped
 
     private void txtEmailKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtEmailKeyTyped
-        if(txtName.getText().length() >= 40)
+        if(txtEmail.getText().length() >= 40)
         {
             evt.consume();
         }
     }//GEN-LAST:event_txtEmailKeyTyped
 
     private void txtPhoneNumberKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtPhoneNumberKeyTyped
-        if(txtName.getText().length() >= 8)
+        if(txtPhoneNumber.getText().length() >= 8)
         {
             evt.consume();
         }
@@ -305,7 +312,60 @@ public class SignInForm extends javax.swing.JFrame {
         return output;
     }
     
-    
+    public boolean ValidatePassword(String password)
+    {
+        boolean status = true;
+        int uppercaseCounter = 0;
+        int lowercaseCounter = 0;
+        int digitCounter = 0;
+        int specialCounter =0;
+       
+       try
+       {
+        File ComparisonFile = new File ("C:\\Users\\nossu\\Desktop\\a\\MEIA-Proyecto1\\PasswordComparisons.txt"); //Cambiar ruta
+        FileReader frComparison = new FileReader(ComparisonFile);
+        BufferedReader brComparison = new BufferedReader(frComparison); 
+        
+        String line;
+        List<String> list = new ArrayList<String>();
+        while((line = brComparison.readLine()) != null){
+            list.add(line);
+        }
+        String[] output = list.toArray(new String[0]);
+        
+        for(int i = 0; i<password.length(); i++)
+        {
+           char c = password.charAt(i);
+           if(Character.isUpperCase(c))
+           {
+               uppercaseCounter++;
+           }else if(Character.isLowerCase(c)){
+               lowercaseCounter++;
+           }
+           else if(IsNumber(String.valueOf(c))){
+               digitCounter++;
+           }
+           if(c>=33 && c<=46 || c==64){
+               specialCounter++;
+           }
+           
+           if((password.length() >= Integer.parseInt(output[0])) &&(uppercaseCounter >= Integer.parseInt(output[1]))
+                && (lowercaseCounter >= Integer.parseInt(output[2])) && (digitCounter >= Integer.parseInt(output[3]))
+                && (specialCounter >= Integer.parseInt(output[4])))
+           {
+               status = true;
+               return status;
+           }else{
+               status = false;
+               return status;
+           }
+        }
+       }catch(IOException ex) {
+           JOptionPane.showMessageDialog(null, "El archivo no existe.");
+       }   
+       return status;
+    }
+            
     /**
      * @param args the command line arguments
      */
