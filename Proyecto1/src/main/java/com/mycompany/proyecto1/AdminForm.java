@@ -599,7 +599,10 @@ public class AdminForm extends javax.swing.JFrame {
         if (userInput[3].length() > 40) {
             return "Contraseña demasiado larga";
         }
-        // VALIDAR SEGURIDAD DE LA PASSWORD PENDIENTE
+        
+        if (!SignInForm.ValidatePassword(userInput[3])) {
+            return "Contraseña poco segura";
+        }
         
         if (!userInput[4].equals("1") && !userInput[4].equals("0")) {
             return "Rol no válido";

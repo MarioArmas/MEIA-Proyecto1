@@ -292,7 +292,7 @@ public class SignInForm extends javax.swing.JFrame {
         return matcher.find();        
     }
     //Comprueba si el parámetro es un dato numérico
-    private boolean IsNumber(String data)
+    private static boolean IsNumber(String data)
     {
         boolean output;
         try
@@ -305,7 +305,7 @@ public class SignInForm extends javax.swing.JFrame {
         return output;
     }
     
-    public boolean ValidatePassword(String password)
+    public static boolean ValidatePassword(String password)
     {
     boolean status = true;
     int uppercaseCounter = 0;
