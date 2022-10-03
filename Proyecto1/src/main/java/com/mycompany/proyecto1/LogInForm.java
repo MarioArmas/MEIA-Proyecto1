@@ -4,6 +4,10 @@
  */
 package com.mycompany.proyecto1;
 
+import static java.awt.image.ImageObserver.WIDTH;
+import javax.swing.JFrame;
+import javax.swing.JOptionPane;
+
 /**
  *
  * @author mario
@@ -31,7 +35,7 @@ public class LogInForm extends javax.swing.JFrame {
         txtPassword = new javax.swing.JTextField();
         jLabel1 = new javax.swing.JLabel();
         jLabel2 = new javax.swing.JLabel();
-        jButton2 = new javax.swing.JButton();
+        SignInJB = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -46,7 +50,12 @@ public class LogInForm extends javax.swing.JFrame {
 
         jLabel2.setText("Contraseña:");
 
-        jButton2.setText("Sign In");
+        SignInJB.setText("Sign In");
+        SignInJB.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                SignInJBActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -56,7 +65,7 @@ public class LogInForm extends javax.swing.JFrame {
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                     .addGroup(layout.createSequentialGroup()
                         .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addComponent(jButton2)
+                        .addComponent(SignInJB)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(jButton1))
                     .addGroup(layout.createSequentialGroup()
@@ -87,7 +96,7 @@ public class LogInForm extends javax.swing.JFrame {
                 .addGap(18, 18, 18)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jButton1)
-                    .addComponent(jButton2))
+                    .addComponent(SignInJB))
                 .addContainerGap(173, Short.MAX_VALUE))
         );
 
@@ -98,8 +107,41 @@ public class LogInForm extends javax.swing.JFrame {
         String User = txtUser.getText();
         String Password = txtPassword.getText();
         
-        
+        String[] userFounded = AdminForm.searchUser(User);
+        if(userFounded[0] != null){
+            if(userFounded[3].equals(Password)){
+                UserForm openform = new UserForm();
+                openform.setVisible(true);
+                System.arraycopy(userFounded, 0, Proyecto1.activeUser, 0, userFounded.length); 
+                if(userFounded[4].equals("0")){
+                    if(userFounded[9].equals("1")){
+                        UserForm userForm = new UserForm();
+                        userForm.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
+                        userForm.setSize(746, 440);
+                        userForm.setVisible(true);
+                    }   
+                }else{
+                    if(userFounded[9].equals("1")){
+                        AdminForm adminForm = new AdminForm();
+                        adminForm.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
+                        adminForm.setSize(430, 350);
+                        adminForm.setVisible(true);
+                    }
+                }
+            }else{
+                JOptionPane.showMessageDialog(null, "La contraseña es incorrecta.","Error!", WIDTH);
+            }
+        }else{
+            JOptionPane.showMessageDialog(null, "No hay un usuario registrado con ese nombre","ERROR!", WIDTH);
+        }
     }//GEN-LAST:event_jButton1ActionPerformed
+
+    private void SignInJBActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_SignInJBActionPerformed
+        SignInForm signInForm = new SignInForm();
+        signInForm.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
+        signInForm.setSize(746, 440);
+        signInForm.setVisible(true);
+    }//GEN-LAST:event_SignInJBActionPerformed
 
     /**
      * @param args the command line arguments
@@ -137,8 +179,8 @@ public class LogInForm extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton SignInJB;
     private javax.swing.JButton jButton1;
-    private javax.swing.JButton jButton2;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JTextField txtPassword;
