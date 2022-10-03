@@ -341,48 +341,71 @@ public class SignInForm extends javax.swing.JFrame {
         return output;
     }
     
+    public static void setPasswordFile()
+    {
+        String Filepath = "C:\\MEIA/PasswordComparisons.txt";
+        String[] comparisons = new String[5];
+        comparisons[0] = "8";
+        comparisons[1] = "2";
+        comparisons[2] = "2";
+        comparisons[3] = "2";
+        comparisons[4] = "2";
+        
+        String data = "";
+        for(int i = 0; i<comparisons.length; i++){
+            data+=comparisons[i];
+            
+            if(i != comparisons.length-1){
+                data+= System.getProperty("line.separator");
+            }
+        }
+        Proyecto1.saveFile(Filepath, data, true);
+    }
+    
     public static boolean ValidatePassword(String password)
     {
-    boolean status = true;
-    int uppercaseCounter = 0;
-    int lowercaseCounter = 0;
-    int digitCounter = 0;
-    int specialCounter =0;
-       try
-       {
+        setPasswordFile();
+        boolean status = true;
+        int uppercaseCounter = 0;
+        int lowercaseCounter = 0;
+        int digitCounter = 0;
+        int specialCounter =0;
+        
+        try{
+            File ComparisonFile = new File ("C:\\MEIA/PasswordComparisons.txt");
+            FileReader frComparison = new FileReader(ComparisonFile);
+            BufferedReader brComparison = new BufferedReader(frComparison); 
 
-        File ComparisonFile = new File ("C:\\MEIA/PasswordComparisons.txt");
-        FileReader frComparison = new FileReader(ComparisonFile);
-        BufferedReader brComparison = new BufferedReader(frComparison); 
-        
-        String line;
-        ArrayList<String> list = new ArrayList<String>();
-        while((line = brComparison.readLine()) != null){
-            list.add(line);
-        }
-        String[] output = list.toArray(new String[0]);
-        
-        for(int i = 0; i<password.length(); i++)
-        {
-           char c = password.charAt(i);
-           if(Character.isUpperCase(c)){uppercaseCounter++;}
-           if(Character.isLowerCase(c)){lowercaseCounter++;}
-           if(IsNumber(String.valueOf(c))){digitCounter++;}
-           if(c>=33 && c<=46 || c==64){specialCounter++;}  
-        }
-        if((password.length() >= Integer.parseInt(output[0])) &&(uppercaseCounter >= Integer.parseInt(output[1]))
-            && (lowercaseCounter >= Integer.parseInt(output[2])) && (digitCounter >= Integer.parseInt(output[3]))
-            && (specialCounter >= Integer.parseInt(output[4])))
-           {
-               status = true;
-           }else{
-               status = false;
-           }
+            String line;
+            ArrayList<String> list = new ArrayList<String>();
+            while((line = brComparison.readLine()) != null){
+                list.add(line);
+            }
+            String[] output = list.toArray(new String[0]);
+
+            for(int i = 0; i<password.length(); i++)
+            {
+               char c = password.charAt(i);
+               if(Character.isUpperCase(c)){uppercaseCounter++;}
+               if(Character.isLowerCase(c)){lowercaseCounter++;}
+               if(IsNumber(String.valueOf(c))){digitCounter++;}
+               if(c>=33 && c<=46 || c==64){specialCounter++;}  
+            }
+            if((password.length() >= Integer.parseInt(output[0])) &&(uppercaseCounter >= Integer.parseInt(output[1]))
+                && (lowercaseCounter >= Integer.parseInt(output[2])) && (digitCounter >= Integer.parseInt(output[3]))
+                && (specialCounter >= Integer.parseInt(output[4])))
+               {
+                   status = true;
+               }else{
+                   status = false;
+               }
        }catch(IOException ex) {
            JOptionPane.showMessageDialog(null, "El archivo no existe.");
        }   
+        
        return status;
     }
+    
     private boolean IsUser()
     {
         String descBitacoraPath = "C:\\MEIA/desc_bitacora_usuario.txt";
