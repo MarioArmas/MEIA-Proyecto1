@@ -451,7 +451,10 @@ public class AdminForm extends javax.swing.JFrame {
         updateDescriptorUser(true);
     }
     
-    private String[] searchUser(String userName) {
+    public static String[] searchUser(String userName) {
+        String USER_FILE = "C:\\MEIA/usuario.txt";
+        String USER_BITACORA_FILE = "C:\\MEIA/bitacora_usuario.txt";
+        
         ArrayList<String> fileUsers = Proyecto1.getFile(USER_FILE);
         ArrayList<String> fileBitacoraUsers = Proyecto1.getFile(USER_BITACORA_FILE);
         String[] userFinded = new String[11];

@@ -19,6 +19,7 @@ import javax.swing.JFrame;
  * @author mario
  */
 public class Proyecto1{
+    public static String[] activeUser = new String[10];
     
     public static void main(String[] args) {
         // this lines open the admin form (just for testing)

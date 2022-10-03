@@ -23,6 +23,10 @@ import javax.swing.JOptionPane;
  */
 public class SignInForm extends javax.swing.JFrame {
 
+    private final String USER_FILE = "C:\\MEIA/usuario.txt";
+    private final String USER_BITACORA_FILE = "C:\\MEIA/bitacora_usuario.txt";
+    private final String DESC_USER_FILE = "C:\\MEIA/descriptor_usuario.txt";
+    private final String DESC_USER_BITACORA_FILE = "C:\\MEIA/descriptor_bitacora_usuario.txt";
     /**
      * Creates new form SignInForm
      */
@@ -135,39 +139,38 @@ public class SignInForm extends javax.swing.JFrame {
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                        .addComponent(jLabel2)
+                        .addComponent(jLabel1)
+                        .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                            .addGap(5, 5, 5)
+                            .addComponent(jLabel4)))
+                    .addGroup(javax.swing.GroupLayout.Alignment.LEADING, layout.createSequentialGroup()
+                        .addContainerGap()
+                        .addComponent(jLabel3)))
+                .addGap(18, 18, 18)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+                    .addComponent(txtLastName, javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(txtUser, javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(txtName, javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(txtPassword, javax.swing.GroupLayout.PREFERRED_SIZE, 204, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(33, 33, 33)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                            .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                .addComponent(jLabel2)
-                                .addComponent(jLabel1)
-                                .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                                    .addGap(5, 5, 5)
-                                    .addComponent(jLabel4)))
-                            .addGroup(javax.swing.GroupLayout.Alignment.LEADING, layout.createSequentialGroup()
-                                .addContainerGap()
-                                .addComponent(jLabel3)))
-                        .addGap(18, 18, 18)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
-                            .addComponent(txtLastName, javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(txtUser, javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(txtName, javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(txtPassword, javax.swing.GroupLayout.PREFERRED_SIZE, 204, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addGap(33, 33, 33)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jLabel5)
-                            .addComponent(jLabel6)
-                            .addComponent(jLabel7)
-                            .addComponent(jLabel8))
-                        .addGap(76, 76, 76)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(lblWarning)
-                            .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                                .addComponent(DateC, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                .addComponent(txtEmail)
-                                .addComponent(txtPhoneNumber)
-                                .addComponent(txtPath, javax.swing.GroupLayout.PREFERRED_SIZE, 210, javax.swing.GroupLayout.PREFERRED_SIZE))))
-                    .addComponent(btnLog, javax.swing.GroupLayout.Alignment.TRAILING))
+                    .addComponent(jLabel5)
+                    .addComponent(jLabel6)
+                    .addComponent(jLabel7)
+                    .addComponent(jLabel8))
+                .addGap(76, 76, 76)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(lblWarning)
+                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                        .addComponent(btnLog)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                            .addComponent(DateC, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(txtEmail)
+                            .addComponent(txtPhoneNumber)
+                            .addComponent(txtPath, javax.swing.GroupLayout.PREFERRED_SIZE, 210, javax.swing.GroupLayout.PREFERRED_SIZE))))
                 .addContainerGap(34, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
@@ -186,8 +189,7 @@ public class SignInForm extends javax.swing.JFrame {
                         .addGap(37, 37, 37)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(txtLastName, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(jLabel3))
-                        .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                            .addComponent(jLabel3)))
                     .addGroup(layout.createSequentialGroup()
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(txtEmail, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -208,9 +210,9 @@ public class SignInForm extends javax.swing.JFrame {
                             .addComponent(txtPath, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(txtPassword, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(jLabel4))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 150, Short.MAX_VALUE)
-                        .addComponent(btnLog)
-                        .addGap(57, 57, 57))))
+                        .addGap(37, 37, 37)
+                        .addComponent(btnLog)))
+                .addContainerGap(19, Short.MAX_VALUE))
         );
 
         pack();
@@ -221,13 +223,37 @@ public class SignInForm extends javax.swing.JFrame {
     }//GEN-LAST:event_txtPathActionPerformed
 
     private void btnLogActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnLogActionPerformed
-        if(ValidateEmail(txtEmail.getText()) && IsNumber(txtPhoneNumber.getText()) && ValidatePassword(txtPassword.getText()))
-        {
-            String day = Integer.toString(DateC.getCalendar().get(Calendar.DAY_OF_MONTH));
-            String month = Integer.toString(DateC.getCalendar().get(Calendar.MONTH) + 1);
-            String year = Integer.toString(DateC.getCalendar().get(Calendar.YEAR));
-            String date = (day+ "/" + month+ "/" + year);
-            txtUser.setText(date);
+        if(ValidateEmail(txtEmail.getText()) && IsNumber(txtPhoneNumber.getText()) && ValidatePassword(txtPassword.getText())){
+            String[] newUser = new String[10];
+            newUser[0] = txtUser.getText();
+            newUser[1] = txtName.getText();
+            newUser[2] = txtLastName.getText();
+            newUser[3] = txtPassword.getText();
+            newUser[5] = getBirthDate();
+            newUser[6] = txtEmail.getText();
+            newUser[7] = txtPhoneNumber.getText();
+            newUser[8] = txtPath.getText();
+            newUser[9] = "1";
+            
+            if(IsUser()){
+                newUser[4] = "0";
+            }else{
+                newUser[4] = "1";
+            }
+            
+            String[] userFinded = searchUser(newUser[0]);
+            if (userFinded[0] != null) return;
+            
+            String userAdded = "";
+            for (int i = 0; i < newUser.length; i++) {
+            userAdded += newUser[i];
+                if (i != newUser.length -1) {
+                    userAdded += "|";
+                }
+            }
+            userAdded += System.getProperty("line.separator");
+            Proyecto1.saveFile(USER_BITACORA_FILE, userAdded, true);
+            //Falta actualizar el descriptor
         }else
         {
             JOptionPane.showMessageDialog(null, "Ingresó incorrectamente alguno de los campos","ERROR!", WIDTH);
@@ -284,6 +310,16 @@ public class SignInForm extends javax.swing.JFrame {
             evt.consume();
         }
     }//GEN-LAST:event_txtPhoneNumberKeyTyped
+    
+    private String getBirthDate()
+    {
+        String day = Integer.toString(DateC.getCalendar().get(Calendar.DAY_OF_MONTH));
+        String month = Integer.toString(DateC.getCalendar().get(Calendar.MONTH) + 1);
+        String year = Integer.toString(DateC.getCalendar().get(Calendar.YEAR));
+        String date = (day+ "/" + month+ "/" + year);
+        return date;
+    }
+    
     //Formato para correo electrónico
     private boolean ValidateEmail(String email)
     {
@@ -315,7 +351,7 @@ public class SignInForm extends javax.swing.JFrame {
        try
        {
 
-        File ComparisonFile = new File ("C:\\Users\\nossu\\Desktop\\a\\MEIA-Proyecto1\\PasswordComparisons.txt"); //Cambiar ruta
+        File ComparisonFile = new File ("C:\\MEIA/PasswordComparisons.txt");
         FileReader frComparison = new FileReader(ComparisonFile);
         BufferedReader brComparison = new BufferedReader(frComparison); 
         
@@ -347,7 +383,51 @@ public class SignInForm extends javax.swing.JFrame {
        }   
        return status;
     }
-            
+    private boolean IsUser()
+    {
+        String descBitacoraPath = "C:\\MEIA/desc_bitacora_usuario.txt";
+        String descUsuarioPath = "C:\\MEIA/desc_usuario.txt";
+        ArrayList<String> descUserData = Proyecto1.getFile(descUsuarioPath);
+        ArrayList<String> descUserBData = Proyecto1.getFile(descBitacoraPath);
+        
+        String[] userData = new String[8];
+        String[] userBData = new String[8];
+        for (int i = 0; i < descUserData.size(); i++) {
+            userData[i] = descUserData.get(i);
+            userBData[i] = descUserBData.get(i);
+        }
+        
+        if(userData[5].equals("0") || userBData[5].equals("0")){
+            return false;
+        }else{
+            return true;
+        }  
+    }
+    
+    public String[] searchUser(String userName) {
+        ArrayList<String> fileUsers = Proyecto1.getFile(USER_FILE);
+        ArrayList<String> fileBitacoraUsers = Proyecto1.getFile(USER_BITACORA_FILE);
+        String[] userFinded = new String[11];
+        
+        for (String userData : fileUsers) {
+            String[] user = userData.split("\\|");
+            if (user[0].equals(userName) && user[9].equals("1")) {
+                System.arraycopy(user, 0, userFinded, 0, user.length);
+                userFinded[10] = USER_FILE;
+                break;
+            }
+        }
+        
+        for (String userData : fileBitacoraUsers) {
+            String[] user = userData.split("\\|");
+            if (user[0].equals(userName) && user[9].equals("1")) {
+                System.arraycopy(user, 0, userFinded, 0, user.length);
+                userFinded[10] = USER_BITACORA_FILE;
+                break;
+            }
+        }
+        return userFinded;
+    }
     /**
      * @param args the command line arguments
      */
