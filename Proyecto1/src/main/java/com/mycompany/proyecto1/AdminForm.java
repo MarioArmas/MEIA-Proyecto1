@@ -11,6 +11,7 @@ import java.util.ArrayList;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.text.SimpleDateFormat;
+import java.util.Collections;
 import java.util.Date;
 import javax.swing.JFileChooser;
 
@@ -20,8 +21,8 @@ import javax.swing.JFileChooser;
  */
 public class AdminForm extends javax.swing.JFrame {
 
-    private final String USER_FILE = "C:\\MEIA/usuario.txt";
-    private final String USER_BITACORA_FILE = "C:\\MEIA/bitacora_usuario.txt";
+    private static final String USER_FILE = "C:\\MEIA/usuario.txt";
+    private static final String USER_BITACORA_FILE = "C:\\MEIA/bitacora_usuario.txt";
 
     /**
      * Creates new form AdminForm
@@ -358,7 +359,35 @@ public class AdminForm extends javax.swing.JFrame {
         Proyecto1.saveFile(descBitacoraPath, fileData, false);
     }
     
-    private void updateDescriptorUser(boolean bitacora) {
+    public static void reorganize() {
+        String path = "C:\\MEIA/desc_usuario.txt";
+        ArrayList<String> data = Proyecto1.getFile(path);
+        if (data.isEmpty()) return;
+        String lineData = data.get(8);
+        int num = Integer.parseInt(lineData.substring(20, lineData.length()));
+        
+        ArrayList<String> usersData = Proyecto1.getFile(USER_BITACORA_FILE);
+        if (usersData.size() >= num) {
+            ArrayList<String> realUsersData = Proyecto1.getFile(USER_FILE);
+            for (String item : usersData) {
+                realUsersData.add(item);
+            }
+            
+            Collections.sort(realUsersData);
+            
+            String fileText = "";
+            for (String item : realUsersData) {
+                fileText += item + System.getProperty("line.separator");
+            }
+            
+            Proyecto1.saveFile(USER_BITACORA_FILE, "", false);
+            Proyecto1.saveFile(USER_FILE, fileText, false);
+            updateDescriptorUser(true);
+            updateDescriptorUser(false);
+        }
+    }
+    
+    public static void updateDescriptorUser(boolean bitacora) {
         String path;
         String date = new SimpleDateFormat("dd-MM-yyyy").format(new Date());
         ArrayList<String> descData;
@@ -384,7 +413,7 @@ public class AdminForm extends javax.swing.JFrame {
             if (user[9].equals("1")) actives++;
             else inactives++;
         }
-        String[] data = new String[8];
+        String[] data = new String[9];
         for (int i = 0; i < descData.size(); i++) {
             data[i] = descData.get(i);
         }
@@ -401,6 +430,7 @@ public class AdminForm extends javax.swing.JFrame {
         data[5] = "Registros: " + fileData.size();
         data[6] = "Registros activos: " + actives;
         data[7] = "Registros inactivos: " + inactives;
+        data[8] = "Max reorganización: 3";
         
         String fileString = "";
         for (int i = 0; i < data.length; i++) {
@@ -408,10 +438,6 @@ public class AdminForm extends javax.swing.JFrame {
             if (i != data.length - 1) {
                 fileString += System.getProperty("line.separator");
             }
-        }
-        
-        if (!bitacora) {
-            fileString += "Max reorganización: "; // PENDIENTE
         }
         
         Proyecto1.saveFile(path, fileString, false);
@@ -437,7 +463,8 @@ public class AdminForm extends javax.swing.JFrame {
 
         if (userFinded[0] != null) return;
 
-        // PENDIENTE VALIDAR EL LENGTH DE LA BITACORA
+        reorganize();
+        
         String userToAdd = "";
         for (int i = 0; i < user.length; i++) {
             userToAdd += user[i];
@@ -449,6 +476,7 @@ public class AdminForm extends javax.swing.JFrame {
 
         Proyecto1.saveFile(USER_BITACORA_FILE, userToAdd, true);
         updateDescriptorUser(true);
+        updateDescriptorUser(false);
     }
     
     private String[] searchUser(String userName) {
@@ -600,9 +628,9 @@ public class AdminForm extends javax.swing.JFrame {
             return "Contraseña demasiado larga";
         }
         
-        if (!SignInForm.ValidatePassword(userInput[3])) {
+        /*if (!SignInForm.ValidatePassword(userInput[3])) {
             return "Contraseña poco segura";
-        }
+        }*/
         
         if (!userInput[4].equals("1") && !userInput[4].equals("0")) {
             return "Rol no válido";
