@@ -3,6 +3,7 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/GUIForms/JFrame.java to edit this template
  */
 package com.mycompany.proyecto1;
+import static java.awt.image.ImageObserver.WIDTH;
 import java.io.File;
 import java.nio.file.Files;
 import java.nio.file.StandardCopyOption;
@@ -14,6 +15,7 @@ import java.text.SimpleDateFormat;
 import java.util.Collections;
 import java.util.Date;
 import javax.swing.JFileChooser;
+import javax.swing.JOptionPane;
 
 /**
  *
@@ -457,7 +459,10 @@ public class AdminForm extends javax.swing.JFrame {
         user[9] = "1";
         
         String status =  validateInputs(user);
-        if (!status.equals("ok")) return;
+        if (!status.equals("ok")) {
+            JOptionPane.showMessageDialog(null, status, "ERROR!", WIDTH);
+            return;
+        }
         
         String[] userFinded = searchUser(user[0]);
 
@@ -523,7 +528,10 @@ public class AdminForm extends javax.swing.JFrame {
         user[8] = PathProfilePictureTF.getText();
         
         String status =  validateInputs(user);
-        if (!status.equals("ok")) return;
+        if (!status.equals("ok")) {
+            JOptionPane.showMessageDialog(null, status, "ERROR!", WIDTH);
+            return;
+        }
         String[] userFinded = searchUser(user[0]);
         String path = userFinded[10];
         if (userFinded[0] == null) {
