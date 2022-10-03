@@ -343,10 +343,10 @@ public class AdminForm extends javax.swing.JFrame {
             data[1] = "Fecha de creación: " + date;
         }
         if (data[2] == null) {
-            data[2] = "Usuario creación: "; // PENDIENTE
+            data[2] = "Usuario creación: " + Proyecto1.activeUser[0];
         }
         data[3] = "Fecha de modificación: " + date;
-        data[4] = "Usuario de modificación: "; // PENDIENTE
+        data[4] = "Usuario de modificación: " + Proyecto1.activeUser[0];
         if (data[5] == null) {
             data[5] = "Registros: 1";
         } else {
@@ -423,10 +423,10 @@ public class AdminForm extends javax.swing.JFrame {
             data[1] = "Fecha de creación: " + date;
         }
         if (data[2] == null) {
-            data[2] = "Usuario creación: "; // PENDIENTE
+            data[2] = "Usuario creación: " + Proyecto1.activeUser[0];
         }
         data[3] = "Fecha de modificación: " + date;
-        data[4] = "Usuario de modificación: "; // PENDIENTE
+        data[4] = "Usuario de modificación: " + Proyecto1.activeUser[0];
         data[5] = "Registros: " + fileData.size();
         data[6] = "Registros activos: " + actives;
         data[7] = "Registros inactivos: " + inactives;
@@ -564,7 +564,7 @@ public class AdminForm extends javax.swing.JFrame {
         // no a él mismo
         String userName = UserTF.getText();
         if (userName.equals("")) return;
-        if (userName.equals("EL MISMO")) return; // NO SE PUEDE ELIMINAR A EL MISMO PENDIENTE
+        if (userName.equals(Proyecto1.activeUser[0])) return;
         
         String[] userFinded = searchUser(userName);
         if (userFinded[0] == null) return;
@@ -628,9 +628,9 @@ public class AdminForm extends javax.swing.JFrame {
             return "Contraseña demasiado larga";
         }
         
-        /*if (!SignInForm.ValidatePassword(userInput[3])) {
+        if (!SignInForm.ValidatePassword(userInput[3])) {
             return "Contraseña poco segura";
-        }*/
+        }
         
         if (!userInput[4].equals("1") && !userInput[4].equals("0")) {
             return "Rol no válido";
