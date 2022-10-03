@@ -23,10 +23,10 @@ public class Proyecto1{
     
     public static void main(String[] args) {
         // this lines open the admin form (just for testing)
-        AdminForm adminForm = new AdminForm();
-        adminForm.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
-        adminForm.setSize(430, 350);
-        adminForm.setVisible(true);
+        LogInForm LogInForm = new LogInForm();
+        LogInForm.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
+        LogInForm.setSize(430, 350);
+        LogInForm.setVisible(true);
     }
     
     public static ArrayList<String> getFile(String path) {
