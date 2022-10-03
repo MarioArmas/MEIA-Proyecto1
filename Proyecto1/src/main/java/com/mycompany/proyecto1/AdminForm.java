@@ -466,6 +466,7 @@ public class AdminForm extends javax.swing.JFrame {
         reorganize();
         
         String userToAdd = "";
+        user[3] = Proyecto1.encode(user[3]);
         for (int i = 0; i < user.length; i++) {
             userToAdd += user[i];
             if (i != user.length -1) {
@@ -502,6 +503,10 @@ public class AdminForm extends javax.swing.JFrame {
             }
         }
         
+        if (userFinded[0] != null) {
+            userFinded[3] = Proyecto1.decode(userFinded[3]);            
+        }
+        
         return userFinded;
     }
     
@@ -518,44 +523,44 @@ public class AdminForm extends javax.swing.JFrame {
         user[8] = PathProfilePictureTF.getText();
         
         String status =  validateInputs(user);
-        if (status.equals("ok")) {
-            String[] userFinded = searchUser(user[0]);
-            String path = userFinded[10];
-            if (userFinded[0] == null) {
-                return;
-            }
-            
-            ArrayList<String> fileUsers = Proyecto1.getFile(path);
-            for (int i = 0; i < fileUsers.size(); i++) {
-                String[] userInFile = fileUsers.get(i).split("\\|");
-                if (userInFile[0].equals(user[0])) {
-                    System.arraycopy(user, 0, userInFile, 0, user.length);
-                    String lineToAdd = "";
-                    for (int j = 0; j < userInFile.length; j++) {
-                        lineToAdd += userInFile[j];
-                        if (j != userInFile.length - 1) {
-                            lineToAdd += "|";
-                        }
-                    }
-                    
-                    fileUsers.remove(i);
-                    fileUsers.add(i, lineToAdd);
-                    String fileData = "";
-                    
-                    for (String item : fileUsers) {
-                        fileData += item + System.getProperty("line.separator");
-                    }
+        if (!status.equals("ok")) return;
+        String[] userFinded = searchUser(user[0]);
+        String path = userFinded[10];
+        if (userFinded[0] == null) {
+            return;
+        }
 
-                    Proyecto1.saveFile(path, fileData, false);
-                    if (path.equals(USER_BITACORA_FILE)) {
-                        updateDescriptorUser(true);
+        ArrayList<String> fileUsers = Proyecto1.getFile(path);
+        for (int i = 0; i < fileUsers.size(); i++) {
+            String[] userInFile = fileUsers.get(i).split("\\|");
+            if (userInFile[0].equals(user[0])) {
+                System.arraycopy(user, 0, userInFile, 0, user.length);
+                String lineToAdd = "";
+                userInFile[3] = Proyecto1.encode(userInFile[3]);
+                for (int j = 0; j < userInFile.length; j++) {
+                    lineToAdd += userInFile[j];
+                    if (j != userInFile.length - 1) {
+                        lineToAdd += "|";
                     }
-                    if (path.equals(USER_FILE)) {
-                        updateDescriptorUser(false);
-                    }
-                    
-                    return;
                 }
+
+                fileUsers.remove(i);
+                fileUsers.add(i, lineToAdd);
+                String fileData = "";
+
+                for (String item : fileUsers) {
+                    fileData += item + System.getProperty("line.separator");
+                }
+
+                Proyecto1.saveFile(path, fileData, false);
+                if (path.equals(USER_BITACORA_FILE)) {
+                    updateDescriptorUser(true);
+                }
+                if (path.equals(USER_FILE)) {
+                    updateDescriptorUser(false);
+                }
+
+                return;
             }
         }
     }
@@ -628,9 +633,9 @@ public class AdminForm extends javax.swing.JFrame {
             return "Contraseña demasiado larga";
         }
         
-        if (!SignInForm.ValidatePassword(userInput[3])) {
+        /*if (!SignInForm.ValidatePassword(userInput[3])) {
             return "Contraseña poco segura";
-        }
+        }*/
         
         if (!userInput[4].equals("1") && !userInput[4].equals("0")) {
             return "Rol no válido";

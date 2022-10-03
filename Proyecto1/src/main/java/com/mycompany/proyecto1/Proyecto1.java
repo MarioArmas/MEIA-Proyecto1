@@ -75,4 +75,28 @@ public class Proyecto1{
            System.out.println(strError);
        }
     }
+    
+    public static String encode(String password) {
+        char[] array = password.toCharArray();
+        int[] asciiValues = new int[array.length];
+        
+        for (int i = 0; i < array.length; i++) {
+            asciiValues[i] = (int) array[i] + 5;
+            array[i] = (char) asciiValues[i];
+        }
+        
+        return new String(array);
+    }
+    
+    public static String decode(String encrypted) {
+        char[] array = encrypted.toCharArray();
+        int[] asciiValues = new int[array.length];
+        
+        for (int i = 0; i < array.length; i++) {
+            asciiValues[i] = (int) array[i] - 5;
+            array[i] = (char) asciiValues[i];
+        }
+        
+        return new String(array);
+    }
 }
