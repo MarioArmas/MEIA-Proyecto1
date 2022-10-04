@@ -4,17 +4,22 @@
  */
 package com.mycompany.proyecto1;
 
+import java.util.ArrayList;
+import java.util.Calendar;
+
 /**
  *
  * @author mario
  */
 public class UserForm extends javax.swing.JFrame {
-
+    private static final String USER_FILE = "C:\\MEIA/usuario.txt";
+    private static final String USER_BITACORA_FILE = "C:\\MEIA/bitacora_usuario.txt";
     /**
      * Creates new form UserForm
      */
     public UserForm() {
         initComponents();
+        copyData();
     }
 
     /**
@@ -37,7 +42,8 @@ public class UserForm extends javax.swing.JFrame {
         PhoneNumberTF = new javax.swing.JTextField();
         PathTF = new javax.swing.JTextField();
         DeleteJB = new javax.swing.JButton();
-        jButton2 = new javax.swing.JButton();
+        ChangeDJB = new javax.swing.JButton();
+        DateC = new com.toedter.calendar.JDateChooser();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -52,8 +58,18 @@ public class UserForm extends javax.swing.JFrame {
         jLabel5.setText("Profile Picture Path");
 
         DeleteJB.setText("Delete");
+        DeleteJB.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                DeleteJBActionPerformed(evt);
+            }
+        });
 
-        jButton2.setText("Change Data");
+        ChangeDJB.setText("Change Data");
+        ChangeDJB.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                ChangeDJBActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -86,11 +102,16 @@ public class UserForm extends javax.swing.JFrame {
                             .addGroup(javax.swing.GroupLayout.Alignment.LEADING, layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                                 .addComponent(PasswordTF, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 72, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addComponent(BirthDateTF, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 72, javax.swing.GroupLayout.PREFERRED_SIZE)))))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 67, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 49, Short.MAX_VALUE)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(DeleteJB, javax.swing.GroupLayout.PREFERRED_SIZE, 73, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jButton2))
-                .addGap(9, 9, 9))
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(DeleteJB, javax.swing.GroupLayout.PREFERRED_SIZE, 73, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(ChangeDJB))
+                        .addGap(9, 9, 9))
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                        .addComponent(DateC, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(23, 23, 23))))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -101,7 +122,7 @@ public class UserForm extends javax.swing.JFrame {
                     .addGroup(layout.createSequentialGroup()
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(PasswordTF, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(jButton2))
+                            .addComponent(ChangeDJB))
                         .addGap(18, 18, 18)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(EmailTF, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -110,7 +131,8 @@ public class UserForm extends javax.swing.JFrame {
                         .addGap(18, 18, 18)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(BirthDateTF, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(jLabel3))))
+                            .addComponent(jLabel3)
+                            .addComponent(DateC, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))))
                 .addGap(18, 18, 18)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(PhoneNumberTF, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -125,6 +147,129 @@ public class UserForm extends javax.swing.JFrame {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
+    private void ChangeDJBActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_ChangeDJBActionPerformed
+        String[] user = new String[10];
+        for (int i = 0; i < Proyecto1.activeUser.length; i++){
+             user[i] = Proyecto1.activeUser[i];
+        }
+        user[3] = PasswordTF.getText();
+        user[6] = EmailTF.getText();
+        user[5] = getBirthDate();
+        user[7] = PhoneNumberTF.getText();
+        user[8] = PathTF.getText();
+        
+        if(SignInForm.ValidateEmail(user[6]) && SignInForm.IsNumber(user[7]) && SignInForm.ValidatePassword(user[3])){
+            updateUser(user);
+        }
+    }//GEN-LAST:event_ChangeDJBActionPerformed
+
+    private void DeleteJBActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_DeleteJBActionPerformed
+        delete();
+    }//GEN-LAST:event_DeleteJBActionPerformed
+    
+    private void copyData(){
+        PasswordTF.setText(Proyecto1.activeUser[3]);
+        EmailTF.setText(Proyecto1.activeUser[6]);
+        BirthDateTF.setText(Proyecto1.activeUser[5]);
+        PhoneNumberTF.setText(Proyecto1.activeUser[7]);
+        PathTF.setText(Proyecto1.activeUser[8]);
+    }
+    
+    private String getBirthDate()
+    {
+        String day = Integer.toString(DateC.getCalendar().get(Calendar.DAY_OF_MONTH));
+        String month = Integer.toString(DateC.getCalendar().get(Calendar.MONTH) + 1);
+        String year = Integer.toString(DateC.getCalendar().get(Calendar.YEAR));
+        String date = (day+ "/" + month+ "/" + year);
+        return date;
+    }
+    
+    private void updateUser(String[] user) {
+        String[] userFinded = AdminForm.searchUser(user[0]);
+        String path = userFinded[10];
+        if (userFinded[0] == null) {
+            return;
+        }
+            
+        ArrayList<String> fileUsers = Proyecto1.getFile(path);
+        for (int i = 0; i < fileUsers.size(); i++) {
+            String[] userInFile = fileUsers.get(i).split("\\|");
+            if (userInFile[0].equals(user[0])) {
+                System.arraycopy(user, 0, userInFile, 0, user.length);
+                String lineToAdd = "";
+                for (int j = 0; j < userInFile.length; j++) {
+                    lineToAdd += userInFile[j];
+                    if (j != userInFile.length - 1) {
+                        lineToAdd += "|";
+                    }
+                }
+                    
+                fileUsers.remove(i);
+                fileUsers.add(i, lineToAdd);
+                String fileData = "";
+                    
+                for (String item : fileUsers) {
+                    fileData += item + System.getProperty("line.separator");
+                }
+
+                Proyecto1.saveFile(path, fileData, false);
+                if (path.equals(USER_BITACORA_FILE)) {
+                    AdminForm.updateDescriptorUser(true);
+                }
+                if (path.equals(USER_FILE)) {
+                    AdminForm.updateDescriptorUser(false);
+                }
+                    
+            return;
+            }
+        }
+    }
+    private void delete() {
+        String[] user = new String[10];
+        for (int i = 0; i < Proyecto1.activeUser.length; i++){
+             user[i] = Proyecto1.activeUser[i];
+        }
+        if (user[0].equals("")) return;
+        if (user[0].equals(Proyecto1.activeUser[0])) return;
+        
+        String[] userFinded = AdminForm.searchUser(user[0]);
+        if (userFinded[0] == null) return;
+        String path = userFinded[10];
+        
+        ArrayList<String> fileUsers = Proyecto1.getFile(path);
+        String lineToAdd = "";
+        for (int i = 0; i < fileUsers.size(); i++) {
+            String[] newUser = fileUsers.get(i).split("\\|");
+            if (user[0].equals(user[0])) {
+                user[9] = "0";
+                
+                for (int j = 0; j < newUser.length; j++) {
+                    lineToAdd += newUser[j];
+                    if (j != newUser.length - 1) {
+                        lineToAdd += "|";
+                    }
+                }
+                
+                fileUsers.remove(i);
+                fileUsers.add(i, lineToAdd);
+                
+                String fileData = "";
+                for (String item : fileUsers) {
+                    fileData += item + System.getProperty("line.separator");
+                }
+                
+                Proyecto1.saveFile(path, fileData, false);
+                if (path.equals(USER_BITACORA_FILE)) {
+                    AdminForm.updateDescriptorUser(true);
+                }
+                if (path.equals(USER_FILE)) {
+                    AdminForm.updateDescriptorUser(false);
+                }
+                
+                return;
+            }
+        }
+    }
     /**
      * @param args the command line arguments
      */
@@ -162,12 +307,13 @@ public class UserForm extends javax.swing.JFrame {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JTextField BirthDateTF;
+    private javax.swing.JButton ChangeDJB;
+    private com.toedter.calendar.JDateChooser DateC;
     private javax.swing.JButton DeleteJB;
     private javax.swing.JTextField EmailTF;
     private javax.swing.JTextField PasswordTF;
     private javax.swing.JTextField PathTF;
     private javax.swing.JTextField PhoneNumberTF;
-    private javax.swing.JButton jButton2;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;

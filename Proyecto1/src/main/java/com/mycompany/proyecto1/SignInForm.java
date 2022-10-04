@@ -321,14 +321,14 @@ public class SignInForm extends javax.swing.JFrame {
     }
     
     //Formato para correo electrónico
-    private boolean ValidateEmail(String email)
+    public static boolean ValidateEmail(String email)
     {
         Pattern pat = Pattern.compile("^[_A-Za-z0-9-\\+]+(\\.[_A-Za-z0-9-]+)*@[A-Za-z0-9-]+(\\.[A-Za-z0-9]+)*(\\.[A-Za-z]{2,})$");
         Matcher matcher = pat.matcher(email);
         return matcher.find();        
     }
     //Comprueba si el parámetro es un dato numérico
-    private static boolean IsNumber(String data)
+    public static boolean IsNumber(String data)
     {
         boolean output;
         try
