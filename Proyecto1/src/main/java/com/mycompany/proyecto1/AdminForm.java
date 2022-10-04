@@ -334,7 +334,7 @@ public class AdminForm extends javax.swing.JFrame {
     private void updateBackupBitacora(String destinationPath) {
         String bitacoraPath = "C:\\MEIA/bitacora_backup.txt";
         String date = new SimpleDateFormat("dd-MM-yyyy").format(new Date());
-        String fileData = destinationPath + "|" + "usuario" + "|" + date + System.getProperty("line.separator");
+        String fileData = destinationPath + "|" + Proyecto1.activeUser[0] + "|" + date + System.getProperty("line.separator");
         Proyecto1.saveFile(bitacoraPath, fileData, true);
     }
     
