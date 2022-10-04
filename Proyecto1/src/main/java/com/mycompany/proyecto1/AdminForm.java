@@ -308,11 +308,15 @@ public class AdminForm extends javax.swing.JFrame {
             System.out.println(strError);
         }
         
-        File[] files = new File("C:\\MEIA").listFiles(); 
+        copyDirectory(dest.toString(), "C:\\MEIA");
+    }
+    
+    private void copyDirectory(String destinationPath, String srcPath) {
+        File[] files = new File(srcPath).listFiles();
         for (File file : files) {
-            String strPath = dest.toString() + "/" + file.getName();
+            String strPath = destinationPath + "/" + file.getName();
             Path path = Paths.get(strPath);
-            if (file.isFile()) {
+            if (file.isFile() || file.isDirectory()) {
                 try {
                     Files.copy(file.toPath(), path, StandardCopyOption.COPY_ATTRIBUTES);
                 }
@@ -320,6 +324,9 @@ public class AdminForm extends javax.swing.JFrame {
                     String strError = ex.getMessage();
                     System.out.println(strError);
                 }
+            }
+            if (file.isDirectory()) {
+                copyDirectory(strPath, srcPath + "/" + file.getName());
             }
         }
     }
