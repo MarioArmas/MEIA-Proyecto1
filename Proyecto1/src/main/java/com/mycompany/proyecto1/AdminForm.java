@@ -641,9 +641,9 @@ public class AdminForm extends javax.swing.JFrame {
             return "Contraseña demasiado larga";
         }
         
-        /*if (!SignInForm.ValidatePassword(userInput[3])) {
+        if (!SignInForm.ValidatePassword(userInput[3])) {
             return "Contraseña poco segura";
-        }*/
+        }
         
         if (!userInput[4].equals("1") && !userInput[4].equals("0")) {
             return "Rol no válido";
@@ -690,6 +690,8 @@ public class AdminForm extends javax.swing.JFrame {
             int field0 = Integer.parseInt(fields[0]);
             int field1 = Integer.parseInt(fields[1]);
             int field2 = Integer.parseInt(fields[2]);
+            if (field0 > 31) return false;
+            if (field1 > 12) return false;
         }
         catch (NumberFormatException ex) {
             return false;
