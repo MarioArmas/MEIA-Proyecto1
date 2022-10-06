@@ -108,8 +108,6 @@ public class LogInForm extends javax.swing.JFrame {
         String Password = txtPassword.getText();
         
         String[] userFinded = AdminForm.searchUser(User);
-        System.out.println(userFinded[3]);
-        //String decodePassword = Proyecto1.decode(userFounded[3]);
         if(userFinded[0] != null){
             if(userFinded[3].equals(Password)){
                 System.arraycopy(userFinded, 0, Proyecto1.activeUser, 0, userFinded.length); 

@@ -20,11 +20,13 @@ import javax.swing.JOptionPane;
  * @author mario
  */
 public class SignInForm extends javax.swing.JFrame {
-
+    
+    public static String adminUser;
+    public static String lastUser;
     private final String USER_FILE = "C:\\MEIA/usuario.txt";
     private final String USER_BITACORA_FILE = "C:\\MEIA/bitacora_usuario.txt";
-    private final String DESC_USER_FILE = "C:\\MEIA/descriptor_usuario.txt";
-    private final String DESC_USER_BITACORA_FILE = "C:\\MEIA/descriptor_bitacora_usuario.txt";
+    private final String DESC_USER_FILE = "C:\\MEIA/desc_usuario.txt";
+    private final String DESC_USER_BITACORA_FILE = "C:\\MEIA/desc_bitacora_usuario.txt";
     /**
      * Creates new form SignInForm
      */
@@ -249,8 +251,10 @@ public class SignInForm extends javax.swing.JFrame {
             
             if(IsUser()){
                 newUser[4] = "0";
+                lastUser = newUser[0];
             }else{
                 newUser[4] = "1";
+                adminUser = newUser[0];
             }
             
             String[] userFinded = searchUser(newUser[0]);

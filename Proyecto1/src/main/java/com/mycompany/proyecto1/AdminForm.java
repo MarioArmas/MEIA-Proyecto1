@@ -340,7 +340,7 @@ public class AdminForm extends javax.swing.JFrame {
     }
     
     private void updateDescriptorBackupBitacora() {
-        String date = new SimpleDateFormat("dd-MM-yyyy").format(new Date());
+        String date = new SimpleDateFormat("dd/MM/yyyy HH:mm:ss").format(Calendar.getInstance().getTime());
         String descBitacoraPath = "C:\\MEIA/desc_bitacora_backup.txt";
         ArrayList<String> rawData = Proyecto1.getFile(descBitacoraPath);
         String[] data = new String[6];
@@ -349,14 +349,14 @@ public class AdminForm extends javax.swing.JFrame {
         }
         
         data[0] = "Nombre simbolico: bitacora_backup.txt";
-        if (data[1] == null) {
+        if (data[1].equals("Fecha de creación: ")) {
             data[1] = "Fecha de creación: " + date;
         }
-        if (data[2] == null) {
-            data[2] = "Usuario creación: " + Proyecto1.activeUser[0];
+        if (data[2].equals("Usuario creación: ")) {
+            data[2] = "Usuario creación: " + SignInForm.adminUser;
         }
         data[3] = "Fecha de modificación: " + date;
-        data[4] = "Usuario de modificación: " + Proyecto1.activeUser[0];
+        data[4] = "Usuario de modificación: " + SignInForm.adminUser;
         if (data[5] == null) {
             data[5] = "Registros: 1";
         } else {
@@ -436,14 +436,14 @@ public class AdminForm extends javax.swing.JFrame {
         }
         
         data[0] = "Nombre simbolico: " + fileName;
-        if (data[1] == null) {
+        if (data[1].equals("Fecha de creación ")) {
             data[1] = "Fecha de creación: " + date;
         }
-        if (data[2] == null) {
-            data[2] = "Usuario creación: " + creator;
+        if (data[2].equals("Usuario creación ")) {
+            data[2] = "Usuario creación: " + SignInForm.adminUser;
         }
         data[3] = "Fecha de modificación: " + date;
-        data[4] = "Usuario de modificación: " + Proyecto1.activeUser[0];
+        data[4] = "Usuario de modificación: " + SignInForm.lastUser;
         data[5] = "Registros: " + fileData.size();
         data[6] = "Registros activos: " + actives;
         data[7] = "Registros inactivos: " + inactives;
