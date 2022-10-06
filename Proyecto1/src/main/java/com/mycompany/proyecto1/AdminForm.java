@@ -12,6 +12,7 @@ import java.util.ArrayList;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.text.SimpleDateFormat;
+import java.util.Calendar;
 import java.util.Collections;
 import java.util.Date;
 import javax.swing.JFileChooser;
@@ -398,7 +399,7 @@ public class AdminForm extends javax.swing.JFrame {
     
     public static void updateDescriptorUser(boolean bitacora) {
         String path;
-        String date = new SimpleDateFormat("dd-MM-yyyy").format(new Date());
+        String date = new SimpleDateFormat("dd/MM/yyyy HH:mm:ss").format(Calendar.getInstance().getTime());
         ArrayList<String> descData;
         ArrayList<String> fileData;
         String fileName;
@@ -417,10 +418,17 @@ public class AdminForm extends javax.swing.JFrame {
         
         int actives = 0;
         int inactives = 0;
+        String creator = "";
         for (String userData : fileData) {
             String[] user = userData.split("\\|");
-            if (user[9].equals("1")) actives++;
-            else inactives++;
+            if (user[9].equals("1")){ 
+                actives++;
+                if(user[4].equals("1")){
+                    creator = user[0];
+                }
+            }else{
+                inactives++;
+            }
         }
         String[] data = new String[9];
         for (int i = 0; i < descData.size(); i++) {
@@ -432,7 +440,7 @@ public class AdminForm extends javax.swing.JFrame {
             data[1] = "Fecha de creación: " + date;
         }
         if (data[2] == null) {
-            data[2] = "Usuario creación: " + Proyecto1.activeUser[0];
+            data[2] = "Usuario creación: " + creator;
         }
         data[3] = "Fecha de modificación: " + date;
         data[4] = "Usuario de modificación: " + Proyecto1.activeUser[0];
@@ -688,7 +696,7 @@ public class AdminForm extends javax.swing.JFrame {
         return "ok";
     }
     
-    private boolean correctDateFormat(String date) {
+    public static boolean correctDateFormat(String date) {
         // Formato de fecha dd/mm/yyyy
         String[] fields = date.split("/");
         if (fields.length != 3) return false;

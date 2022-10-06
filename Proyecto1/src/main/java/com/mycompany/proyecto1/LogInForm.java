@@ -30,7 +30,7 @@ public class LogInForm extends javax.swing.JFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
-        jButton1 = new javax.swing.JButton();
+        LogInJB = new javax.swing.JButton();
         txtUser = new javax.swing.JTextField();
         txtPassword = new javax.swing.JTextField();
         jLabel1 = new javax.swing.JLabel();
@@ -39,10 +39,10 @@ public class LogInForm extends javax.swing.JFrame {
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
-        jButton1.setText("Log In");
-        jButton1.addActionListener(new java.awt.event.ActionListener() {
+        LogInJB.setText("Log In");
+        LogInJB.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton1ActionPerformed(evt);
+                LogInJBActionPerformed(evt);
             }
         });
 
@@ -67,7 +67,7 @@ public class LogInForm extends javax.swing.JFrame {
                         .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                         .addComponent(SignInJB)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(jButton1))
+                        .addComponent(LogInJB))
                     .addGroup(layout.createSequentialGroup()
                         .addGap(65, 65, 65)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -95,33 +95,33 @@ public class LogInForm extends javax.swing.JFrame {
                     .addComponent(jLabel2))
                 .addGap(18, 18, 18)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jButton1)
+                    .addComponent(LogInJB)
                     .addComponent(SignInJB))
-                .addContainerGap(173, Short.MAX_VALUE))
+                .addContainerGap(84, Short.MAX_VALUE))
         );
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
+    private void LogInJBActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_LogInJBActionPerformed
         String User = txtUser.getText();
         String Password = txtPassword.getText();
         
-        String[] userFounded = AdminForm.searchUser(User);
-        if(userFounded[0] != null){
-            if(userFounded[3].equals(Password)){
-                UserForm openform = new UserForm();
-                openform.setVisible(true);
-                System.arraycopy(userFounded, 0, Proyecto1.activeUser, 0, userFounded.length); 
-                if(userFounded[4].equals("0")){
-                    if(userFounded[9].equals("1")){
+        String[] userFinded = AdminForm.searchUser(User);
+        System.out.println(userFinded[3]);
+        //String decodePassword = Proyecto1.decode(userFounded[3]);
+        if(userFinded[0] != null){
+            if(userFinded[3].equals(Password)){
+                System.arraycopy(userFinded, 0, Proyecto1.activeUser, 0, userFinded.length); 
+                if(userFinded[4].equals("0")){
+                    if(userFinded[9].equals("1")){
                         UserForm userForm = new UserForm();
                         userForm.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
                         userForm.setSize(746, 440);
                         userForm.setVisible(true);
                     }   
                 }else{
-                    if(userFounded[9].equals("1")){
+                    if(userFinded[9].equals("1")){
                         AdminForm adminForm = new AdminForm();
                         adminForm.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
                         adminForm.setSize(430, 350);
@@ -134,7 +134,7 @@ public class LogInForm extends javax.swing.JFrame {
         }else{
             JOptionPane.showMessageDialog(null, "No hay un usuario registrado con ese nombre","ERROR!", WIDTH);
         }
-    }//GEN-LAST:event_jButton1ActionPerformed
+    }//GEN-LAST:event_LogInJBActionPerformed
 
     private void SignInJBActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_SignInJBActionPerformed
         SignInForm signInForm = new SignInForm();
@@ -179,8 +179,8 @@ public class LogInForm extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton LogInJB;
     private javax.swing.JButton SignInJB;
-    private javax.swing.JButton jButton1;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JTextField txtPassword;

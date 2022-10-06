@@ -11,8 +11,6 @@ import java.io.FileReader;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Calendar;
-import java.util.List;
-import java.util.Scanner;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 import javax.swing.JOptionPane;
@@ -131,6 +129,11 @@ public class SignInForm extends javax.swing.JFrame {
                 txtPathActionPerformed(evt);
             }
         });
+        txtPath.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyTyped(java.awt.event.KeyEvent evt) {
+                txtPathKeyTyped(evt);
+            }
+        });
 
         lblWarning.setText("Correo no válido.");
 
@@ -223,6 +226,15 @@ public class SignInForm extends javax.swing.JFrame {
     }//GEN-LAST:event_txtPathActionPerformed
 
     private void btnLogActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnLogActionPerformed
+        File fileUser = new File(DESC_USER_FILE);
+        File fileBitacora = new File(DESC_USER_BITACORA_FILE);
+        
+        if(!fileUser.exists() && !fileBitacora.exists())
+        {
+            CreateDescriptorUser(true);
+            CreateDescriptorUser(false);
+        }
+        
         if(ValidateEmail(txtEmail.getText()) && IsNumber(txtPhoneNumber.getText()) && ValidatePassword(txtPassword.getText())){
             String[] newUser = new String[10];
             newUser[0] = txtUser.getText();
@@ -242,9 +254,11 @@ public class SignInForm extends javax.swing.JFrame {
             }
             
             String[] userFinded = searchUser(newUser[0]);
-            if (userFinded[0] != null) return;
+            if (userFinded[0] != null)  return;
             
+            AdminForm.reorganize();
             String userAdded = "";
+            newUser[3] = Proyecto1.encode(newUser[3]);
             for (int i = 0; i < newUser.length; i++) {
             userAdded += newUser[i];
                 if (i != newUser.length -1) {
@@ -253,7 +267,8 @@ public class SignInForm extends javax.swing.JFrame {
             }
             userAdded += System.getProperty("line.separator");
             Proyecto1.saveFile(USER_BITACORA_FILE, userAdded, true);
-            //Falta actualizar el descriptor
+            AdminForm.updateDescriptorUser(true);
+            AdminForm.updateDescriptorUser(false);
         }else
         {
             JOptionPane.showMessageDialog(null, "Ingresó incorrectamente alguno de los campos","ERROR!", WIDTH);
@@ -310,6 +325,13 @@ public class SignInForm extends javax.swing.JFrame {
             evt.consume();
         }
     }//GEN-LAST:event_txtPhoneNumberKeyTyped
+
+    private void txtPathKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtPathKeyTyped
+        if(txtPath.getText().length() >= 200)
+        {
+            evt.consume();
+        }
+    }//GEN-LAST:event_txtPathKeyTyped
     
     private String getBirthDate()
     {
@@ -364,7 +386,11 @@ public class SignInForm extends javax.swing.JFrame {
     
     public static boolean ValidatePassword(String password)
     {
-        setPasswordFile();
+        File passwordFile = new File("C:\\MEIA/PasswordComparisons.txt");
+        if(!passwordFile.exists()){
+            setPasswordFile();
+        }
+        
         boolean status = true;
         int uppercaseCounter = 0;
         int lowercaseCounter = 0;
@@ -413,18 +439,61 @@ public class SignInForm extends javax.swing.JFrame {
         ArrayList<String> descUserData = Proyecto1.getFile(descUsuarioPath);
         ArrayList<String> descUserBData = Proyecto1.getFile(descBitacoraPath);
         
-        String[] userData = new String[8];
-        String[] userBData = new String[8];
+        String[] userData = new String[9];
+        String[] userBData = new String[9];
         for (int i = 0; i < descUserData.size(); i++) {
             userData[i] = descUserData.get(i);
             userBData[i] = descUserBData.get(i);
         }
         
-        if(userData[5].equals("0") || userBData[5].equals("0")){
+        if(userData[5].contains("0") && userBData[5].contains("0")){
             return false;
         }else{
             return true;
         }  
+    }
+    
+    public static void CreateDescriptorUser(boolean bitacora) {
+        String path;
+        ArrayList<String> descData;
+        if (bitacora) {
+            path = "C:\\MEIA/desc_bitacora_usuario.txt";
+            descData = Proyecto1.getFile(path);
+        }
+        else {
+            path = "C:\\MEIA/desc_usuario.txt";
+            descData = Proyecto1.getFile(path);
+        }
+        
+        String[] data = new String[9];
+        for (int i = 0; i < descData.size(); i++) {
+            data[i] = descData.get(i);
+        }
+        
+        data[0] = "Nombre simbolico: ";
+        if (data[1] == null) {
+            data[1] = "Fecha de creación: ";
+        }
+        if (data[2] == null) {
+            data[2] = "Usuario creación: ";
+
+        data[3] = "Fecha de modificación: ";
+        data[4] = "Usuario de modificación: ";
+        data[5] = "Registros: 0";
+        data[6] = "Registros activos: 0";
+        data[7] = "Registros inactivos: 0";
+        data[8] = "Max reorganización: 3";
+        
+        String fileString = "";
+        for (int i = 0; i < data.length; i++) {
+            fileString += data[i];
+            if (i != data.length - 1) {
+                fileString += System.getProperty("line.separator");
+            }
+        }
+        
+        Proyecto1.saveFile(path, fileString, true);
+        }
     }
     
     public String[] searchUser(String userName) {
