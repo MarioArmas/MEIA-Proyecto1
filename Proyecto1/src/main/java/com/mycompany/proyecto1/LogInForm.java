@@ -117,13 +117,15 @@ public class LogInForm extends javax.swing.JFrame {
                         userForm.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
                         userForm.setSize(746, 440);
                         userForm.setVisible(true);
-                    }   
+                        SignInForm.lastUser = txtUser.getText();
+                    }
                 }else{
                     if(userFinded[9].equals("1")){
                         AdminForm adminForm = new AdminForm();
                         adminForm.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
                         adminForm.setSize(430, 350);
                         adminForm.setVisible(true);
+                        SignInForm.lastUser = txtUser.getText();
                     }
                 }
             }else{

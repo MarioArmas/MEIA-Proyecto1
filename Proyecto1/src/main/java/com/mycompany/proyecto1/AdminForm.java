@@ -349,14 +349,14 @@ public class AdminForm extends javax.swing.JFrame {
         }
         
         data[0] = "Nombre simbolico: bitacora_backup.txt";
-        if (data[1].equals("Fecha de creación: ")) {
+        if (data[1] == null) {
             data[1] = "Fecha de creación: " + date;
         }
-        if (data[2].equals("Usuario creación: ")) {
-            data[2] = "Usuario creación: " + SignInForm.adminUser;
+        if (data[2] == null) {
+            data[2] = "Usuario creación: " + SignInForm.lastUser;
         }
         data[3] = "Fecha de modificación: " + date;
-        data[4] = "Usuario de modificación: " + SignInForm.adminUser;
+        data[4] = "Usuario de modificación: " + SignInForm.lastUser;
         if (data[5] == null) {
             data[5] = "Registros: 1";
         } else {
@@ -436,11 +436,12 @@ public class AdminForm extends javax.swing.JFrame {
         }
         
         data[0] = "Nombre simbolico: " + fileName;
-        if (data[1].equals("Fecha de creación ")) {
-            data[1] = "Fecha de creación: " + date;
+        System.out.println(data[1]);
+        if (data[1] == null) {
+                data[1] = "Fecha de creación: " + date;
         }
-        if (data[2].equals("Usuario creación ")) {
-            data[2] = "Usuario creación: " + SignInForm.adminUser;
+        if (data[2] == null) {
+            data[2] = "Usuario creación: " + SignInForm.lastUser;
         }
         data[3] = "Fecha de modificación: " + date;
         data[4] = "Usuario de modificación: " + SignInForm.lastUser;

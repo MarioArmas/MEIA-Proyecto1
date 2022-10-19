@@ -21,8 +21,8 @@ import javax.swing.JOptionPane;
  */
 public class SignInForm extends javax.swing.JFrame {
     
-    public static String adminUser;
-    public static String lastUser;
+    public static String adminUser = "";
+    public static String lastUser = "";
     private final String USER_FILE = "C:\\MEIA/usuario.txt";
     private final String USER_BITACORA_FILE = "C:\\MEIA/bitacora_usuario.txt";
     private final String DESC_USER_FILE = "C:\\MEIA/desc_usuario.txt";
@@ -231,11 +231,11 @@ public class SignInForm extends javax.swing.JFrame {
         File fileUser = new File(DESC_USER_FILE);
         File fileBitacora = new File(DESC_USER_BITACORA_FILE);
         
-        if(!fileUser.exists() && !fileBitacora.exists())
+        /*if(!fileUser.exists() && !fileBitacora.exists())
         {
-            CreateDescriptorUser(true);
-            CreateDescriptorUser(false);
-        }
+            AdminForm.updateDescriptorUser(true);
+            AdminForm.updateDescriptorUser(false);
+        }*/
         
         if(ValidateEmail(txtEmail.getText()) && IsNumber(txtPhoneNumber.getText()) && ValidatePassword(txtPassword.getText())){
             String[] newUser = new String[10];
@@ -254,7 +254,7 @@ public class SignInForm extends javax.swing.JFrame {
                 lastUser = newUser[0];
             }else{
                 newUser[4] = "1";
-                adminUser = newUser[0];
+                lastUser = newUser[0];
             }
             
             String[] userFinded = searchUser(newUser[0]);
@@ -271,6 +271,7 @@ public class SignInForm extends javax.swing.JFrame {
             }
             userAdded += System.getProperty("line.separator");
             Proyecto1.saveFile(USER_BITACORA_FILE, userAdded, true);
+            if (SignInForm.lastUser.equals("")) SignInForm.lastUser = newUser[0];
             AdminForm.updateDescriptorUser(true);
             AdminForm.updateDescriptorUser(false);
         }else
@@ -450,14 +451,10 @@ public class SignInForm extends javax.swing.JFrame {
             userBData[i] = descUserBData.get(i);
         }
         
-        if(userData[5].contains("0") && userBData[5].contains("0")){
-            return false;
-        }else{
-            return true;
-        }  
+        return !(userData[5] == null && userBData[5] == null);
     }
     
-    public static void CreateDescriptorUser(boolean bitacora) {
+    /*public static void CreateDescriptorUser(boolean bitacora) {
         String path;
         ArrayList<String> descData;
         if (bitacora) {
@@ -498,7 +495,7 @@ public class SignInForm extends javax.swing.JFrame {
         
         Proyecto1.saveFile(path, fileString, true);
         }
-    }
+    }*/
     
     public String[] searchUser(String userName) {
         ArrayList<String> fileUsers = Proyecto1.getFile(USER_FILE);
