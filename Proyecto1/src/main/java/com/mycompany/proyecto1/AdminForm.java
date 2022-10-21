@@ -397,6 +397,29 @@ public class AdminForm extends javax.swing.JFrame {
         }
     }
     
+    public static void reorganize(boolean force) {
+        String path = "C:\\MEIA/desc_usuario.txt";
+        ArrayList<String> data = Proyecto1.getFile(path);
+        if (data.isEmpty()) return;
+        ArrayList<String> usersData = Proyecto1.getFile(USER_BITACORA_FILE);
+        ArrayList<String> realUsersData = Proyecto1.getFile(USER_FILE);
+        for (String item : usersData) {
+            realUsersData.add(item);
+        }
+
+        Collections.sort(realUsersData);
+
+        String fileText = "";
+        for (String item : realUsersData) {
+            fileText += item + System.getProperty("line.separator");
+        }
+
+        Proyecto1.saveFile(USER_BITACORA_FILE, "", false);
+        Proyecto1.saveFile(USER_FILE, fileText, false);
+        updateDescriptorUser(true);
+        updateDescriptorUser(false);
+    }
+    
     public static void updateDescriptorUser(boolean bitacora) {
         String path;
         String date = new SimpleDateFormat("dd/MM/yyyy HH:mm:ss").format(Calendar.getInstance().getTime());

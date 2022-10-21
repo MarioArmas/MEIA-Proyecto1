@@ -38,6 +38,11 @@ public class LogInForm extends javax.swing.JFrame {
         SignInJB = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        addWindowListener(new java.awt.event.WindowAdapter() {
+            public void windowClosing(java.awt.event.WindowEvent evt) {
+                formWindowClosing(evt);
+            }
+        });
 
         LogInJB.setText("Log In");
         LogInJB.addActionListener(new java.awt.event.ActionListener() {
@@ -142,6 +147,10 @@ public class LogInForm extends javax.swing.JFrame {
         signInForm.setSize(746, 440);
         signInForm.setVisible(true);
     }//GEN-LAST:event_SignInJBActionPerformed
+
+    private void formWindowClosing(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowClosing
+        AdminForm.reorganize(true);
+    }//GEN-LAST:event_formWindowClosing
 
     /**
      * @param args the command line arguments
