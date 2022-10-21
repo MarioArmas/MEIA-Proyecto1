@@ -45,11 +45,9 @@
                       <EmptySpace max="-2" attributes="0"/>
                       <Group type="103" groupAlignment="1" max="-2" attributes="0">
                           <Component id="PathTF" pref="126" max="32767" attributes="0"/>
-                          <Group type="103" alignment="0" groupAlignment="0" max="-2" attributes="0">
-                              <Component id="PhoneNumberTF" pref="126" max="32767" attributes="0"/>
-                              <Component id="BirthDateTF" max="32767" attributes="0"/>
-                              <Component id="EmailTF" max="32767" attributes="0"/>
-                          </Group>
+                          <Component id="PhoneNumberTF" alignment="0" pref="126" max="32767" attributes="0"/>
+                          <Component id="BirthDateTF" alignment="0" max="32767" attributes="0"/>
+                          <Component id="EmailTF" alignment="0" max="32767" attributes="0"/>
                       </Group>
                   </Group>
               </Group>

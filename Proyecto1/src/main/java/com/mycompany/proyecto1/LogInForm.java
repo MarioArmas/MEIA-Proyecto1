@@ -107,7 +107,7 @@ public class LogInForm extends javax.swing.JFrame {
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
-
+    
     private void LogInJBActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_LogInJBActionPerformed
         String User = txtUser.getText();
         String Password = txtPassword.getText();

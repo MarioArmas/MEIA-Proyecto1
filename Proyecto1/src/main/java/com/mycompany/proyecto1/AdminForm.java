@@ -459,7 +459,6 @@ public class AdminForm extends javax.swing.JFrame {
         }
         
         data[0] = "Nombre simbolico: " + fileName;
-        System.out.println(data[1]);
         if (data[1] == null) {
                 data[1] = "Fecha de creación: " + date;
         }

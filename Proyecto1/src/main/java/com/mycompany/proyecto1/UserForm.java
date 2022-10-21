@@ -5,6 +5,14 @@
 package com.mycompany.proyecto1;
 
 import java.util.ArrayList;
+import java.io.File;
+import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.StandardCopyOption;
+import javax.sound.sampled.AudioInputStream;
+import javax.sound.sampled.AudioSystem;
+import javax.sound.sampled.Clip;
+import javax.swing.JFileChooser;
 
 /**
  *
@@ -313,6 +321,60 @@ public class UserForm extends javax.swing.JFrame {
             }
         }
     }
+    
+    public static void playSound(String songName) {
+        // recibe como parámetro el nombre de la canción y su extensión
+        try {
+            AudioInputStream audioInputStream = AudioSystem.getAudioInputStream(new File("C:\\MEIA/songs/" + songName).getAbsoluteFile());
+            Clip clip = AudioSystem.getClip();
+            clip.open(audioInputStream);
+            clip.start();
+        } catch(Exception ex) {
+            System.out.println("Error with playing sound.");
+            ex.printStackTrace();
+        }
+    }
+    
+    private void moveSound() {
+        // get song path
+        JFileChooser dialogo = new JFileChooser("C:\\MEIA");
+        
+        File fichero;
+        String sourcePath = "";
+        
+        int valor = dialogo.showOpenDialog(this);
+        if (valor == JFileChooser.APPROVE_OPTION) {
+            fichero = dialogo.getSelectedFile();
+            sourcePath = fichero.getPath();
+        }
+        
+        if (sourcePath.equals("")) {
+            System.out.println("Error/ agregar mensaje de error");
+        }
+        
+        // move song to MEIA
+        File file = new File("C:\\MEIA/songs/");
+        if (!file.exists()) {
+            if (file.mkdir()) {
+                System.out.println("Directory is created!");
+            } else {
+                System.out.println("Failed to create directory!");
+            }
+        }
+        
+        String destinationPath = "C:\\MEIA/songs/";
+        var source = new File(sourcePath);
+        var dest = new File(destinationPath + sourcePath.split("\\\\")[sourcePath.split("\\\\").length - 1]);
+        
+        try {
+            Files.copy(source.toPath(), dest.toPath(), StandardCopyOption.COPY_ATTRIBUTES);
+        }
+        catch (IOException ex) {
+            String strError = ex.getMessage();
+            System.out.println(strError);
+        }
+    }
+    
     /**
      * @param args the command line arguments
      */
