@@ -69,9 +69,13 @@ public class AdminForm extends javax.swing.JFrame {
         jLabel1 = new javax.swing.JLabel();
         DeleteBtn = new javax.swing.JButton();
         jPanel2 = new javax.swing.JPanel();
-        AddSongBtn = new javax.swing.JButton();
         jScrollPane1 = new javax.swing.JScrollPane();
         AllSongsTxt = new javax.swing.JTextArea();
+        AddSongBtn = new javax.swing.JButton();
+        SongNameTxt = new javax.swing.JTextField();
+        ArtistNameTxt = new javax.swing.JTextField();
+        jLabel10 = new javax.swing.JLabel();
+        jLabel11 = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -220,7 +224,11 @@ public class AdminForm extends javax.swing.JFrame {
                 .addGap(34, 34, 34))
         );
 
-        jTabbedPane1.addTab("tab1", jPanel1);
+        jTabbedPane1.addTab("Manage users", jPanel1);
+
+        AllSongsTxt.setColumns(20);
+        AllSongsTxt.setRows(5);
+        jScrollPane1.setViewportView(AllSongsTxt);
 
         AddSongBtn.setText("Add song");
         AddSongBtn.addActionListener(new java.awt.event.ActionListener() {
@@ -229,32 +237,53 @@ public class AdminForm extends javax.swing.JFrame {
             }
         });
 
-        AllSongsTxt.setColumns(20);
-        AllSongsTxt.setRows(5);
-        jScrollPane1.setViewportView(AllSongsTxt);
+        jLabel10.setText("Nombre de la canción:");
+
+        jLabel11.setText("Nombre del artista:");
 
         javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
         jPanel2.setLayout(jPanel2Layout);
         jPanel2Layout.setHorizontalGroup(
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel2Layout.createSequentialGroup()
-                .addGap(22, 22, 22)
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 256, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(20, 20, 20)
+                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jLabel11, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addGroup(jPanel2Layout.createSequentialGroup()
+                        .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(jLabel10, javax.swing.GroupLayout.PREFERRED_SIZE, 130, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(SongNameTxt, javax.swing.GroupLayout.PREFERRED_SIZE, 120, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+                                .addComponent(AddSongBtn, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, 120, Short.MAX_VALUE)
+                                .addComponent(ArtistNameTxt, javax.swing.GroupLayout.Alignment.LEADING)))
+                        .addGap(0, 0, Short.MAX_VALUE)))
                 .addGap(18, 18, 18)
-                .addComponent(AddSongBtn, javax.swing.GroupLayout.PREFERRED_SIZE, 101, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(26, Short.MAX_VALUE))
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 256, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(17, 17, 17))
         );
         jPanel2Layout.setVerticalGroup(
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel2Layout.createSequentialGroup()
-                .addGap(18, 18, 18)
+                .addGap(16, 16, 16)
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 256, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(AddSongBtn))
-                .addContainerGap(23, Short.MAX_VALUE))
+                    .addGroup(jPanel2Layout.createSequentialGroup()
+                        .addGap(4, 4, 4)
+                        .addComponent(jLabel10)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(SongNameTxt, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(23, 23, 23)
+                        .addComponent(jLabel11)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(ArtistNameTxt, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(AddSongBtn)
+                        .addGap(38, 38, 38))
+                    .addGroup(jPanel2Layout.createSequentialGroup()
+                        .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 256, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addContainerGap(25, Short.MAX_VALUE))))
         );
 
-        jTabbedPane1.addTab("tab2", jPanel2);
+        jTabbedPane1.addTab("Songs", jPanel2);
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -263,14 +292,14 @@ public class AdminForm extends javax.swing.JFrame {
             .addGroup(layout.createSequentialGroup()
                 .addGap(27, 27, 27)
                 .addComponent(jTabbedPane1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(16, Short.MAX_VALUE))
+                .addContainerGap(18, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addGap(22, 22, 22)
+                .addGap(28, 28, 28)
                 .addComponent(jTabbedPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 330, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(27, Short.MAX_VALUE))
+                .addContainerGap(21, Short.MAX_VALUE))
         );
 
         pack();
@@ -324,7 +353,6 @@ public class AdminForm extends javax.swing.JFrame {
 
     private void AddSongBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_AddSongBtnActionPerformed
         moveSound();
-        // update file
     }//GEN-LAST:event_AddSongBtnActionPerformed
 
     /**
@@ -363,6 +391,7 @@ public class AdminForm extends javax.swing.JFrame {
     }
     
     private void moveSound() {
+        // PENDIENTE VALIDAR QUE NO SE AGREGUE LA MISMA CANCIÓN DOS VECES
         // get song path
         JFileChooser dialogo = new JFileChooser("C:\\MEIA");
         
@@ -399,6 +428,96 @@ public class AdminForm extends javax.swing.JFrame {
         catch (IOException ex) {
             String strError = ex.getMessage();
             System.out.println(strError);
+        }
+        
+        // save song data in descriptor
+        String code = ""; // PENDIENTE AGREGAR EL CODIGO DE LA CANCION
+        String song = SongNameTxt.getText();
+        String artist = ArtistNameTxt.getText();
+        String path = destinationPath + sourcePath.split("\\\\")[sourcePath.split("\\\\").length - 1];
+        String user = SignInForm.lastUser;
+        String date = new SimpleDateFormat("dd/MM/yyyy HH:mm:ss").format(Calendar.getInstance().getTime());
+        String status = "1";
+        
+        String stringToAdd = code + "|" + song + "|" + artist + "|" + path + "|" + user + "|" + date + "|" + status + System.getProperty("line.separator");
+        reorganizeSongs();
+        Proyecto1.saveFile("C:\\MEIA/bitacora_canciones.txt", stringToAdd, true);
+        updateDescriptorSongs(true);
+        updateDescriptorSongs(false);
+    }
+    
+    public static void updateDescriptorSongs(boolean bitacora) {
+        String path;
+        String date = new SimpleDateFormat("dd/MM/yyyy HH:mm:ss").format(Calendar.getInstance().getTime());
+        ArrayList<String> descData;
+        ArrayList<String> fileData;
+        String fileName;
+        if (bitacora) {
+            path = "C:\\MEIA/desc_bitacora_canciones.txt";
+            descData = Proyecto1.getFile(path);
+            fileData = Proyecto1.getFile("C:\\MEIA/bitacora_canciones.txt");
+            fileName = "bitacora_canciones.txt";
+        }
+        else {
+            path = "C:\\MEIA/desc_canciones.txt";
+            descData = Proyecto1.getFile(path);
+            fileData = Proyecto1.getFile("C:\\MEIA/canciones.txt");
+            fileName = "canciones.txt";
+        }
+        
+        String[] data = new String[7];
+        for (int i = 0; i < descData.size(); i++) {
+            data[i] = descData.get(i);
+        }
+        
+        data[0] = "Nombre simbolico: " + fileName;
+        if (data[1] == null) {
+                data[1] = "Fecha de creación: " + date;
+        }
+        if (data[2] == null) {
+            data[2] = "Usuario creación: " + SignInForm.lastUser;
+        }
+        data[3] = "Fecha de modificación: " + date;
+        data[4] = "Usuario de modificación: " + SignInForm.lastUser;
+        data[5] = "Registros: " + fileData.size();
+        data[6] = "Max reorganización: 3";
+        
+        String fileString = "";
+        for (int i = 0; i < data.length; i++) {
+            fileString += data[i];
+            if (i != data.length - 1) {
+                fileString += System.getProperty("line.separator");
+            }
+        }
+        
+        Proyecto1.saveFile(path, fileString, false);
+    }
+    
+    public static void reorganizeSongs() {
+        String path = "C:\\MEIA/desc_canciones.txt";
+        ArrayList<String> data = Proyecto1.getFile(path);
+        if (data.isEmpty()) return;
+        String lineData = data.get(8);
+        int num = Integer.parseInt(lineData.substring(20, lineData.length()));
+        
+        ArrayList<String> usersData = Proyecto1.getFile("C:\\MEIA/bitacora_canciones.txt");
+        if (usersData.size() >= num) {
+            ArrayList<String> realUsersData = Proyecto1.getFile("C:\\MEIA/canciones.txt");
+            for (String item : usersData) {
+                realUsersData.add(item);
+            }
+            
+            Collections.sort(realUsersData);
+            
+            String fileText = "";
+            for (String item : realUsersData) {
+                fileText += item + System.getProperty("line.separator");
+            }
+            
+            Proyecto1.saveFile("C:\\MEIA/bitacora_canciones.txt", "", false);
+            Proyecto1.saveFile("C:\\MEIA/canciones.txt", fileText, false);
+            updateDescriptorSongs(true);
+            updateDescriptorSongs(false);
         }
     }
     
@@ -856,6 +975,7 @@ public class AdminForm extends javax.swing.JFrame {
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton AddSongBtn;
     private javax.swing.JTextArea AllSongsTxt;
+    private javax.swing.JTextField ArtistNameTxt;
     private javax.swing.JButton BackupBtn;
     private javax.swing.JTextField BirthDateTF;
     private javax.swing.JButton DeleteBtn;
@@ -868,9 +988,12 @@ public class AdminForm extends javax.swing.JFrame {
     private javax.swing.JTextField PhoneNumberTF;
     private javax.swing.JTextField RolTF;
     private javax.swing.JButton SearchBtn;
+    private javax.swing.JTextField SongNameTxt;
     private javax.swing.JButton UpdateBtn;
     private javax.swing.JTextField UserTF;
     private javax.swing.JLabel jLabel1;
+    private javax.swing.JLabel jLabel10;
+    private javax.swing.JLabel jLabel11;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
