@@ -430,8 +430,11 @@ public class AdminForm extends javax.swing.JFrame {
             System.out.println(strError);
         }
         
+        ArrayList<String> songsBitacora = Proyecto1.getFile("C:\\MEIA/bitacora_canciones.txt");
+        ArrayList<String> songs = Proyecto1.getFile("C:\\MEIA/canciones.txt");
+        
         // save song data in descriptor
-        String code = ""; // PENDIENTE AGREGAR EL CODIGO DE LA CANCION
+        String code = String.valueOf(songsBitacora.size() + songs.size() + 1);
         String song = SongNameTxt.getText();
         String artist = ArtistNameTxt.getText();
         String path = destinationPath + sourcePath.split("\\\\")[sourcePath.split("\\\\").length - 1];
@@ -497,7 +500,7 @@ public class AdminForm extends javax.swing.JFrame {
         String path = "C:\\MEIA/desc_canciones.txt";
         ArrayList<String> data = Proyecto1.getFile(path);
         if (data.isEmpty()) return;
-        String lineData = data.get(8);
+        String lineData = data.get(6);
         int num = Integer.parseInt(lineData.substring(20, lineData.length()));
         
         ArrayList<String> usersData = Proyecto1.getFile("C:\\MEIA/bitacora_canciones.txt");
