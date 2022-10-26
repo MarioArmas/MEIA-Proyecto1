@@ -318,6 +318,11 @@ public class AdminForm extends javax.swing.JFrame {
             destinationPath = file.getPath();
         }
         
+        if (destinationPath.contains("C:\\MEIA") || destinationPath.equals("")) {
+            JOptionPane.showMessageDialog(null, "No es posible realizar el backup en esa carpeta","Error!", WIDTH);
+            return;
+        }
+        
         makeBackup(destinationPath);
         updateBackupBitacora(destinationPath);
         updateDescriptorBackupBitacora();
@@ -336,6 +341,9 @@ public class AdminForm extends javax.swing.JFrame {
             EmailTF.setText(user[6]);
             PhoneNumberTF.setText(user[7]);
             PathProfilePictureTF.setText(user[8]);
+            JOptionPane.showMessageDialog(null, "Usuario encontrado","Operación realizada con éxito", WIDTH);
+        } else {
+            JOptionPane.showMessageDialog(null, "No se encontró al usuario","Error!", WIDTH);
         }
     }//GEN-LAST:event_SearchBtnActionPerformed
 
@@ -393,6 +401,7 @@ public class AdminForm extends javax.swing.JFrame {
     private void moveSound() {
         // PENDIENTE VALIDAR QUE NO SE AGREGUE LA MISMA CANCIÓN DOS VECES
         // get song path
+        showSongs();
         JFileChooser dialogo = new JFileChooser("C:\\MEIA");
         
         File fichero;
@@ -402,6 +411,11 @@ public class AdminForm extends javax.swing.JFrame {
         if (valor == JFileChooser.APPROVE_OPTION) {
             fichero = dialogo.getSelectedFile();
             sourcePath = fichero.getPath();
+        }
+        
+        if (sourcePath.equals("") || SongNameTxt.getText().equals("") || ArtistNameTxt.getText().equals("")) {
+            JOptionPane.showMessageDialog(null, "Hacen falta campos por completar","Error!", WIDTH);
+            return;
         }
         
         if (sourcePath.equals("")) {
@@ -524,8 +538,38 @@ public class AdminForm extends javax.swing.JFrame {
         }
     }
     
+    private void showSongs() {
+        String text = "";
+        ArrayList<String> fileData1 = Proyecto1.getFile("C:\\MEIA/bitacora_canciones.txt");
+        ArrayList<String> fileData2 = Proyecto1.getFile("C:\\MEIA/canciones.txt");
+        
+        for (String line : fileData1) {
+            String[] items = line.split("\\|");
+            text += items[1]  + " - " + items[2] + System.getProperty("line.separator");
+        }
+        
+        for (String line : fileData2) {
+            String[] items = line.split("\\|");
+            text += items[1]  + " - " + items[2] + System.getProperty("line.separator");
+        }
+        
+        AllSongsTxt.setText(text);
+    }
+    
     private void makeBackup(String _destinationPath) {
         String destinationPath = _destinationPath + "/MEIA_Backup";
+        int counter = 0;
+        File check = new File(destinationPath);
+        
+        while (check.exists()) {
+            counter++;
+            check = new File(destinationPath + counter);
+        }
+        
+        if (counter != 0) {
+            destinationPath += String.valueOf(counter);
+        }
+        
         var source = new File("C:\\MEIA");
         var dest = new File(destinationPath);
         
@@ -534,10 +578,11 @@ public class AdminForm extends javax.swing.JFrame {
         }
         catch (IOException ex) {
             String strError = ex.getMessage();
-            System.out.println(strError);
+            JOptionPane.showMessageDialog(null, strError,"Error!", WIDTH);
         }
         
         copyDirectory(dest.toString(), "C:\\MEIA");
+        JOptionPane.showMessageDialog(null, "Backup realizado con éxito","Operación realizada con éxito", WIDTH);
     }
     
     private void copyDirectory(String destinationPath, String srcPath) {
@@ -551,7 +596,7 @@ public class AdminForm extends javax.swing.JFrame {
                 }
                 catch (IOException ex) {
                     String strError = ex.getMessage();
-                    System.out.println(strError);
+                    JOptionPane.showMessageDialog(null, strError,"Error!", WIDTH);
                 }
             }
             if (file.isDirectory()) {
@@ -732,7 +777,10 @@ public class AdminForm extends javax.swing.JFrame {
         
         String[] userFinded = searchUser(user[0]);
 
-        if (userFinded[0] != null) return;
+        if (userFinded[0] != null) {
+            JOptionPane.showMessageDialog(null, "El usuario que desea ingresar ya existe","Error!", WIDTH);
+            return;
+        }
 
         reorganize();
         
@@ -749,6 +797,7 @@ public class AdminForm extends javax.swing.JFrame {
         Proyecto1.saveFile(USER_BITACORA_FILE, userToAdd, true);
         updateDescriptorUser(true);
         updateDescriptorUser(false);
+        JOptionPane.showMessageDialog(null, "Usuario creado con éxito","Operación realizada con éxito", WIDTH);
     }
     
     public static String[] searchUser(String userName) {
@@ -775,7 +824,7 @@ public class AdminForm extends javax.swing.JFrame {
         }
         
         if (userFinded[0] != null) {
-            userFinded[3] = Proyecto1.decode(userFinded[3]);            
+            userFinded[3] = Proyecto1.decode(userFinded[3]);
         }
         
         return userFinded;
@@ -801,6 +850,7 @@ public class AdminForm extends javax.swing.JFrame {
         String[] userFinded = searchUser(user[0]);
         String path = userFinded[10];
         if (userFinded[0] == null) {
+            JOptionPane.showMessageDialog(null, "No se encontró el usuario al que desea modificar","Error!", WIDTH);
             return;
         }
 
@@ -834,6 +884,7 @@ public class AdminForm extends javax.swing.JFrame {
                     updateDescriptorUser(false);
                 }
 
+                JOptionPane.showMessageDialog(null, "Se actualizaron los datos correctamente","Operación realizada con éxito", WIDTH);
                 return;
             }
         }
@@ -842,11 +893,20 @@ public class AdminForm extends javax.swing.JFrame {
     private void deleteUser() {
         // no a él mismo
         String userName = UserTF.getText();
-        if (userName.equals("")) return;
-        if (userName.equals(Proyecto1.activeUser[0])) return;
+        if (userName.equals("")) {
+            JOptionPane.showMessageDialog(null, "Debe ingresar un usuario a eliminar","Error!", WIDTH);
+            return;
+        }
+        if (userName.equals(SignInForm.lastUser)) {
+            JOptionPane.showMessageDialog(null, "No es posible eliminarse a si mismo","Error!", WIDTH);
+            return;
+        }
         
         String[] userFinded = searchUser(userName);
-        if (userFinded[0] == null) return;
+        if (userFinded[0] == null) {
+            JOptionPane.showMessageDialog(null, "No se encontró el usuario al que desea eliminar","Error!", WIDTH);
+            return;
+        }
         String path = userFinded[10];
         
         ArrayList<String> fileUsers = Proyecto1.getFile(path);
@@ -879,6 +939,7 @@ public class AdminForm extends javax.swing.JFrame {
                     updateDescriptorUser(false);
                 }
                 
+                JOptionPane.showMessageDialog(null, "Se eliminó al usuario correctamente","Operación realizada con éxito", WIDTH);
                 return;
             }
         }
