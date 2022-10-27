@@ -13,6 +13,7 @@ import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
+import javax.swing.JFileChooser;
 import javax.swing.JOptionPane;
 
 /**
@@ -61,6 +62,7 @@ public class SignInForm extends javax.swing.JFrame {
         jLabel8 = new javax.swing.JLabel();
         txtPath = new javax.swing.JTextField();
         lblWarning = new javax.swing.JLabel();
+        jButton1 = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -126,6 +128,7 @@ public class SignInForm extends javax.swing.JFrame {
 
         jLabel8.setText("Path Profile Picture");
 
+        txtPath.setEditable(false);
         txtPath.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 txtPathActionPerformed(evt);
@@ -138,6 +141,13 @@ public class SignInForm extends javax.swing.JFrame {
         });
 
         lblWarning.setText("Correo no válido.");
+
+        jButton1.setText("Add profile picture");
+        jButton1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton1ActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -169,13 +179,14 @@ public class SignInForm extends javax.swing.JFrame {
                 .addGap(76, 76, 76)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(lblWarning)
+                    .addComponent(jButton1)
                     .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                         .addComponent(btnLog)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                             .addComponent(DateC, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                             .addComponent(txtEmail)
                             .addComponent(txtPhoneNumber)
-                            .addComponent(txtPath, javax.swing.GroupLayout.PREFERRED_SIZE, 210, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                            .addComponent(txtPath, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 210, javax.swing.GroupLayout.PREFERRED_SIZE))))
                 .addContainerGap(34, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
@@ -215,9 +226,11 @@ public class SignInForm extends javax.swing.JFrame {
                             .addComponent(txtPath, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(txtPassword, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(jLabel4))
-                        .addGap(37, 37, 37)
-                        .addComponent(btnLog)))
-                .addContainerGap(19, Short.MAX_VALUE))
+                        .addGap(3, 3, 3)
+                        .addComponent(jButton1)))
+                .addGap(30, 30, 30)
+                .addComponent(btnLog)
+                .addContainerGap(31, Short.MAX_VALUE))
         );
 
         pack();
@@ -337,12 +350,36 @@ public class SignInForm extends javax.swing.JFrame {
             evt.consume();
         }
     }//GEN-LAST:event_txtPathKeyTyped
+
+    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
+        JFileChooser dialog = new JFileChooser("C:\\MEIA");
+        
+        File fichero;
+        String sourcePath = "";
+        
+        //dialog.setFileSelectionMode(JFileChooser.);
+        int valor = dialog.showOpenDialog(this);
+        if (valor == JFileChooser.APPROVE_OPTION) {
+            fichero = dialog.getSelectedFile();
+            sourcePath = fichero.getPath();
+        }
+        
+        if (!sourcePath.endsWith(".jpg") && !sourcePath.endsWith(".jpeg") && !sourcePath.endsWith(".png")) {
+            JOptionPane.showMessageDialog(null, "El tipo de archivo no es un archivo válido, debe ser un archivo .jpg, .jpeg o .png","Error!", WIDTH);
+            return;
+        }
+        
+        txtPath.setText(sourcePath);
+    }//GEN-LAST:event_jButton1ActionPerformed
     
     private String getBirthDate()
     {
         String day = Integer.toString(DateC.getCalendar().get(Calendar.DAY_OF_MONTH));
         String month = Integer.toString(DateC.getCalendar().get(Calendar.MONTH) + 1);
         String year = Integer.toString(DateC.getCalendar().get(Calendar.YEAR));
+        if (day.length() == 1) {
+            day = "0" + day;
+        }
         String date = (day+ "/" + month+ "/" + year);
         return date;
     }
@@ -559,6 +596,7 @@ public class SignInForm extends javax.swing.JFrame {
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private com.toedter.calendar.JDateChooser DateC;
     private javax.swing.JButton btnLog;
+    private javax.swing.JButton jButton1;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;

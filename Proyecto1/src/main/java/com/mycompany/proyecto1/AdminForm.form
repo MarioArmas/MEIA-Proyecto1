@@ -26,7 +26,7 @@
           <Group type="102" alignment="0" attributes="0">
               <EmptySpace min="-2" pref="27" max="-2" attributes="0"/>
               <Component id="jTabbedPane1" min="-2" max="-2" attributes="0"/>
-              <EmptySpace pref="18" max="32767" attributes="0"/>
+              <EmptySpace pref="20" max="32767" attributes="0"/>
           </Group>
       </Group>
     </DimensionLayout>
@@ -34,8 +34,8 @@
       <Group type="103" groupAlignment="0" attributes="0">
           <Group type="102" alignment="0" attributes="0">
               <EmptySpace min="-2" pref="28" max="-2" attributes="0"/>
-              <Component id="jTabbedPane1" min="-2" pref="330" max="-2" attributes="0"/>
-              <EmptySpace pref="21" max="32767" attributes="0"/>
+              <Component id="jTabbedPane1" min="-2" pref="342" max="-2" attributes="0"/>
+              <EmptySpace pref="41" max="32767" attributes="0"/>
           </Group>
       </Group>
     </DimensionLayout>
@@ -57,64 +57,62 @@
           <Layout>
             <DimensionLayout dim="0">
               <Group type="103" groupAlignment="0" attributes="0">
-                  <Group type="102" alignment="0" attributes="0">
-                      <EmptySpace max="32767" attributes="0"/>
-                      <Group type="103" groupAlignment="0" attributes="0">
-                          <Component id="jLabel5" alignment="0" min="-2" pref="37" max="-2" attributes="0"/>
-                          <Group type="103" alignment="0" groupAlignment="1" attributes="0">
-                              <Component id="jLabel2" alignment="1" min="-2" pref="48" max="-2" attributes="0"/>
-                              <Component id="jLabel1" min="-2" pref="48" max="-2" attributes="0"/>
-                          </Group>
-                          <Group type="103" alignment="0" groupAlignment="1" attributes="0">
-                              <Component id="jLabel4" alignment="1" min="-2" pref="69" max="-2" attributes="0"/>
-                              <Component id="jLabel3" min="-2" pref="69" max="-2" attributes="0"/>
-                              <Component id="jLabel6" alignment="1" min="-2" pref="69" max="-2" attributes="0"/>
-                          </Group>
-                          <Group type="103" alignment="0" groupAlignment="1" attributes="0">
-                              <Component id="jLabel8" alignment="1" min="-2" pref="51" max="-2" attributes="0"/>
-                              <Component id="jLabel7" min="-2" pref="51" max="-2" attributes="0"/>
-                          </Group>
-                          <Component id="jLabel9" alignment="0" min="-2" pref="130" max="-2" attributes="0"/>
-                      </Group>
-                      <EmptySpace max="-2" attributes="0"/>
-                      <Group type="103" groupAlignment="0" attributes="0">
-                          <Component id="PathProfilePictureTF" alignment="0" min="-2" pref="100" max="-2" attributes="0"/>
-                          <Group type="103" alignment="0" groupAlignment="1" attributes="0">
-                              <Component id="PhoneNumberTF" alignment="1" min="-2" pref="100" max="-2" attributes="0"/>
-                              <Component id="EmailTF" alignment="1" min="-2" pref="100" max="-2" attributes="0"/>
-                              <Component id="BirthDateTF" alignment="1" min="-2" pref="100" max="-2" attributes="0"/>
-                              <Component id="RolTF" alignment="1" min="-2" pref="100" max="-2" attributes="0"/>
-                              <Component id="PasswordTF" alignment="1" min="-2" pref="100" max="-2" attributes="0"/>
-                              <Component id="LastNameTF" alignment="1" min="-2" pref="100" max="-2" attributes="0"/>
-                              <Group type="103" alignment="1" groupAlignment="1" attributes="0">
-                                  <Component id="NameTF" alignment="1" min="-2" pref="100" max="-2" attributes="0"/>
-                                  <Component id="UserTF" alignment="0" min="-2" pref="100" max="-2" attributes="0"/>
+                  <Group type="102" alignment="1" attributes="0">
+                      <EmptySpace pref="46" max="32767" attributes="0"/>
+                      <Group type="103" groupAlignment="1" max="-2" attributes="0">
+                          <Component id="jButton2" max="32767" attributes="0"/>
+                          <Group type="102" alignment="1" attributes="0">
+                              <Group type="103" groupAlignment="0" attributes="0">
+                                  <Component id="jLabel5" alignment="0" min="-2" pref="37" max="-2" attributes="0"/>
+                                  <Group type="103" alignment="0" groupAlignment="1" attributes="0">
+                                      <Component id="jLabel2" alignment="1" min="-2" pref="48" max="-2" attributes="0"/>
+                                      <Component id="jLabel1" min="-2" pref="48" max="-2" attributes="0"/>
+                                  </Group>
+                                  <Group type="103" alignment="0" groupAlignment="1" attributes="0">
+                                      <Component id="jLabel4" alignment="1" min="-2" pref="69" max="-2" attributes="0"/>
+                                      <Component id="jLabel3" min="-2" pref="69" max="-2" attributes="0"/>
+                                      <Component id="jLabel6" alignment="1" min="-2" pref="69" max="-2" attributes="0"/>
+                                  </Group>
+                                  <Group type="103" alignment="0" groupAlignment="1" attributes="0">
+                                      <Component id="jLabel8" alignment="1" min="-2" pref="51" max="-2" attributes="0"/>
+                                      <Component id="jLabel7" min="-2" pref="51" max="-2" attributes="0"/>
+                                  </Group>
+                                  <Component id="jLabel9" alignment="0" min="-2" pref="130" max="-2" attributes="0"/>
+                              </Group>
+                              <EmptySpace max="-2" attributes="0"/>
+                              <Group type="103" groupAlignment="0" attributes="0">
+                                  <Component id="PathProfilePictureTF" alignment="0" min="-2" pref="100" max="-2" attributes="0"/>
+                                  <Group type="103" alignment="0" groupAlignment="1" attributes="0">
+                                      <Component id="PhoneNumberTF" alignment="1" min="-2" pref="100" max="-2" attributes="0"/>
+                                      <Component id="EmailTF" alignment="1" min="-2" pref="100" max="-2" attributes="0"/>
+                                      <Component id="BirthDateTF" alignment="1" min="-2" pref="100" max="-2" attributes="0"/>
+                                      <Component id="RolTF" alignment="1" min="-2" pref="100" max="-2" attributes="0"/>
+                                      <Component id="PasswordTF" alignment="1" min="-2" pref="100" max="-2" attributes="0"/>
+                                      <Component id="LastNameTF" alignment="1" min="-2" pref="100" max="-2" attributes="0"/>
+                                      <Group type="103" alignment="1" groupAlignment="1" attributes="0">
+                                          <Component id="NameTF" alignment="1" min="-2" pref="100" max="-2" attributes="0"/>
+                                          <Component id="UserTF" alignment="0" min="-2" pref="100" max="-2" attributes="0"/>
+                                      </Group>
+                                  </Group>
                               </Group>
                           </Group>
                       </Group>
                       <EmptySpace min="-2" pref="47" max="-2" attributes="0"/>
                       <Group type="103" groupAlignment="0" attributes="0">
-                          <Group type="102" alignment="1" attributes="0">
-                              <Component id="SearchBtn" min="-2" max="-2" attributes="0"/>
-                              <EmptySpace min="-2" pref="20" max="-2" attributes="0"/>
-                          </Group>
-                          <Group type="102" attributes="0">
-                              <Group type="103" groupAlignment="0" attributes="0">
-                                  <Component id="UpdateBtn" alignment="0" min="-2" max="-2" attributes="0"/>
-                                  <Component id="DeleteBtn" alignment="0" min="-2" max="-2" attributes="0"/>
-                                  <Component id="InsertBtn" alignment="0" min="-2" max="-2" attributes="0"/>
-                                  <Component id="BackupBtn" alignment="0" min="-2" max="-2" attributes="0"/>
-                              </Group>
-                              <EmptySpace max="-2" attributes="0"/>
-                          </Group>
+                          <Component id="SearchBtn" alignment="1" min="-2" max="-2" attributes="0"/>
+                          <Component id="UpdateBtn" alignment="0" min="-2" max="-2" attributes="0"/>
+                          <Component id="DeleteBtn" alignment="0" min="-2" max="-2" attributes="0"/>
+                          <Component id="InsertBtn" alignment="0" min="-2" max="-2" attributes="0"/>
+                          <Component id="BackupBtn" alignment="0" min="-2" max="-2" attributes="0"/>
                       </Group>
+                      <EmptySpace min="-2" pref="40" max="-2" attributes="0"/>
                   </Group>
               </Group>
             </DimensionLayout>
             <DimensionLayout dim="1">
               <Group type="103" groupAlignment="0" attributes="0">
-                  <Group type="102" alignment="1" attributes="0">
-                      <EmptySpace max="32767" attributes="0"/>
+                  <Group type="102" alignment="0" attributes="0">
+                      <EmptySpace min="-2" pref="15" max="-2" attributes="0"/>
                       <Group type="103" groupAlignment="3" attributes="0">
                           <Component id="UserTF" alignment="3" min="-2" max="-2" attributes="0"/>
                           <Component id="jLabel1" alignment="3" min="-2" max="-2" attributes="0"/>
@@ -162,9 +160,13 @@
                       <Group type="103" groupAlignment="3" attributes="0">
                           <Component id="PathProfilePictureTF" alignment="3" min="-2" max="-2" attributes="0"/>
                           <Component id="jLabel9" alignment="3" min="-2" max="-2" attributes="0"/>
+                      </Group>
+                      <EmptySpace max="-2" attributes="0"/>
+                      <Group type="103" groupAlignment="3" attributes="0">
+                          <Component id="jButton2" alignment="3" min="-2" max="-2" attributes="0"/>
                           <Component id="BackupBtn" alignment="3" min="-2" max="-2" attributes="0"/>
                       </Group>
-                      <EmptySpace min="-2" pref="34" max="-2" attributes="0"/>
+                      <EmptySpace pref="20" max="32767" attributes="0"/>
                   </Group>
               </Group>
             </DimensionLayout>
@@ -251,6 +253,9 @@
               </Events>
             </Component>
             <Component class="javax.swing.JTextField" name="PathProfilePictureTF">
+              <Properties>
+                <Property name="editable" type="boolean" value="false"/>
+              </Properties>
             </Component>
             <Component class="javax.swing.JButton" name="UpdateBtn">
               <Properties>
@@ -271,6 +276,14 @@
               </Properties>
               <Events>
                 <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="DeleteBtnActionPerformed"/>
+              </Events>
+            </Component>
+            <Component class="javax.swing.JButton" name="jButton2">
+              <Properties>
+                <Property name="text" type="java.lang.String" value="Add profile picture"/>
+              </Properties>
+              <Events>
+                <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="jButton2ActionPerformed"/>
               </Events>
             </Component>
           </SubComponents>
@@ -329,7 +342,7 @@
                           </Group>
                           <Group type="102" attributes="0">
                               <Component id="jScrollPane1" min="-2" pref="256" max="-2" attributes="0"/>
-                              <EmptySpace pref="25" max="32767" attributes="0"/>
+                              <EmptySpace pref="37" max="32767" attributes="0"/>
                           </Group>
                       </Group>
                   </Group>
@@ -346,6 +359,7 @@
               <SubComponents>
                 <Component class="javax.swing.JTextArea" name="AllSongsTxt">
                   <Properties>
+                    <Property name="editable" type="boolean" value="false"/>
                     <Property name="columns" type="int" value="20"/>
                     <Property name="rows" type="int" value="5"/>
                   </Properties>
