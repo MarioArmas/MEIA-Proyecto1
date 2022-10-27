@@ -402,14 +402,15 @@ public class AdminForm extends javax.swing.JFrame {
         // PENDIENTE VALIDAR QUE NO SE AGREGUE LA MISMA CANCIÓN DOS VECES
         // get song path
         showSongs();
-        JFileChooser dialogo = new JFileChooser("C:\\MEIA");
+        JFileChooser dialog = new JFileChooser("C:\\MEIA");
         
         File fichero;
         String sourcePath = "";
         
-        int valor = dialogo.showOpenDialog(this);
+        //dialog.setFileSelectionMode(JFileChooser.);
+        int valor = dialog.showOpenDialog(this);
         if (valor == JFileChooser.APPROVE_OPTION) {
-            fichero = dialogo.getSelectedFile();
+            fichero = dialog.getSelectedFile();
             sourcePath = fichero.getPath();
         }
         
@@ -418,23 +419,25 @@ public class AdminForm extends javax.swing.JFrame {
             return;
         }
         
-        if (sourcePath.equals("")) {
-            System.out.println("Error/ agregar mensaje de error");
+        if (!sourcePath.endsWith(".wav")) {
+            JOptionPane.showMessageDialog(null, "El tipo de archivo no es un archivo válido, debe ser un archivo .wav","Error!", WIDTH);
+            return;
         }
         
         // move song to MEIA
         File file = new File("C:\\MEIA/songs/");
         if (!file.exists()) {
-            if (file.mkdir()) {
-                System.out.println("Directory is created!");
-            } else {
-                System.out.println("Failed to create directory!");
-            }
+            file.mkdir();
         }
         
         String destinationPath = "C:\\MEIA/songs/";
         var source = new File(sourcePath);
         var dest = new File(destinationPath + sourcePath.split("\\\\")[sourcePath.split("\\\\").length - 1]);
+        
+        if (dest.exists()) {
+            JOptionPane.showMessageDialog(null, "Ya existe un archivo con ese nombre, por favor cambie el nombre del archivo o seleccione otro","Error!", WIDTH);
+            return;
+        }
         
         try {
             Files.copy(source.toPath(), dest.toPath(), StandardCopyOption.COPY_ATTRIBUTES);
