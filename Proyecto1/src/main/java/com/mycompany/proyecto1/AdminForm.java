@@ -32,6 +32,7 @@ public class AdminForm extends javax.swing.JFrame {
      */
     public AdminForm() {
         initComponents();
+        showSongs();
     }
 
     /**
@@ -374,6 +375,7 @@ public class AdminForm extends javax.swing.JFrame {
 
     private void AddSongBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_AddSongBtnActionPerformed
         moveSound();
+        showSongs();
     }//GEN-LAST:event_AddSongBtnActionPerformed
 
     private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
@@ -433,9 +435,7 @@ public class AdminForm extends javax.swing.JFrame {
     }
     
     private void moveSound() {
-        // PENDIENTE VALIDAR QUE NO SE AGREGUE LA MISMA CANCIÓN DOS VECES
         // get song path
-        showSongs();
         JFileChooser dialog = new JFileChooser("C:\\MEIA");
         
         File fichero;
@@ -579,15 +579,20 @@ public class AdminForm extends javax.swing.JFrame {
         String text = "";
         ArrayList<String> fileData1 = Proyecto1.getFile("C:\\MEIA/bitacora_canciones.txt");
         ArrayList<String> fileData2 = Proyecto1.getFile("C:\\MEIA/canciones.txt");
+        ArrayList<String> songs = new ArrayList<String>();
         
         for (String line : fileData1) {
-            String[] items = line.split("\\|");
-            text += items[1]  + " - " + items[2] + System.getProperty("line.separator");
+            fileData2.add(line);
         }
         
         for (String line : fileData2) {
             String[] items = line.split("\\|");
-            text += items[1]  + " - " + items[2] + System.getProperty("line.separator");
+            songs.add(items[1]  + " - " + items[2] + System.getProperty("line.separator"));
+        }
+        
+        Collections.sort(songs);
+        for (String song : songs) {
+            text += song;
         }
         
         AllSongsTxt.setText(text);
