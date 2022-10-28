@@ -150,6 +150,7 @@ public class LogInForm extends javax.swing.JFrame {
 
     private void formWindowClosing(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowClosing
         AdminForm.reorganize(true);
+        AdminForm.reorganizeSongs(true);
     }//GEN-LAST:event_formWindowClosing
 
     /**

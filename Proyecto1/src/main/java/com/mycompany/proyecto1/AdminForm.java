@@ -575,6 +575,29 @@ public class AdminForm extends javax.swing.JFrame {
         }
     }
     
+    public static void reorganizeSongs(boolean force) {
+        String path = "C:\\MEIA/desc_canciones.txt";
+        ArrayList<String> data = Proyecto1.getFile(path);
+        if (data.isEmpty()) return;
+        ArrayList<String> usersData = Proyecto1.getFile("C:\\MEIA/bitacora_canciones.txt");
+        ArrayList<String> realUsersData = Proyecto1.getFile("C:\\MEIA/canciones.txt");
+        for (String item : usersData) {
+            realUsersData.add(item);
+        }
+
+        Collections.sort(realUsersData);
+
+        String fileText = "";
+        for (String item : realUsersData) {
+            fileText += item + System.getProperty("line.separator");
+        }
+
+        Proyecto1.saveFile("C:\\MEIA/bitacora_canciones.txt", "", false);
+        Proyecto1.saveFile("C:\\MEIA/canciones.txt", fileText, false);
+        updateDescriptorSongs(true);
+        updateDescriptorSongs(false);
+    }
+    
     private void showSongs() {
         String text = "";
         ArrayList<String> fileData1 = Proyecto1.getFile("C:\\MEIA/bitacora_canciones.txt");
