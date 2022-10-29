@@ -11,6 +11,7 @@ import java.nio.file.Files;
 import java.nio.file.StandardCopyOption;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
+import java.util.Collections;
 import javax.sound.sampled.AudioInputStream;
 import javax.sound.sampled.AudioSystem;
 import javax.sound.sampled.Clip;
@@ -24,6 +25,7 @@ public class UserForm extends javax.swing.JFrame {
     private static final String USER_FILE = "C:\\MEIA/usuario.txt";
     private static final String USER_BITACORA_FILE = "C:\\MEIA/bitacora_usuario.txt";
     private static final String USER_PLAYLISTS_FILE = "C:\\MEIA/listas_canciones.txt";
+    private static final String BITACORA_USER_PLAYLISTS_FILE = "C:\\MEIA/bitacora_listas_canciones.txt";
     
     /**
      * Creates new form UserForm
@@ -327,10 +329,16 @@ public class UserForm extends javax.swing.JFrame {
             }
         }
         PlaylistToAdd += System.getProperty("line.separator");
-        Proyecto1.saveFile(USER_PLAYLISTS_FILE, PlaylistToAdd, true);
+        
+        reorganizePlaylist();
+        Proyecto1.saveFile(BITACORA_USER_PLAYLISTS_FILE, PlaylistToAdd, true);
+        updateDescriptorPlaylist(true);
+        updateDescriptorPlaylist(false);
+        
         
     }//GEN-LAST:event_JBCreatePlaylistActionPerformed
-    
+
+    //Lets copy the active user information on data fields
     private void copyData(){
         PasswordTF.setText(Proyecto1.activeUser[3]);
         EmailTF.setText(Proyecto1.activeUser[6]);
@@ -420,6 +428,82 @@ public class UserForm extends javax.swing.JFrame {
                 return;
             }
         }
+    }
+    
+    private void reorganizePlaylist(){
+        String path = "C:\\MEIA/desc_listas_canciones.txt";
+        ArrayList<String> data = Proyecto1.getFile(path);
+        if (data.isEmpty()) return;
+        String lineData = data.get(6);
+        int num = Integer.parseInt(lineData.substring(20, lineData.length()));
+        System.out.print(num);
+        ArrayList<String> usersData = Proyecto1.getFile("C:\\MEIA/bitacora_listas_canciones.txt");
+        System.out.print(usersData.size());
+        if (usersData.size() >= num) {
+            ArrayList<String> realUsersData = Proyecto1.getFile("C:\\MEIA/listas_canciones.txt");
+            for (String item : usersData) {
+                realUsersData.add(item);
+            }
+            
+            Collections.sort(realUsersData);
+            
+            String fileText = "";
+            for (String item : realUsersData) {
+                fileText += item + System.getProperty("line.separator");
+            }
+            
+            Proyecto1.saveFile("C:\\MEIA/bitacora_listas_canciones.txt", "", false);
+            Proyecto1.saveFile("C:\\MEIA/listas_canciones.txt", fileText, false);
+            updateDescriptorPlaylist(true);
+            updateDescriptorPlaylist(false);
+        }
+    }
+    
+    private void updateDescriptorPlaylist(boolean bitacora){
+        String path;
+        String date = new SimpleDateFormat("dd/MM/yyyy HH:mm").format(Calendar.getInstance().getTime());
+        ArrayList<String> descData;
+        ArrayList<String> fileData;
+        String fileName;
+        if (bitacora) {
+            path = "C:\\MEIA/desc_bitacora_listas_canciones.txt";
+            descData = Proyecto1.getFile(path);
+            fileData = Proyecto1.getFile("C:\\MEIA/bitacora_listas_canciones.txt");
+            fileName = "bitacora_listas_canciones.txt";
+        }
+        else {
+            path = "C:\\MEIA/desc_listas_canciones.txt";
+            descData = Proyecto1.getFile(path);
+            fileData = Proyecto1.getFile("C:\\MEIA/listas_canciones.txt");
+            fileName = "listas_canciones.txt";
+        }
+        
+        String[] data = new String[7];
+        for (int i = 0; i < descData.size(); i++) {
+            data[i] = descData.get(i);
+        }
+        
+        data[0] = "Nombre simbolico: " + fileName;
+        if (data[1] == null) {
+                data[1] = "Fecha de creación: " + date;
+        }
+        if (data[2] == null) {
+            data[2] = "Usuario creación: " + SignInForm.lastUser;
+        }
+        data[3] = "Fecha de modificación: " + date;
+        data[4] = "Usuario de modificación: " + SignInForm.lastUser;
+        data[5] = "Registros: " + fileData.size();
+        data[6] = "Max reorganización: 3";
+        
+        String fileString = "";
+        for (int i = 0; i < data.length; i++) {
+            fileString += data[i];
+            if (i != data.length - 1) {
+                fileString += System.getProperty("line.separator");
+            }
+        }
+        
+        Proyecto1.saveFile(path, fileString, false);
     }
     
     public static void playSound(String songName) {
