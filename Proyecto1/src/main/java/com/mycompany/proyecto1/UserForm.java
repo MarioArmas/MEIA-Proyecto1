@@ -4,6 +4,7 @@
  */
 package com.mycompany.proyecto1;
 
+import static java.awt.image.ImageObserver.WIDTH;
 import java.util.ArrayList;
 import java.io.File;
 import java.io.IOException;
@@ -16,6 +17,7 @@ import javax.sound.sampled.AudioInputStream;
 import javax.sound.sampled.AudioSystem;
 import javax.sound.sampled.Clip;
 import javax.swing.JFileChooser;
+import javax.swing.JOptionPane;
 
 /**
  *
@@ -209,16 +211,14 @@ public class UserForm extends javax.swing.JFrame {
             .addGroup(jPanel2Layout.createSequentialGroup()
                 .addGap(12, 12, 12)
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(jPanel2Layout.createSequentialGroup()
-                        .addComponent(jLabel7)
-                        .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                    .addComponent(jLabel7)
                     .addGroup(jPanel2Layout.createSequentialGroup()
                         .addComponent(jLabel6, javax.swing.GroupLayout.PREFERRED_SIZE, 119, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(JTplaylistName, javax.swing.GroupLayout.DEFAULT_SIZE, 223, Short.MAX_VALUE)
+                        .addComponent(JTplaylistName, javax.swing.GroupLayout.PREFERRED_SIZE, 337, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addComponent(JBCreatePlaylist)
-                        .addGap(26, 26, 26))))
+                        .addComponent(JBCreatePlaylist)))
+                .addContainerGap(265, Short.MAX_VALUE))
         );
         jPanel2Layout.setVerticalGroup(
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -245,7 +245,7 @@ public class UserForm extends javax.swing.JFrame {
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addComponent(jTabbedPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 298, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(0, 36, Short.MAX_VALUE))
+                .addGap(0, 140, Short.MAX_VALUE))
         );
 
         pack();
@@ -264,6 +264,7 @@ public class UserForm extends javax.swing.JFrame {
         
         if(SignInForm.ValidateEmail(user[6]) && SignInForm.IsNumber(user[7]) && SignInForm.ValidatePassword(user[3]) && AdminForm.correctDateFormat(user[5])){
             updateUser(user);
+            JOptionPane.showMessageDialog(null, "Datos cambiados correctamente","Operación exitosa", WIDTH);
         }
     }//GEN-LAST:event_ChangeDJBActionPerformed
 
@@ -312,6 +313,11 @@ public class UserForm extends javax.swing.JFrame {
     }//GEN-LAST:event_JTplaylistNameActionPerformed
 
     private void JBCreatePlaylistActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_JBCreatePlaylistActionPerformed
+        if (JTplaylistName.getText().equals("")) {
+            JOptionPane.showMessageDialog(null, "Debe ingresar un nombre para la lista","Error!", WIDTH);
+            return;
+        }
+        
         String[] Playlist = new String[5];
         String date = new SimpleDateFormat("dd/MM/yyyy HH:mm").format(Calendar.getInstance().getTime());
         
@@ -334,10 +340,14 @@ public class UserForm extends javax.swing.JFrame {
         Proyecto1.saveFile(BITACORA_USER_PLAYLISTS_FILE, PlaylistToAdd, true);
         updateDescriptorPlaylist(true);
         updateDescriptorPlaylist(false);
-        
+        JOptionPane.showMessageDialog(null, "Playlist agregada","Operación exitosa", WIDTH);
+        showSongs();
         
     }//GEN-LAST:event_JBCreatePlaylistActionPerformed
-
+    
+    private void showSongs(){
+        
+    }
     //Lets copy the active user information on data fields
     private void copyData(){
         PasswordTF.setText(Proyecto1.activeUser[3]);
@@ -381,18 +391,24 @@ public class UserForm extends javax.swing.JFrame {
                 }
                 if (path.equals(USER_FILE)) {
                     AdminForm.updateDescriptorUser(false);
-                }
-                    
-            return;
+                } 
+                return;
             }
         }
     }
     private void delete() {
         String userName = Proyecto1.activeUser[0];
-        if (userName.equals("")) return;
+        if (userName.equals("")){
+            JOptionPane.showMessageDialog(null, "Debe ingresar un usuario","Error!", WIDTH);
+            return;
+        }
+            
         
         String[] userFinded = AdminForm.searchUser(userName);
-        if (userFinded[0] == null) return;
+        if (userFinded[0] == null){
+            JOptionPane.showMessageDialog(null, "El usuario seleccionado no existe","Error!", WIDTH);
+            return;
+        }
         String path = userFinded[10];
         
         ArrayList<String> fileUsers = Proyecto1.getFile(path);
@@ -425,6 +441,7 @@ public class UserForm extends javax.swing.JFrame {
                     AdminForm.updateDescriptorUser(false);
                 }
                 
+                JOptionPane.showMessageDialog(null, "Se ha dado de baja al usuario","Operación exitosa", WIDTH);
                 return;
             }
         }
