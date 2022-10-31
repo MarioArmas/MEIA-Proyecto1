@@ -7,16 +7,13 @@ package com.mycompany.proyecto1;
 import static java.awt.image.ImageObserver.WIDTH;
 import java.util.ArrayList;
 import java.io.File;
-import java.io.IOException;
-import java.nio.file.Files;
-import java.nio.file.StandardCopyOption;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Collections;
 import javax.sound.sampled.AudioInputStream;
 import javax.sound.sampled.AudioSystem;
 import javax.sound.sampled.Clip;
-import javax.swing.JFileChooser;
+import javax.swing.DefaultListModel;
 import javax.swing.JOptionPane;
 
 /**
@@ -26,8 +23,9 @@ import javax.swing.JOptionPane;
 public class UserForm extends javax.swing.JFrame {
     private static final String USER_FILE = "C:\\MEIA/usuario.txt";
     private static final String USER_BITACORA_FILE = "C:\\MEIA/bitacora_usuario.txt";
-    private static final String USER_PLAYLISTS_FILE = "C:\\MEIA/listas_canciones.txt";
     private static final String BITACORA_USER_PLAYLISTS_FILE = "C:\\MEIA/bitacora_listas_canciones.txt";
+    static int blockNumber = 1;
+    static int index = 0;
     
     /**
      * Creates new form UserForm
@@ -65,6 +63,15 @@ public class UserForm extends javax.swing.JFrame {
         jLabel6 = new javax.swing.JLabel();
         JTplaylistName = new javax.swing.JTextField();
         jLabel7 = new javax.swing.JLabel();
+        jLabel8 = new javax.swing.JLabel();
+        jLabel9 = new javax.swing.JLabel();
+        cbxPlaylist = new javax.swing.JComboBox<>();
+        cbxSongs = new javax.swing.JComboBox<>();
+        jScrollPane1 = new javax.swing.JScrollPane();
+        JLSongs = new javax.swing.JList<>();
+        jScrollPane2 = new javax.swing.JScrollPane();
+        JLPlaylists = new javax.swing.JList<>();
+        JBaddSong = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         addWindowListener(new java.awt.event.WindowAdapter() {
@@ -187,14 +194,14 @@ public class UserForm extends javax.swing.JFrame {
 
         jTabbedPane1.addTab("Data", jPanel1);
 
-        JBCreatePlaylist.setText("Crear Playlist");
+        JBCreatePlaylist.setText("Create Playlist");
         JBCreatePlaylist.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 JBCreatePlaylistActionPerformed(evt);
             }
         });
 
-        jLabel6.setText("Nombre de la playlist:");
+        jLabel6.setText("Playlist name:");
 
         JTplaylistName.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -202,7 +209,20 @@ public class UserForm extends javax.swing.JFrame {
             }
         });
 
-        jLabel7.setText("Generar nueva playlist");
+        jLabel7.setText("Generate new playlist");
+
+        jLabel9.setText("Add songs to a playlist");
+
+        jScrollPane1.setViewportView(JLSongs);
+
+        jScrollPane2.setViewportView(JLPlaylists);
+
+        JBaddSong.setText("Add song");
+        JBaddSong.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                JBaddSongActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
         jPanel2.setLayout(jPanel2Layout);
@@ -211,26 +231,59 @@ public class UserForm extends javax.swing.JFrame {
             .addGroup(jPanel2Layout.createSequentialGroup()
                 .addGap(12, 12, 12)
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jLabel7)
                     .addGroup(jPanel2Layout.createSequentialGroup()
-                        .addComponent(jLabel6, javax.swing.GroupLayout.PREFERRED_SIZE, 119, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(jLabel7)
+                            .addGroup(jPanel2Layout.createSequentialGroup()
+                                .addComponent(jLabel6, javax.swing.GroupLayout.PREFERRED_SIZE, 119, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(JTplaylistName, javax.swing.GroupLayout.PREFERRED_SIZE, 337, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                                .addComponent(JBCreatePlaylist)))
+                        .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                    .addGroup(jPanel2Layout.createSequentialGroup()
+                        .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(jLabel8)
+                            .addComponent(jLabel9)
+                            .addGroup(jPanel2Layout.createSequentialGroup()
+                                .addComponent(cbxPlaylist, javax.swing.GroupLayout.PREFERRED_SIZE, 115, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGap(18, 18, 18)
+                                .addComponent(cbxSongs, javax.swing.GroupLayout.PREFERRED_SIZE, 120, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGap(18, 18, 18)
+                                .addComponent(JBaddSong)))
+                        .addGap(15, 15, 15)
+                        .addComponent(jScrollPane2, javax.swing.GroupLayout.DEFAULT_SIZE, 221, Short.MAX_VALUE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(JTplaylistName, javax.swing.GroupLayout.PREFERRED_SIZE, 337, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addComponent(JBCreatePlaylist)))
-                .addContainerGap(265, Short.MAX_VALUE))
+                        .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 231, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(44, 44, 44))))
         );
         jPanel2Layout.setVerticalGroup(
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel2Layout.createSequentialGroup()
                 .addGap(19, 19, 19)
                 .addComponent(jLabel7)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGap(18, 18, 18)
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(JBCreatePlaylist)
                     .addComponent(jLabel6)
                     .addComponent(JTplaylistName, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addContainerGap(199, Short.MAX_VALUE))
+                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(jPanel2Layout.createSequentialGroup()
+                        .addGap(50, 50, 50)
+                        .addComponent(jLabel8)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(jLabel9)
+                        .addGap(18, 18, 18)
+                        .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(cbxPlaylist, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(cbxSongs, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(JBaddSong))
+                        .addContainerGap())
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel2Layout.createSequentialGroup()
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 252, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 183, javax.swing.GroupLayout.PREFERRED_SIZE)))))
         );
 
         jTabbedPane1.addTab("Playlists", jPanel2);
@@ -244,8 +297,9 @@ public class UserForm extends javax.swing.JFrame {
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
+                .addContainerGap()
                 .addComponent(jTabbedPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 298, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(0, 140, Short.MAX_VALUE))
+                .addContainerGap(21, Short.MAX_VALUE))
         );
 
         pack();
@@ -274,6 +328,8 @@ public class UserForm extends javax.swing.JFrame {
 
     private void formWindowOpened(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowOpened
         copyData();
+        showSongs();
+        showPlaylists();
     }//GEN-LAST:event_formWindowOpened
 
     private void PasswordTFKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_PasswordTFKeyTyped
@@ -342,11 +398,156 @@ public class UserForm extends javax.swing.JFrame {
         updateDescriptorPlaylist(false);
         JOptionPane.showMessageDialog(null, "Playlist agregada","Operación exitosa", WIDTH);
         showSongs();
+        showPlaylists();
         
     }//GEN-LAST:event_JBCreatePlaylistActionPerformed
+
+    private void JBaddSongActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_JBaddSongActionPerformed
+        addSongToPlaylist();
+    }//GEN-LAST:event_JBaddSongActionPerformed
     
-    private void showSongs(){
+    private void addSongToPlaylist(){
+        String playlist = cbxPlaylist.getSelectedItem().toString();
+        String songCode = getSongCode(cbxSongs.getSelectedItem().toString());
+        String user = Proyecto1.activeUser[0];
+        String date = new SimpleDateFormat("dd/MM/yyyy HH:mm").format(Calendar.getInstance().getTime());
+        getBlock();
+        String bloque = String.valueOf(blockNumber);
+        String path = "C:\\MEIA/bloque_" + bloque + ".txt";
+        String indexPath = "C:\\MEIA/indice_canciones.txt";
         
+        //Actions to update and add songs to the master file
+        String songToAdd = user + "|" + playlist + "|" + songCode + "|" + user + "|" + date + "|1";
+        songToAdd += System.getProperty("line.separator");
+        Proyecto1.saveFile(path, songToAdd, true);
+        updateDescriptorBlock();
+        
+        //Actions to update and add songs to the index file (sorted)
+        ArrayList<String> indexData = Proyecto1.getFile("C:\\MEIA/indice_canciones.txt");
+        if (!indexData.isEmpty()){
+            index = indexData.size();
+            index++;
+        }
+        
+        String[] indexSong = new String[5];
+        String position = getPosition();
+        String key = user + "" + playlist + "" + songCode;
+        String pointer = " ";
+        indexSong[0] = String.valueOf(index);
+        indexSong[1] = String.valueOf(blockNumber) + "." + position;
+        indexSong[2] = key;
+        indexSong[3] = pointer; //pendiente actualizar este dato
+        indexSong[4] = "1";
+        
+        String indexSongToAdd = "";
+        for (int i = 0; i < indexSong.length; i++) {
+            indexSongToAdd += indexSong[i];
+            if (i != indexSong.length -1) {
+                indexSongToAdd += "|";
+            }
+        }
+        indexSongToAdd += System.getProperty("line.separator");
+
+        Proyecto1.saveFile(indexPath, indexSongToAdd, true);
+        updateDescriptorIndexFile();
+        JOptionPane.showMessageDialog(null, "canción agregada a la playlist","Operación exitosa", WIDTH);
+        index++;
+    }
+    
+    
+    private void showSongs(){   
+        ArrayList<String> fileData1 = Proyecto1.getFile("C:\\MEIA/bitacora_canciones.txt");
+        ArrayList<String> fileData2 = Proyecto1.getFile("C:\\MEIA/canciones.txt");
+        ArrayList<String> songs = new ArrayList<String>();
+        DefaultListModel modelSongs= new DefaultListModel();
+        JLSongs.setModel(modelSongs);
+        cbxSongs.removeAllItems();
+        
+        for (String line : fileData1) {
+            fileData2.add(line);
+        }
+        
+        for (String line : fileData2) {
+            String[] items = line.split("\\|");
+            songs.add(items[1]  + " - " + items[2] + System.getProperty("line.separator"));
+        }
+        
+        Collections.sort(songs);
+        for (String song : songs) {
+            modelSongs.addElement(song);
+            cbxSongs.addItem(song);
+        }   
+    }
+    
+    private void showPlaylists(){
+        ArrayList<String> filePlaylists = Proyecto1.getFile("C:\\MEIA/listas_canciones.txt");
+        ArrayList<String> fileBitacoraPlaylists = Proyecto1.getFile("C:\\MEIA/bitacora_listas_canciones.txt");
+        DefaultListModel modelPlaylist = new DefaultListModel();
+        JLPlaylists.setModel(modelPlaylist);
+        modelPlaylist.clear();
+        cbxPlaylist.removeAllItems();
+        
+        for (String userData : filePlaylists) {
+            String[] playlistUser = userData.split("\\|");
+            if (playlistUser[0].equals(Proyecto1.activeUser[0])) {
+                modelPlaylist.addElement(playlistUser[1]);
+                cbxPlaylist.addItem(playlistUser[1]);
+            }
+        }
+        
+        for (String userData : fileBitacoraPlaylists) {
+            String[] playlistUser = userData.split("\\|");
+            if (playlistUser[0].equals(Proyecto1.activeUser[0])) {
+                modelPlaylist.addElement(playlistUser[1]);
+                cbxPlaylist.addItem(playlistUser[1]);
+            }
+        }
+    }
+    
+    private String getSongCode(String songName){
+        String code = "";
+        String[] name = songName.split("\\-");
+        
+        ArrayList<String> fileSongs = Proyecto1.getFile("C:\\MEIA/canciones.txt");
+        ArrayList<String> fileBitacoraSongs = Proyecto1.getFile("C:\\MEIA/bitacora_canciones.txt");
+        
+        for (String songsData : fileSongs) {
+            String[] songs = songsData.split("\\|");
+            if (songs[1].equals(name[0].substring(0, name[0].length()-1))) {
+                code = songs[0];
+                break;
+            }
+        }
+        
+        for (String songsData : fileBitacoraSongs) {
+            String[] songs = songsData.split("\\|");
+            if (songs[1].equals(name[0].substring(0, name[0].length()-1))) {
+                code = songs[0];
+                break;
+            }
+        }
+        return code;
+    }
+    //gets the block number in which the new song should be entered
+    private void getBlock(){
+        String path = "C:\\MEIA/desc_bloque_"+ blockNumber +".txt";
+        ArrayList<String> data = Proyecto1.getFile(path);
+        if (data.isEmpty()) return;
+        String lineData = data.get(6);
+        int num = Integer.parseInt(lineData.substring(20, lineData.length()));
+        
+        ArrayList<String> usersData = Proyecto1.getFile("C:\\MEIA/bloque_"+blockNumber+".txt");
+        if (usersData.size() >= num) {
+            blockNumber++;
+        }
+    }
+    
+    private String getPosition(){
+        String position;
+        ArrayList<String> usersData = Proyecto1.getFile("C:\\MEIA/bloque_"+blockNumber+".txt");
+        int numOfElements = usersData.size();
+        position = String.valueOf(numOfElements++);
+        return position;
     }
     //Lets copy the active user information on data fields
     private void copyData(){
@@ -453,9 +654,8 @@ public class UserForm extends javax.swing.JFrame {
         if (data.isEmpty()) return;
         String lineData = data.get(6);
         int num = Integer.parseInt(lineData.substring(20, lineData.length()));
-        System.out.print(num);
+        
         ArrayList<String> usersData = Proyecto1.getFile("C:\\MEIA/bitacora_listas_canciones.txt");
-        System.out.print(usersData.size());
         if (usersData.size() >= num) {
             ArrayList<String> realUsersData = Proyecto1.getFile("C:\\MEIA/listas_canciones.txt");
             for (String item : usersData) {
@@ -523,6 +723,86 @@ public class UserForm extends javax.swing.JFrame {
         Proyecto1.saveFile(path, fileString, false);
     }
     
+    private void updateDescriptorBlock(){
+        String path;
+        String date = new SimpleDateFormat("dd/MM/yyyy HH:mm").format(Calendar.getInstance().getTime());
+        ArrayList<String> descData;
+        ArrayList<String> fileData;
+        String fileName;
+        String bloque = String.valueOf(blockNumber);
+        
+        path = "C:\\MEIA/desc_bloque_"+ bloque +".txt";
+        descData = Proyecto1.getFile(path);
+        fileData = Proyecto1.getFile("C:\\MEIA/bloque_"+ bloque +".txt");
+        fileName = "C:\\MEIA/bloque_"+ bloque +"txt"; 
+        String[] data = new String[7];
+        for (int i = 0; i < descData.size(); i++) {
+            data[i] = descData.get(i);
+        }
+        
+        data[0] = "Nombre simbolico: " + fileName;
+        if (data[1] == null) {
+                data[1] = "Fecha de creación: " + date;
+        }
+        if (data[2] == null) {
+            data[2] = "Usuario creación: " + SignInForm.lastUser;
+        }
+        data[3] = "Fecha de modificación: " + date;
+        data[4] = "Usuario de modificación: " + SignInForm.lastUser;
+        data[5] = "Registros: " + fileData.size();
+        data[6] = "Max reorganización: 3";
+        
+        String fileString = "";
+        for (int i = 0; i < data.length; i++) {
+            fileString += data[i];
+            if (i != data.length - 1) {
+                fileString += System.getProperty("line.separator");
+            }
+        }
+        
+        Proyecto1.saveFile(path, fileString, false); 
+    }
+    
+    private void updateDescriptorIndexFile(){
+        String path;
+        String date = new SimpleDateFormat("dd/MM/yyyy HH:mm").format(Calendar.getInstance().getTime());
+        ArrayList<String> descData;
+        ArrayList<String> fileData;
+        String fileName;
+        
+        path = "C:\\MEIA/desc_indice_canciones.txt";
+        descData = Proyecto1.getFile(path);
+        fileData = Proyecto1.getFile("C:\\MEIA/indice_canciones.txt");
+        fileName = "indice_canciones.txt";
+
+        
+        String[] data = new String[7];
+        for (int i = 0; i < descData.size(); i++) {
+            data[i] = descData.get(i);
+        }
+        
+        data[0] = "Nombre simbolico: " + fileName;
+        if (data[1] == null) {
+                data[1] = "Fecha de creación: " + date;
+        }
+        if (data[2] == null) {
+            data[2] = "Usuario creación: " + SignInForm.lastUser;
+        }
+        data[3] = "Fecha de modificación: " + date;
+        data[4] = "Usuario de modificación: " + SignInForm.lastUser;
+        data[5] = "Registros: " + fileData.size();
+        data[6] = "Max reorganización: 3";
+        
+        String fileString = "";
+        for (int i = 0; i < data.length; i++) {
+            fileString += data[i];
+            if (i != data.length - 1) {
+                fileString += System.getProperty("line.separator");
+            }
+        }
+        
+        Proyecto1.saveFile(path, fileString, false);
+    }
     public static void playSound(String songName) {
         // recibe como parámetro el nombre de la canción y su extensión
         try {
@@ -577,10 +857,15 @@ public class UserForm extends javax.swing.JFrame {
     private javax.swing.JButton DeleteJB;
     private javax.swing.JTextField EmailTF;
     private javax.swing.JButton JBCreatePlaylist;
+    private javax.swing.JButton JBaddSong;
+    private javax.swing.JList<String> JLPlaylists;
+    private javax.swing.JList<String> JLSongs;
     private javax.swing.JTextField JTplaylistName;
     private javax.swing.JTextField PasswordTF;
     private javax.swing.JTextField PathTF;
     private javax.swing.JTextField PhoneNumberTF;
+    private javax.swing.JComboBox<String> cbxPlaylist;
+    private javax.swing.JComboBox<String> cbxSongs;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
@@ -588,8 +873,12 @@ public class UserForm extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel5;
     private javax.swing.JLabel jLabel6;
     private javax.swing.JLabel jLabel7;
+    private javax.swing.JLabel jLabel8;
+    private javax.swing.JLabel jLabel9;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;
+    private javax.swing.JScrollPane jScrollPane1;
+    private javax.swing.JScrollPane jScrollPane2;
     private javax.swing.JTabbedPane jTabbedPane1;
     // End of variables declaration//GEN-END:variables
 }
