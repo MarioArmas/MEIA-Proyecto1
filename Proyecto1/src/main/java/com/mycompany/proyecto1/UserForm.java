@@ -71,13 +71,21 @@ public class UserForm extends javax.swing.JFrame {
         jLabel9 = new javax.swing.JLabel();
         cbxPlaylist = new javax.swing.JComboBox<>();
         cbxSongs = new javax.swing.JComboBox<>();
-        jScrollPane1 = new javax.swing.JScrollPane();
-        JLSongs = new javax.swing.JList<>();
-        jScrollPane2 = new javax.swing.JScrollPane();
-        JLPlaylists = new javax.swing.JList<>();
         JBaddSong = new javax.swing.JButton();
         PlayMusicBtn = new javax.swing.JButton();
         StopMusicBtn = new javax.swing.JButton();
+        jPanel3 = new javax.swing.JPanel();
+        jScrollPane3 = new javax.swing.JScrollPane();
+        JLSystemSongs = new javax.swing.JList<>();
+        jLabel10 = new javax.swing.JLabel();
+        jLabel11 = new javax.swing.JLabel();
+        jScrollPane4 = new javax.swing.JScrollPane();
+        JLuserPlaylists = new javax.swing.JList<>();
+        jLabel12 = new javax.swing.JLabel();
+        cbxPlaylistsData = new javax.swing.JComboBox<>();
+        JBshow = new javax.swing.JButton();
+        jScrollPane5 = new javax.swing.JScrollPane();
+        JLPlaylistSongs = new javax.swing.JList<>();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         addWindowListener(new java.awt.event.WindowAdapter() {
@@ -222,10 +230,6 @@ public class UserForm extends javax.swing.JFrame {
 
         jLabel9.setText("Add songs to a playlist");
 
-        jScrollPane1.setViewportView(JLSongs);
-
-        jScrollPane2.setViewportView(JLPlaylists);
-
         JBaddSong.setText("Add song");
         JBaddSong.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -279,11 +283,7 @@ public class UserForm extends javax.swing.JFrame {
                                 .addComponent(PlayMusicBtn)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                                 .addComponent(StopMusicBtn)))
-                        .addGap(15, 15, 15)
-                        .addComponent(jScrollPane2, javax.swing.GroupLayout.DEFAULT_SIZE, 221, Short.MAX_VALUE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 231, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(44, 44, 44))))
+                        .addGap(44, 517, Short.MAX_VALUE))))
         );
         jPanel2Layout.setVerticalGroup(
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -295,30 +295,87 @@ public class UserForm extends javax.swing.JFrame {
                     .addComponent(JBCreatePlaylist)
                     .addComponent(jLabel6)
                     .addComponent(JTplaylistName, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(jPanel2Layout.createSequentialGroup()
-                        .addGap(50, 50, 50)
-                        .addComponent(jLabel8)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(jLabel9)
-                        .addGap(18, 18, 18)
-                        .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(cbxPlaylist, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(cbxSongs, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(JBaddSong))
-                        .addGap(43, 43, 43)
-                        .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(PlayMusicBtn)
-                            .addComponent(StopMusicBtn))
-                        .addContainerGap())
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel2Layout.createSequentialGroup()
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 252, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 183, javax.swing.GroupLayout.PREFERRED_SIZE)))))
+                .addGap(50, 50, 50)
+                .addComponent(jLabel8)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jLabel9)
+                .addGap(18, 18, 18)
+                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(cbxPlaylist, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(cbxSongs, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(JBaddSong))
+                .addGap(43, 43, 43)
+                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(PlayMusicBtn)
+                    .addComponent(StopMusicBtn))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
         jTabbedPane1.addTab("Playlists", jPanel2);
+
+        jScrollPane3.setViewportView(JLSystemSongs);
+
+        jLabel10.setText("System Songs");
+
+        jLabel11.setText("Your playlists");
+
+        jScrollPane4.setViewportView(JLuserPlaylists);
+
+        jLabel12.setText("Select a playlist");
+
+        JBshow.setText("Show songs");
+        JBshow.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                JBshowActionPerformed(evt);
+            }
+        });
+
+        jScrollPane5.setViewportView(JLPlaylistSongs);
+
+        javax.swing.GroupLayout jPanel3Layout = new javax.swing.GroupLayout(jPanel3);
+        jPanel3.setLayout(jPanel3Layout);
+        jPanel3Layout.setHorizontalGroup(
+            jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel3Layout.createSequentialGroup()
+                .addContainerGap()
+                .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(jPanel3Layout.createSequentialGroup()
+                        .addComponent(jScrollPane3, javax.swing.GroupLayout.PREFERRED_SIZE, 183, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(18, 18, 18)
+                        .addComponent(jScrollPane4, javax.swing.GroupLayout.PREFERRED_SIZE, 182, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(127, 127, 127)
+                        .addComponent(jScrollPane5, javax.swing.GroupLayout.PREFERRED_SIZE, 218, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(jPanel3Layout.createSequentialGroup()
+                        .addComponent(jLabel10)
+                        .addGap(124, 124, 124)
+                        .addComponent(jLabel11)
+                        .addGap(156, 156, 156)
+                        .addComponent(jLabel12)
+                        .addGap(18, 18, 18)
+                        .addComponent(cbxPlaylistsData, javax.swing.GroupLayout.PREFERRED_SIZE, 145, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addComponent(JBshow)))
+                .addContainerGap(84, Short.MAX_VALUE))
+        );
+        jPanel3Layout.setVerticalGroup(
+            jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel3Layout.createSequentialGroup()
+                .addContainerGap()
+                .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel10)
+                    .addComponent(jLabel11)
+                    .addComponent(jLabel12)
+                    .addComponent(cbxPlaylistsData, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(JBshow))
+                .addGap(4, 4, 4)
+                .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                    .addComponent(jScrollPane3)
+                    .addComponent(jScrollPane4)
+                    .addComponent(jScrollPane5, javax.swing.GroupLayout.DEFAULT_SIZE, 215, Short.MAX_VALUE))
+                .addContainerGap(15, Short.MAX_VALUE))
+        );
+
+        jTabbedPane1.addTab("Playlist data", jPanel3);
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -453,6 +510,10 @@ public class UserForm extends javax.swing.JFrame {
             clip.stop();
         }
     }//GEN-LAST:event_formWindowClosing
+
+    private void JBshowActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_JBshowActionPerformed
+        showPlaylistSongs();
+    }//GEN-LAST:event_JBshowActionPerformed
     
     private void addSongToPlaylist(){
         String playlist = cbxPlaylist.getSelectedItem().toString();
@@ -508,7 +569,7 @@ public class UserForm extends javax.swing.JFrame {
         ArrayList<String> fileData2 = Proyecto1.getFile("C:\\MEIA/canciones.txt");
         ArrayList<String> songs = new ArrayList<String>();
         DefaultListModel modelSongs= new DefaultListModel();
-        JLSongs.setModel(modelSongs);
+        JLSystemSongs.setModel(modelSongs);
         cbxSongs.removeAllItems();
         
         for (String line : fileData1) {
@@ -531,7 +592,7 @@ public class UserForm extends javax.swing.JFrame {
         ArrayList<String> filePlaylists = Proyecto1.getFile("C:\\MEIA/listas_canciones.txt");
         ArrayList<String> fileBitacoraPlaylists = Proyecto1.getFile("C:\\MEIA/bitacora_listas_canciones.txt");
         DefaultListModel modelPlaylist = new DefaultListModel();
-        JLPlaylists.setModel(modelPlaylist);
+        JLuserPlaylists.setModel(modelPlaylist);
         modelPlaylist.clear();
         cbxPlaylist.removeAllItems();
         
@@ -540,6 +601,7 @@ public class UserForm extends javax.swing.JFrame {
             if (playlistUser[0].equals(Proyecto1.activeUser[0])) {
                 modelPlaylist.addElement(playlistUser[1]);
                 cbxPlaylist.addItem(playlistUser[1]);
+                cbxPlaylistsData.addItem(playlistUser[1]);
             }
         }
         
@@ -548,6 +610,57 @@ public class UserForm extends javax.swing.JFrame {
             if (playlistUser[0].equals(Proyecto1.activeUser[0])) {
                 modelPlaylist.addElement(playlistUser[1]);
                 cbxPlaylist.addItem(playlistUser[1]);
+                cbxPlaylistsData.addItem(playlistUser[1]);
+            }
+        }
+    }
+    private void showPlaylistSongs(){
+        String path = "C:\\MEIA";
+        String playlist = cbxPlaylistsData.getSelectedItem().toString();       
+        ArrayList<String> fileSongs = Proyecto1.getFile("C:\\MEIA/canciones.txt");
+        ArrayList<String> fileBitacoraPlaylists = Proyecto1.getFile("C:\\MEIA/bitacora_canciones.txt");
+        
+        DefaultListModel modelPlaylist = new DefaultListModel();
+        JLPlaylistSongs.setModel(modelPlaylist);
+        modelPlaylist.clear();
+        
+        int counter = 0;
+        
+        File[] files = new File(path).listFiles(file -> file.isFile());
+        for(File file : files){
+            String filename = file.getName();
+            if(filename.contains("bloque")){
+                counter++;
+            }
+        }
+        counter = counter/2;
+
+        for(int i = 1; i <= counter; i++){
+            String blockPath = "C:\\MEIA/bloque_"+i+".txt";
+            ArrayList<String> filePlaylistsBlock = Proyecto1.getFile(blockPath);
+            
+            for (String userData : filePlaylistsBlock) {
+                String codeSongFinded;
+                String[] playlistUser = userData.split("\\|");
+
+                if (playlistUser[1].equals(playlist)) {
+                    codeSongFinded = playlistUser[2];
+                    
+                    //get the song name
+                    for (String songsData : fileSongs) {
+                        String[] playlistSongs = songsData.split("\\|");
+                        if (playlistSongs[0].equals(codeSongFinded)) {  
+                            modelPlaylist.addElement(playlistSongs[1] + " - " + playlistSongs[2]);
+                        }                        
+                    }
+
+                    for (String songsData : fileBitacoraPlaylists) {
+                        String[] playlistSongs = songsData.split("\\|");
+                        if (playlistSongs[0].equals(codeSongFinded)) {
+                            modelPlaylist.addElement(playlistSongs[1] + " - " + playlistSongs[2]);
+                        }
+                    }
+                }
             }
         }
     }
@@ -905,8 +1018,10 @@ public class UserForm extends javax.swing.JFrame {
     private javax.swing.JTextField EmailTF;
     private javax.swing.JButton JBCreatePlaylist;
     private javax.swing.JButton JBaddSong;
-    private javax.swing.JList<String> JLPlaylists;
-    private javax.swing.JList<String> JLSongs;
+    private javax.swing.JButton JBshow;
+    private javax.swing.JList<String> JLPlaylistSongs;
+    private javax.swing.JList<String> JLSystemSongs;
+    private javax.swing.JList<String> JLuserPlaylists;
     private javax.swing.JTextField JTplaylistName;
     private javax.swing.JTextField PasswordTF;
     private javax.swing.JTextField PathTF;
@@ -914,8 +1029,12 @@ public class UserForm extends javax.swing.JFrame {
     private javax.swing.JButton PlayMusicBtn;
     private javax.swing.JButton StopMusicBtn;
     private javax.swing.JComboBox<String> cbxPlaylist;
+    private javax.swing.JComboBox<String> cbxPlaylistsData;
     private javax.swing.JComboBox<String> cbxSongs;
     private javax.swing.JLabel jLabel1;
+    private javax.swing.JLabel jLabel10;
+    private javax.swing.JLabel jLabel11;
+    private javax.swing.JLabel jLabel12;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
@@ -926,8 +1045,10 @@ public class UserForm extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel9;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;
-    private javax.swing.JScrollPane jScrollPane1;
-    private javax.swing.JScrollPane jScrollPane2;
+    private javax.swing.JPanel jPanel3;
+    private javax.swing.JScrollPane jScrollPane3;
+    private javax.swing.JScrollPane jScrollPane4;
+    private javax.swing.JScrollPane jScrollPane5;
     private javax.swing.JTabbedPane jTabbedPane1;
     // End of variables declaration//GEN-END:variables
 }
