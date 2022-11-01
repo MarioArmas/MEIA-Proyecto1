@@ -7,12 +7,15 @@ package com.mycompany.proyecto1;
 import static java.awt.image.ImageObserver.WIDTH;
 import java.util.ArrayList;
 import java.io.File;
+import java.io.IOException;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Collections;
 import javax.sound.sampled.AudioInputStream;
 import javax.sound.sampled.AudioSystem;
 import javax.sound.sampled.Clip;
+import javax.sound.sampled.LineUnavailableException;
+import javax.sound.sampled.UnsupportedAudioFileException;
 import javax.swing.DefaultListModel;
 import javax.swing.JOptionPane;
 
@@ -26,6 +29,7 @@ public class UserForm extends javax.swing.JFrame {
     private static final String BITACORA_USER_PLAYLISTS_FILE = "C:\\MEIA/bitacora_listas_canciones.txt";
     static int blockNumber = 1;
     static int index = 0;
+    public static Clip clip;
     
     /**
      * Creates new form UserForm
@@ -72,9 +76,14 @@ public class UserForm extends javax.swing.JFrame {
         jScrollPane2 = new javax.swing.JScrollPane();
         JLPlaylists = new javax.swing.JList<>();
         JBaddSong = new javax.swing.JButton();
+        PlayMusicBtn = new javax.swing.JButton();
+        StopMusicBtn = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         addWindowListener(new java.awt.event.WindowAdapter() {
+            public void windowClosing(java.awt.event.WindowEvent evt) {
+                formWindowClosing(evt);
+            }
             public void windowOpened(java.awt.event.WindowEvent evt) {
                 formWindowOpened(evt);
             }
@@ -224,6 +233,20 @@ public class UserForm extends javax.swing.JFrame {
             }
         });
 
+        PlayMusicBtn.setText("Play Music");
+        PlayMusicBtn.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                PlayMusicBtnActionPerformed(evt);
+            }
+        });
+
+        StopMusicBtn.setText("Stop music");
+        StopMusicBtn.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                StopMusicBtnActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
         jPanel2.setLayout(jPanel2Layout);
         jPanel2Layout.setHorizontalGroup(
@@ -250,7 +273,12 @@ public class UserForm extends javax.swing.JFrame {
                                 .addGap(18, 18, 18)
                                 .addComponent(cbxSongs, javax.swing.GroupLayout.PREFERRED_SIZE, 120, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addGap(18, 18, 18)
-                                .addComponent(JBaddSong)))
+                                .addComponent(JBaddSong))
+                            .addGroup(jPanel2Layout.createSequentialGroup()
+                                .addGap(48, 48, 48)
+                                .addComponent(PlayMusicBtn)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                                .addComponent(StopMusicBtn)))
                         .addGap(15, 15, 15)
                         .addComponent(jScrollPane2, javax.swing.GroupLayout.DEFAULT_SIZE, 221, Short.MAX_VALUE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
@@ -278,6 +306,10 @@ public class UserForm extends javax.swing.JFrame {
                             .addComponent(cbxPlaylist, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(cbxSongs, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(JBaddSong))
+                        .addGap(43, 43, 43)
+                        .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(PlayMusicBtn)
+                            .addComponent(StopMusicBtn))
                         .addContainerGap())
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel2Layout.createSequentialGroup()
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
@@ -405,6 +437,22 @@ public class UserForm extends javax.swing.JFrame {
     private void JBaddSongActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_JBaddSongActionPerformed
         addSongToPlaylist();
     }//GEN-LAST:event_JBaddSongActionPerformed
+
+    private void PlayMusicBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_PlayMusicBtnActionPerformed
+        playSound("audio.wav");
+    }//GEN-LAST:event_PlayMusicBtnActionPerformed
+
+    private void StopMusicBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_StopMusicBtnActionPerformed
+        if (clip != null) {
+            clip.stop();
+        }
+    }//GEN-LAST:event_StopMusicBtnActionPerformed
+
+    private void formWindowClosing(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowClosing
+        if (clip != null) {
+            clip.stop();
+        }
+    }//GEN-LAST:event_formWindowClosing
     
     private void addSongToPlaylist(){
         String playlist = cbxPlaylist.getSelectedItem().toString();
@@ -807,12 +855,11 @@ public class UserForm extends javax.swing.JFrame {
         // recibe como parámetro el nombre de la canción y su extensión
         try {
             AudioInputStream audioInputStream = AudioSystem.getAudioInputStream(new File("C:\\MEIA/songs/" + songName).getAbsoluteFile());
-            Clip clip = AudioSystem.getClip();
+            clip = AudioSystem.getClip();
             clip.open(audioInputStream);
             clip.start();
-        } catch(Exception ex) {
-            System.out.println("Error with playing sound.");
-            ex.printStackTrace();
+        } catch(IOException | LineUnavailableException | UnsupportedAudioFileException ex) {
+           JOptionPane.showMessageDialog(null, "Error with playing sound.", "Error!", WIDTH);
         }
     }
     
@@ -864,6 +911,8 @@ public class UserForm extends javax.swing.JFrame {
     private javax.swing.JTextField PasswordTF;
     private javax.swing.JTextField PathTF;
     private javax.swing.JTextField PhoneNumberTF;
+    private javax.swing.JButton PlayMusicBtn;
+    private javax.swing.JButton StopMusicBtn;
     private javax.swing.JComboBox<String> cbxPlaylist;
     private javax.swing.JComboBox<String> cbxSongs;
     private javax.swing.JLabel jLabel1;

@@ -78,8 +78,15 @@ public class AdminForm extends javax.swing.JFrame {
         ArtistNameTxt = new javax.swing.JTextField();
         jLabel10 = new javax.swing.JLabel();
         jLabel11 = new javax.swing.JLabel();
+        PlayMusicBtn = new javax.swing.JButton();
+        StopMusicBtn = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        addWindowListener(new java.awt.event.WindowAdapter() {
+            public void windowClosing(java.awt.event.WindowEvent evt) {
+                formWindowClosing(evt);
+            }
+        });
 
         BackupBtn.setText("Backup");
         BackupBtn.addActionListener(new java.awt.event.ActionListener() {
@@ -255,6 +262,20 @@ public class AdminForm extends javax.swing.JFrame {
 
         jLabel11.setText("Nombre del artista:");
 
+        PlayMusicBtn.setText("Play music");
+        PlayMusicBtn.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                PlayMusicBtnActionPerformed(evt);
+            }
+        });
+
+        StopMusicBtn.setText("Stop music");
+        StopMusicBtn.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                StopMusicBtnActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
         jPanel2.setLayout(jPanel2Layout);
         jPanel2Layout.setHorizontalGroup(
@@ -268,6 +289,8 @@ public class AdminForm extends javax.swing.JFrame {
                             .addComponent(jLabel10, javax.swing.GroupLayout.PREFERRED_SIZE, 130, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(SongNameTxt, javax.swing.GroupLayout.PREFERRED_SIZE, 120, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+                                .addComponent(StopMusicBtn, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                .addComponent(PlayMusicBtn, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                                 .addComponent(AddSongBtn, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, 120, Short.MAX_VALUE)
                                 .addComponent(ArtistNameTxt, javax.swing.GroupLayout.Alignment.LEADING)))
                         .addGap(0, 0, Short.MAX_VALUE)))
@@ -279,7 +302,7 @@ public class AdminForm extends javax.swing.JFrame {
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel2Layout.createSequentialGroup()
                 .addGap(16, 16, 16)
-                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                     .addGroup(jPanel2Layout.createSequentialGroup()
                         .addGap(4, 4, 4)
                         .addComponent(jLabel10)
@@ -289,12 +312,14 @@ public class AdminForm extends javax.swing.JFrame {
                         .addComponent(jLabel11)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(ArtistNameTxt, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                         .addComponent(AddSongBtn)
-                        .addGap(38, 38, 38))
-                    .addGroup(jPanel2Layout.createSequentialGroup()
-                        .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 256, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addContainerGap(37, Short.MAX_VALUE))))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(PlayMusicBtn)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addComponent(StopMusicBtn))
+                    .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 256, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addContainerGap(37, Short.MAX_VALUE))
         );
 
         jTabbedPane1.addTab("Songs", jPanel2);
@@ -398,6 +423,22 @@ public class AdminForm extends javax.swing.JFrame {
         
         PathProfilePictureTF.setText(sourcePath);
     }//GEN-LAST:event_jButton2ActionPerformed
+
+    private void PlayMusicBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_PlayMusicBtnActionPerformed
+        UserForm.playSound("audio.wav");
+    }//GEN-LAST:event_PlayMusicBtnActionPerformed
+
+    private void StopMusicBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_StopMusicBtnActionPerformed
+        if (UserForm.clip != null) {
+            UserForm.clip.stop();
+        }
+    }//GEN-LAST:event_StopMusicBtnActionPerformed
+
+    private void formWindowClosing(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowClosing
+        if (UserForm.clip != null) {
+            UserForm.clip.stop();
+        }
+    }//GEN-LAST:event_formWindowClosing
 
     /**
      * @param args the command line arguments
@@ -1115,9 +1156,11 @@ public class AdminForm extends javax.swing.JFrame {
     private javax.swing.JTextField PasswordTF;
     private javax.swing.JTextField PathProfilePictureTF;
     private javax.swing.JTextField PhoneNumberTF;
+    private javax.swing.JButton PlayMusicBtn;
     private javax.swing.JTextField RolTF;
     private javax.swing.JButton SearchBtn;
     private javax.swing.JTextField SongNameTxt;
+    private javax.swing.JButton StopMusicBtn;
     private javax.swing.JButton UpdateBtn;
     private javax.swing.JTextField UserTF;
     private javax.swing.JButton jButton2;

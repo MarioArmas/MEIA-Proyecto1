@@ -8,6 +8,9 @@
     <SyntheticProperty name="formSizePolicy" type="int" value="1"/>
     <SyntheticProperty name="generateCenter" type="boolean" value="false"/>
   </SyntheticProperties>
+  <Events>
+    <EventHandler event="windowClosing" listener="java.awt.event.WindowListener" parameters="java.awt.event.WindowEvent" handler="formWindowClosing"/>
+  </Events>
   <AuxValues>
     <AuxValue name="FormSettings_autoResourcing" type="java.lang.Integer" value="0"/>
     <AuxValue name="FormSettings_autoSetComponentName" type="java.lang.Boolean" value="false"/>
@@ -309,6 +312,8 @@
                                   <Component id="jLabel10" alignment="0" min="-2" pref="130" max="-2" attributes="0"/>
                                   <Component id="SongNameTxt" alignment="0" min="-2" pref="120" max="-2" attributes="0"/>
                                   <Group type="103" alignment="0" groupAlignment="1" max="-2" attributes="0">
+                                      <Component id="StopMusicBtn" alignment="0" max="32767" attributes="0"/>
+                                      <Component id="PlayMusicBtn" alignment="0" max="32767" attributes="0"/>
                                       <Component id="AddSongBtn" alignment="0" pref="120" max="32767" attributes="0"/>
                                       <Component id="ArtistNameTxt" alignment="0" max="32767" attributes="0"/>
                                   </Group>
@@ -326,7 +331,7 @@
               <Group type="103" groupAlignment="0" attributes="0">
                   <Group type="102" alignment="0" attributes="0">
                       <EmptySpace min="-2" pref="16" max="-2" attributes="0"/>
-                      <Group type="103" groupAlignment="0" attributes="0">
+                      <Group type="103" groupAlignment="0" max="-2" attributes="0">
                           <Group type="102" attributes="0">
                               <EmptySpace min="-2" pref="4" max="-2" attributes="0"/>
                               <Component id="jLabel10" min="-2" max="-2" attributes="0"/>
@@ -336,15 +341,16 @@
                               <Component id="jLabel11" min="-2" max="-2" attributes="0"/>
                               <EmptySpace max="-2" attributes="0"/>
                               <Component id="ArtistNameTxt" min="-2" max="-2" attributes="0"/>
-                              <EmptySpace max="32767" attributes="0"/>
+                              <EmptySpace type="unrelated" max="-2" attributes="0"/>
                               <Component id="AddSongBtn" min="-2" max="-2" attributes="0"/>
-                              <EmptySpace min="-2" pref="38" max="-2" attributes="0"/>
+                              <EmptySpace max="32767" attributes="0"/>
+                              <Component id="PlayMusicBtn" min="-2" max="-2" attributes="0"/>
+                              <EmptySpace type="unrelated" max="-2" attributes="0"/>
+                              <Component id="StopMusicBtn" min="-2" max="-2" attributes="0"/>
                           </Group>
-                          <Group type="102" attributes="0">
-                              <Component id="jScrollPane1" min="-2" pref="256" max="-2" attributes="0"/>
-                              <EmptySpace pref="37" max="32767" attributes="0"/>
-                          </Group>
+                          <Component id="jScrollPane1" min="-2" pref="256" max="-2" attributes="0"/>
                       </Group>
+                      <EmptySpace pref="37" max="32767" attributes="0"/>
                   </Group>
               </Group>
             </DimensionLayout>
@@ -387,6 +393,22 @@
               <Properties>
                 <Property name="text" type="java.lang.String" value="Nombre del artista:"/>
               </Properties>
+            </Component>
+            <Component class="javax.swing.JButton" name="PlayMusicBtn">
+              <Properties>
+                <Property name="text" type="java.lang.String" value="Play music"/>
+              </Properties>
+              <Events>
+                <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="PlayMusicBtnActionPerformed"/>
+              </Events>
+            </Component>
+            <Component class="javax.swing.JButton" name="StopMusicBtn">
+              <Properties>
+                <Property name="text" type="java.lang.String" value="Stop music"/>
+              </Properties>
+              <Events>
+                <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="StopMusicBtnActionPerformed"/>
+              </Events>
             </Component>
           </SubComponents>
         </Container>

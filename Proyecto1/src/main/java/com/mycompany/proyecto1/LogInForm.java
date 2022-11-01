@@ -128,7 +128,7 @@ public class LogInForm extends javax.swing.JFrame {
                     if(userFinded[9].equals("1")){
                         AdminForm adminForm = new AdminForm();
                         adminForm.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
-                        adminForm.setSize(430, 350);
+                        adminForm.setSize(550, 450);
                         adminForm.setVisible(true);
                         SignInForm.lastUser = txtUser.getText();
                     }

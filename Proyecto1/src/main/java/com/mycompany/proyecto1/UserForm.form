@@ -9,6 +9,7 @@
     <SyntheticProperty name="generateCenter" type="boolean" value="false"/>
   </SyntheticProperties>
   <Events>
+    <EventHandler event="windowClosing" listener="java.awt.event.WindowListener" parameters="java.awt.event.WindowEvent" handler="formWindowClosing"/>
     <EventHandler event="windowOpened" listener="java.awt.event.WindowListener" parameters="java.awt.event.WindowEvent" handler="formWindowOpened"/>
   </Events>
   <AuxValues>
@@ -233,6 +234,12 @@
                                       <EmptySpace type="separate" max="-2" attributes="0"/>
                                       <Component id="JBaddSong" min="-2" max="-2" attributes="0"/>
                                   </Group>
+                                  <Group type="102" alignment="0" attributes="0">
+                                      <EmptySpace min="-2" pref="48" max="-2" attributes="0"/>
+                                      <Component id="PlayMusicBtn" min="-2" max="-2" attributes="0"/>
+                                      <EmptySpace type="unrelated" max="-2" attributes="0"/>
+                                      <Component id="StopMusicBtn" min="-2" max="-2" attributes="0"/>
+                                  </Group>
                               </Group>
                               <EmptySpace min="-2" pref="15" max="-2" attributes="0"/>
                               <Component id="jScrollPane2" pref="221" max="32767" attributes="0"/>
@@ -266,6 +273,11 @@
                                   <Component id="cbxPlaylist" alignment="3" min="-2" max="-2" attributes="0"/>
                                   <Component id="cbxSongs" alignment="3" min="-2" max="-2" attributes="0"/>
                                   <Component id="JBaddSong" alignment="3" min="-2" max="-2" attributes="0"/>
+                              </Group>
+                              <EmptySpace min="-2" pref="43" max="-2" attributes="0"/>
+                              <Group type="103" groupAlignment="3" attributes="0">
+                                  <Component id="PlayMusicBtn" alignment="3" min="-2" max="-2" attributes="0"/>
+                                  <Component id="StopMusicBtn" alignment="3" min="-2" max="-2" attributes="0"/>
                               </Group>
                               <EmptySpace max="32767" attributes="0"/>
                           </Group>
@@ -376,6 +388,22 @@
               </Properties>
               <Events>
                 <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="JBaddSongActionPerformed"/>
+              </Events>
+            </Component>
+            <Component class="javax.swing.JButton" name="PlayMusicBtn">
+              <Properties>
+                <Property name="text" type="java.lang.String" value="Play Music"/>
+              </Properties>
+              <Events>
+                <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="PlayMusicBtnActionPerformed"/>
+              </Events>
+            </Component>
+            <Component class="javax.swing.JButton" name="StopMusicBtn">
+              <Properties>
+                <Property name="text" type="java.lang.String" value="Stop music"/>
+              </Properties>
+              <Events>
+                <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="StopMusicBtnActionPerformed"/>
               </Events>
             </Component>
           </SubComponents>
