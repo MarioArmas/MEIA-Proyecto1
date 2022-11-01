@@ -28,7 +28,7 @@ public class UserForm extends javax.swing.JFrame {
     private static final String USER_BITACORA_FILE = "C:\\MEIA/bitacora_usuario.txt";
     private static final String BITACORA_USER_PLAYLISTS_FILE = "C:\\MEIA/bitacora_listas_canciones.txt";
     static int blockNumber = 1;
-    static int index = 0;
+    static int index = 1;
     public static Clip clip;
     
     /**
@@ -463,6 +463,11 @@ public class UserForm extends javax.swing.JFrame {
             return;
         }
         
+        if(searchPlaylist(JTplaylistName.getText())){
+            JOptionPane.showMessageDialog(null, "Ya existe esta playlist","Error!", WIDTH);
+            return;
+        }
+        
         String[] Playlist = new String[5];
         String date = new SimpleDateFormat("dd/MM/yyyy HH:mm").format(Calendar.getInstance().getTime());
         
@@ -525,13 +530,19 @@ public class UserForm extends javax.swing.JFrame {
         String path = "C:\\MEIA/bloque_" + bloque + ".txt";
         String indexPath = "C:\\MEIA/indice_canciones.txt";
         
+        //Validate that the song doesn't exist on the playlist selected. 
+        if(searchSongOnPlaylist(songCode)){
+            JOptionPane.showMessageDialog(null, "Ya existe esta canción en la playlist seleccionada","Error!", WIDTH);
+            return;
+        }
+        
         //Actions to update and add songs to the master file
         String songToAdd = user + "|" + playlist + "|" + songCode + "|" + user + "|" + date + "|1";
-        songToAdd += System.getProperty("line.separator");
+        songToAdd += System.getProperty("line.separator");  
         Proyecto1.saveFile(path, songToAdd, true);
         updateDescriptorBlock();
         
-        //Actions to update and add songs to the index file (sorted)
+        //Actions to update and add songs to the index file (sorted).
         ArrayList<String> indexData = Proyecto1.getFile("C:\\MEIA/indice_canciones.txt");
         if (!indexData.isEmpty()){
             index = indexData.size();
@@ -614,6 +625,7 @@ public class UserForm extends javax.swing.JFrame {
             }
         }
     }
+    
     private void showPlaylistSongs(){
         String path = "C:\\MEIA";
         String playlist = cbxPlaylistsData.getSelectedItem().toString();       
@@ -758,6 +770,7 @@ public class UserForm extends javax.swing.JFrame {
             }
         }
     }
+    
     private void delete() {
         String userName = Proyecto1.activeUser[0];
         if (userName.equals("")){
@@ -807,6 +820,61 @@ public class UserForm extends javax.swing.JFrame {
                 return;
             }
         }
+    }
+    
+    private static boolean searchPlaylist(String playlist) {
+        ArrayList<String> filePlaylists = Proyecto1.getFile("C:\\MEIA/listas_canciones.txt");
+        ArrayList<String> fileBitacoraPlaylists = Proyecto1.getFile("C:\\MEIA/bitacora_listas_canciones.txt");
+        boolean status = false;
+        
+        for (String playlistData : filePlaylists) {
+            String[] user = playlistData.split("\\|");
+            if (user[0].equals(Proyecto1.activeUser[0]) && user[1].equals(playlist)) {
+                status = true;
+                break;
+            }
+        }
+        
+        for (String playlistData : fileBitacoraPlaylists) {
+            String[] user = playlistData.split("\\|");
+            if (user[0].equals(Proyecto1.activeUser[0]) && user[1].equals(playlist)) {
+                status = true;
+                break;
+            }
+        }
+        return status;
+    }
+    
+    private boolean searchSongOnPlaylist(String songCode){
+        boolean status = false;
+        
+        String path = "C:\\MEIA";
+        String playlist = cbxPlaylist.getSelectedItem().toString();       
+        int counter = 0;
+        
+        File[] files = new File(path).listFiles(file -> file.isFile());
+        for(File file : files){
+            String filename = file.getName();
+            if(filename.contains("bloque")){
+                counter++;
+            }
+        }
+        counter = counter/2;
+
+        for(int i = 1; i <= counter; i++){
+            String blockPath = "C:\\MEIA/bloque_"+i+".txt";
+            ArrayList<String> filePlaylistsBlock = Proyecto1.getFile(blockPath);
+            
+            for (String userData : filePlaylistsBlock) {
+                String[] playlistUser = userData.split("\\|");
+
+                if (playlistUser[1].equals(playlist) && playlistUser[2].equals(songCode)){
+                    status = true;
+                    break;
+                }
+            }
+        }
+        return status;
     }
     
     private void reorganizePlaylist(){
@@ -964,6 +1032,7 @@ public class UserForm extends javax.swing.JFrame {
         
         Proyecto1.saveFile(path, fileString, false);
     }
+   
     public static void playSound(String songName) {
         // recibe como parámetro el nombre de la canción y su extensión
         try {
