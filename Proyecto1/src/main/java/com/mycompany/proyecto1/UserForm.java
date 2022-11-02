@@ -546,7 +546,10 @@ public class UserForm extends javax.swing.JFrame {
         ArrayList<String> indexData = Proyecto1.getFile("C:\\MEIA/indice_canciones.txt");
         if (!indexData.isEmpty()){
             index = indexData.size();
-            index++;
+            index++;  
+        }
+        if (indexData.size() > 1){
+            ChangeDataFormat();
         }
         
         String[] indexSong = new String[5];
@@ -556,20 +559,25 @@ public class UserForm extends javax.swing.JFrame {
         indexSong[0] = String.valueOf(index);
         indexSong[1] = String.valueOf(blockNumber) + "." + position;
         indexSong[2] = key;
-        indexSong[3] = pointer; //pendiente actualizar este dato
+        indexSong[3] = pointer; 
         indexSong[4] = "1";
         
-        String indexSongToAdd = "";
-        for (int i = 0; i < indexSong.length; i++) {
-            indexSongToAdd += indexSong[i];
-            if (i != indexSong.length -1) {
-                indexSongToAdd += "|";
-            }
-        }
-        indexSongToAdd += System.getProperty("line.separator");
-
-        Proyecto1.saveFile(indexPath, indexSongToAdd, true);
+        String reorderSongToAdd = indexSong[2] + "|" + indexSong[0] + "|" + indexSong[1] + "|" + indexSong[3] + "|" + indexSong[4];
+        reorderSongToAdd += System.getProperty("line.separator"); 
+        Proyecto1.saveFile(indexPath, reorderSongToAdd, true);
         updateDescriptorIndexFile();
+        
+        ArrayList<String> realUsersData = Proyecto1.getFile(indexPath);  
+        Collections.sort(realUsersData);
+        
+        String fileText = "";
+            for (String item : realUsersData) {
+                fileText += item + System.getProperty("line.separator");
+            }
+        Proyecto1.saveFile(indexPath,"", false);
+        Proyecto1.saveFile(indexPath, fileText, true);
+        reorganizeIndex();
+        
         JOptionPane.showMessageDialog(null, "canción agregada a la playlist","Operación exitosa", WIDTH);
         index++;
     }
@@ -701,7 +709,7 @@ public class UserForm extends javax.swing.JFrame {
         }
         return code;
     }
-    //gets the block number in which the new song should be entered
+    //gets the block number in which the new song should be added.
     private void getBlock(){
         String path = "C:\\MEIA/desc_bloque_"+ blockNumber +".txt";
         ArrayList<String> data = Proyecto1.getFile(path);
@@ -875,6 +883,83 @@ public class UserForm extends javax.swing.JFrame {
             }
         }
         return status;
+    }
+    
+    private void ChangeDataFormat(){
+        String path = "C:\\MEIA/indice_canciones.txt";
+        ArrayList<String> registerData = Proyecto1.getFile(path);
+        
+        Proyecto1.saveFile(path,"",false);
+        String[] data = new String[5];
+        String textToAdd;
+        for (String userData : registerData) {
+            String[] playlistUser = userData.split("\\|");
+            data[0] = playlistUser[2];
+            data[1] = playlistUser[0];
+            data[2] = playlistUser[1];
+            data[3] = playlistUser[3];
+            data[4] = playlistUser[4];
+
+            textToAdd = data[0] + "|" + data[1] + "|" + data[2] + "|" + data[3] + "|" + data[4];
+            textToAdd += System.getProperty("line.separator"); 
+            Proyecto1.saveFile(path, textToAdd, true);
+        }
+    }
+    private void reorganizeIndex(){
+        String path = "C:\\MEIA/indice_canciones.txt";
+        ArrayList<String> indexData = Proyecto1.getFile(path);
+        ArrayList<String> registerData = Proyecto1.getFile(path);
+
+        if(indexData.size() == 1){
+            return;
+        }
+        
+        Proyecto1.saveFile(path,"",false);
+        
+        //Add following index to an array
+        String[] pointers = new String[indexData.size()];
+        int indx = 0;
+        for (String userData : indexData) {
+            String[] playlistUser = userData.split("\\|");
+            pointers[indx] = playlistUser[1];
+            indx++;
+        }
+         
+        for(int i = 0; i<pointers.length;i++){
+            System.out.println(pointers[i]);
+        }
+        
+        String[] data = new String[5];
+        String textToAdd;
+        int index = 1;
+        for (String userData : registerData) {
+            String[] playlistUser = userData.split("\\|");
+            data[0] = playlistUser[1];
+            data[1] = playlistUser[2];
+            data[2] = playlistUser[0];
+            data[4] = playlistUser[4];
+            if(index<(registerData.size())){
+                data[3] = pointers[index];
+            }else{
+                data[3] = "eof";
+            }
+            index++;
+            textToAdd = data[0] + "|" + data[1] + "|" + data[2] + "|" + data[3] + "|" + data[4];
+            textToAdd += System.getProperty("line.separator"); 
+            Proyecto1.saveFile(path, textToAdd, true);
+        }
+        
+        ArrayList<String> indxFile = Proyecto1.getFile(path);  
+        Collections.sort(indxFile);
+        
+        String fileText = "";
+        for (String item : indxFile) {
+            fileText += item + System.getProperty("line.separator");
+        }
+        System.out.println(fileText);
+        Proyecto1.saveFile(path,"", false);
+        Proyecto1.saveFile(path, fileText, true);
+   
     }
     
     private void reorganizePlaylist(){
