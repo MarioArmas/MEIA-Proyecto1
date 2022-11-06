@@ -27,6 +27,7 @@ public class UserForm extends javax.swing.JFrame {
     private static final String USER_FILE = "C:\\MEIA/usuario.txt";
     private static final String USER_BITACORA_FILE = "C:\\MEIA/bitacora_usuario.txt";
     private static final String BITACORA_USER_PLAYLISTS_FILE = "C:\\MEIA/bitacora_listas_canciones.txt";
+    public String firstPointer = "";
     static int blockNumber = 1;
     static int index = 1;
     public static Clip clip;
@@ -932,6 +933,7 @@ public class UserForm extends javax.swing.JFrame {
         String[] data = new String[5];
         String textToAdd;
         int index = 1;
+        firstPointer = pointers[0];
         for (String userData : registerData) {
             String[] playlistUser = userData.split("\\|");
             data[0] = playlistUser[1];
@@ -959,6 +961,7 @@ public class UserForm extends javax.swing.JFrame {
         System.out.println(fileText);
         Proyecto1.saveFile(path,"", false);
         Proyecto1.saveFile(path, fileText, true);
+        updateDescriptorIndexFile();
    
     }
     
@@ -1089,8 +1092,17 @@ public class UserForm extends javax.swing.JFrame {
         fileData = Proyecto1.getFile("C:\\MEIA/indice_canciones.txt");
         fileName = "indice_canciones.txt";
 
+        int totalBloques = 1;
+        boolean exists = true;
         
-        String[] data = new String[7];
+        while (exists) {
+            File tempFile = new File("C:\\MEIA/bloque_" + totalBloques + ".txt");
+            exists = tempFile.exists();
+            totalBloques++;
+        }
+        totalBloques -= 2;
+        
+        String[] data = new String[9];
         for (int i = 0; i < descData.size(); i++) {
             data[i] = descData.get(i);
         }
@@ -1106,6 +1118,8 @@ public class UserForm extends javax.swing.JFrame {
         data[4] = "Usuario de modificación: " + SignInForm.lastUser;
         data[5] = "Registros: " + fileData.size();
         data[6] = "Max reorganización: 3";
+        data[7] = "Registro inicial: " + firstPointer;
+        data[8] = "Numero de bloques: " + totalBloques;
         
         String fileString = "";
         for (int i = 0; i < data.length; i++) {
